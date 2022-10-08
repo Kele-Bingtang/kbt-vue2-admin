@@ -1,0 +1,38 @@
+/* Variables */
+
+// Base color
+$blue:#324157;
+$light-blue:#3A71A8;
+$red:#C03639;
+$pink: #E65D6E;
+$green: #30B08F;
+$tiffany: #4AB7BD;
+$yellow:#FEC171;
+$panGreen: #30B08F;
+
+// SideMenu
+// menu 开头代表是一级菜单的样式，sub 开头代表是二级菜单的样式，除了 menuText，menuText 是整个菜单的文字样式，即包含了 sub 的文字样式。
+$sideMenuWidth: 210px;
+$menuHover:#ecf5ff; // #263445
+$menuBg:#fff; // #304156
+$menuText:#303133; // #bfcbd9
+$menuActiveText:#409EFF; // #409EFF
+$subMenuBg:#fff; // #1f2d3d
+$subMenuHover:#ecf5ff; // #001528
+$subMenuActiveText:#409EFF; // #f4f4f5
+$elIcon: #909399; // #bfcbd9
+$svgIcon: #909399; // #303133
+
+// Login page
+$lightGray: #eee;
+$darkGray:#889aa4;
+$loginBg: #2d3a4b;
+$loginCursorColor: #fff;
+
+// The :export directive is the magic sauce for webpack
+// https://mattferderer.com/use-sass-variables-in-typescript-and-javascript
+:export {
+  menuBg: $menuBg;
+  menuText: $menuText;
+  menuActiveText: $menuActiveText;
+}
