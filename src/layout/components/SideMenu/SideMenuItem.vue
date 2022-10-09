@@ -24,7 +24,7 @@
             <svg-icon v-else :name="menuItem.meta.icon" />
           </template>
           <!-- 如果没有 title，则以 name 显示 -->
-          <span slot="title">{{ showTitle(menuItem) }}</span>
+          <span slot="title">{{ getTitle(menuItem) }}</span>
         </el-menu-item>
       </side-menu-item-link>
     </template>
@@ -43,7 +43,7 @@
           ></i>
           <svg-icon v-else :name="menuItem.meta.icon" />
         </template>
-        <span slot="title">{{ showTitle(menuItem) }}</span>
+        <span slot="title">{{ getTitle(menuItem) }}</span>
       </template>
       <!-- 递归循环出子菜单 -->
       <template v-if="menuItem.children">
@@ -64,7 +64,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { RouteConfig } from "vue-router";
 import SideMenuItemLink from "./SideMenuItemLink.vue";
-import { showTitle } from "@/utils";
+import { getTitle } from "@/utils";
 
 @Component({
   components: {
@@ -79,8 +79,8 @@ export default class SideMenuItem extends Vue {
   @Prop({ default: true })
   public isFirstMenu!: boolean; // 是否是一级菜单
 
-  public showTitle(menuItem: RouteConfig) {
-    return showTitle(menuItem, this);
+  public getTitle(menuItem: RouteConfig) {
+    return getTitle(menuItem, this);
   }
 }
 </script>

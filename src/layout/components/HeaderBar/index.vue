@@ -20,6 +20,8 @@ import Breadcrumb from "./Breadcrumb.vue";
 import { Route, RouteConfig, RouteRecord } from "vue-router";
 import { PermissionModule } from "@/store/modules/permission";
 
+type RouteMatched = RouteRecord & Partial<Route>;
+
 @Component({
   components: {
     SideMenuTrigger,
@@ -27,12 +29,7 @@ import { PermissionModule } from "@/store/modules/permission";
   },
 })
 export default class HeaderBar extends Vue {
-  public breadcrumbs: Array<RouteRecord> = [];
-
-  private homeRoute: RouteConfig = {
-    path: "",
-    name: "",
-  };
+  public breadcrumbs: Array<Route> = [];
 
   // 获取是否展开菜单栏的布尔值
   get isCollapse(): boolean {
@@ -63,14 +60,32 @@ export default class HeaderBar extends Vue {
     let matched = this.$route.matched;
     // 如果是首页，直接返回
     if (homeRoute && matched.some((item) => item.name === homeRoute.name)) {
-      return [homeRoute as RouteRecord];
+      return [homeRoute as Route];
     }
     matched = homeRoute ? [homeRoute as RouteRecord].concat(matched) : matched;
-    return matched.filter((item) => {
+    let routeMatched: Array<Route> = [];
+    /**
+     * 如果 route.meta.title 是 function，那么需要 route 的信息，所以将 matched 转成 route，一个面包屑就是一个 route
+     * 因为 matched 专门存放匹配的路由 path、name、meta，所以这是匹配路由唯一的，而其他就是 route 唯一，两者并不重复且冲突
+     */
+    matched.forEach((item) => {
+      routeMatched.push({
+        path: item.path,
+        name: item.name,
+        meta: item.meta,
+        fullPath: item.meta.$fullPath,
+        matched,
+        hash: this.$route.hash,
+        params: this.$route.params,
+        query: this.$route.query,
+        redirectedFrom: this.$route.redirectedFrom,
+      });
+    });
+    return routeMatched.filter((item) => {
       return (
         (item.name || (item.meta && item.meta.title)) &&
         item.meta &&
-        !item.meta.hiddenInBread
+        !item.meta.hideInBread
       );
     });
   }
@@ -119,7 +134,6 @@ export default class HeaderBar extends Vue {
       &:hover {
         cursor: pointer;
         transition: background 0.3s;
-        background: rgba(0, 0, 0, 0.025);
       }
     }
   }

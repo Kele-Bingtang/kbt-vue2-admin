@@ -7,36 +7,39 @@ import {
 } from "vuex-module-decorators";
 import store from "@/store";
 import { RouteConfig } from "vue-router";
-import { constantRoutes } from "@/router";
+import { constantRoutes } from "@/router/routes-config";
 import { isExternal } from "@/utils/validate";
 
 export interface PermissionState {
-  onlyRolesRoutes: Array<RouteConfig>; // 当前用户独有的权限路由表
-  allRoutes: Array<RouteConfig>; // 当前用户所有的权限路由表（包含基础路由）
+  rolesRoutes: Array<RouteConfig>; // 当前用户独有的权限路由表
+  loadRoutes: Array<RouteConfig>; // 当前用户所有的权限路由表（包含基础路由）
   homeRoute: RouteConfig; // 首页的路由
+  isLoadedRoutes: boolean;
 }
 
 @Module({ dynamic: true, store, name: "permission", namespaced: true })
 class Permission extends VuexModule implements PermissionState {
-  public onlyRolesRoutes: Array<RouteConfig> = [];
-  public allRoutes: Array<RouteConfig> = [];
+  public rolesRoutes: Array<RouteConfig> = [];
+  public loadRoutes: Array<RouteConfig> = [];
   public homeRoute: RouteConfig = {
     path: "",
     name: "",
   };
+  public isLoadedRoutes: boolean = false;
 
   @Action
-  public addRolesRoutes(routes: Array<RouteConfig>) {
+  public loadRolesRoutes(routes: Array<RouteConfig>) {
     this.SET_ROUTES(routes);
   }
 
   @Mutation
-  public SET_ROUTES(routes: Array<RouteConfig>) {
+  private SET_ROUTES(routes: Array<RouteConfig>) {
     let fullPathConstantRoutes = getRouteFullPath(constantRoutes);
-    let fullPathRoutes = getRouteFullPath(routes);
-    this.allRoutes = fullPathConstantRoutes.concat(fullPathRoutes);
-    this.onlyRolesRoutes = fullPathRoutes;
-    this.homeRoute = getHomeRoute(this.allRoutes, "home");
+    let fullPathRolesRoutes = getRouteFullPath(routes);
+    this.loadRoutes = fullPathConstantRoutes.concat(fullPathRolesRoutes);
+    this.rolesRoutes = fullPathRolesRoutes;
+    this.homeRoute = getHomeRoute(this.loadRoutes, "home");
+    this.isLoadedRoutes = true;
   }
 }
 
@@ -55,7 +58,7 @@ export const getRouteFullPath = (
   return routes.map((route) => {
     if (!(route.meta && route.meta.$fullPath)) {
       let { meta } = route;
-      meta = meta ? meta : {};
+      meta = meta || {};
       // 一级路由的 $fullPath 是自己的 path，如果 path 自带 /，则不需要路由拼接
       if (route.path.startsWith("/")) {
         meta.$fullPath = route.path;

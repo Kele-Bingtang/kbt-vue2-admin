@@ -36,6 +36,7 @@ export interface ErrorLog {
   vm: any;
   info: string;
   url: string;
+  hasRead: boolean;
   userId?: string;
   userName?: string;
   token?: string;
@@ -43,17 +44,12 @@ export interface ErrorLog {
   time?: number;
 }
 
-export interface ErrorObj {
-  hasReadErrorLogs: boolean;
-  errorLogs: Array<ErrorLog>; // 错误日志
-}
-
 export interface LayoutState {
   sideMenu: SideMenu; // 侧边菜单
   tagsNav: tagsNav; // 标签页
   size: string; // 布局大小
   language: string; // 语言
-  error: ErrorObj;
+  errorLogs: Array<ErrorLog>; // 错误日志
 }
 
 @Module({ dynamic: true, store, name: "layout", namespaced: true })
@@ -70,10 +66,7 @@ class Layout extends VuexModule implements LayoutState {
 
   public language = getLocale() || "zh-CN";
 
-  public error: ErrorObj = {
-    hasReadErrorLogs: false,
-    errorLogs: [],
-  };
+  public errorLogs: Array<ErrorLog> = [];
 
   // 折叠或者隐藏菜单栏
   @Action
@@ -94,7 +87,6 @@ class Layout extends VuexModule implements LayoutState {
   @Action
   public addErrorLog(errorLog: ErrorLog) {
     this.ADD_ERROR_LOG(errorLog);
-    this.setHasReadErrorLogsStatus(false);
   }
 
   @Action
@@ -169,23 +161,23 @@ class Layout extends VuexModule implements LayoutState {
 
   @Mutation
   private ADD_ERROR_LOG(errorLog: ErrorLog) {
-    let { userId, userName, token, roles } = UserModule;
+    let { userInfo, token, roles } = UserModule;
     let log: ErrorLog = {
       ...errorLog,
-      userId,
-      userName,
+      userId: userInfo.userId,
+      userName: userInfo.userName,
       token,
       roles,
       time: new Date().getTime(),
     };
-    this.error.errorLogs.push(log);
+    this.errorLogs.push(log);
   }
 
   @Mutation
   private DELETE_ONE_ERROR_LOG(errorLog: ErrorLog) {
-    for (const [i, e] of this.error.errorLogs.entries()) {
+    for (const [i, e] of this.errorLogs.entries()) {
       if (e.time === errorLog.time) {
-        this.error.errorLogs.splice(i, 1);
+        this.errorLogs.splice(i, 1);
         break;
       }
     }
@@ -193,12 +185,15 @@ class Layout extends VuexModule implements LayoutState {
 
   @Mutation
   private CLEAR_ERROR_LOG() {
-    this.error.errorLogs.splice(0);
+    this.errorLogs.splice(0);
   }
 
   @Mutation
   private SET_HAS_READ_ERROR_LOGS_STATUS(status: boolean) {
-    this.error.hasReadErrorLogs = status;
+    this.errorLogs = this.errorLogs.map((errorLog) => {
+      errorLog.hasRead = status;
+      return errorLog;
+    })
   }
 
   @Mutation

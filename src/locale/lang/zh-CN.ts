@@ -8,11 +8,13 @@ export default {
     test3: "测试3",
     test4: "测试4",
     test: "测试",
-    "test1-1": "测试1-1"
+    "test1-1": "测试1-1",
+    params: "动态路由",
+    query: "带参路由",
   },
   $navbar: {
     profile: "我的主页",
     logOut: "退出登录",
-    size: "布局大小"
+    size: "布局大小",
   },
 };

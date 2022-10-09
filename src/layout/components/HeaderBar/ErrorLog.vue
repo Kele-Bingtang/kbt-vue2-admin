@@ -1,13 +1,8 @@
 <template>
   <div class="error-log-badge">
     <el-badge :value="count" :max="99" class="badge">
-      <el-button
-        style="padding: 8px 10px"
-        size="small"
-        type="danger"
-        @click="openErrorLogger"
-      >
-        <svg-icon name="bug" />
+      <el-button size="small" plain @click="openErrorLogger">
+        <svg-icon name="bug" width="18px" height="18px" />
       </el-button>
     </el-badge>
   </div>
@@ -21,17 +16,16 @@ export default class ErrorLog extends Vue {
   @Prop({ default: 0 })
   public errorCount!: number;
 
-  @Prop({ default: false })
-  public hasReadErrorLogs!: boolean;
-
   get count() {
-    return this.hasReadErrorLogs ? 0 : this.errorCount;
+    return this.errorCount === 0 ? 0 : this.errorCount;
   }
 
   public openErrorLogger() {
-    this.$router.push({
-      name: "errorLoggerPage",
-    });
+    if (this.$route.name !== "errorLoggerPage") {
+      this.$router.push({
+        name: "errorLoggerPage",
+      });
+    }
   }
 }
 </script>
@@ -41,12 +35,27 @@ export default class ErrorLog extends Vue {
   .badge {
     line-height: 25px;
     margin-top: -5px;
+    .el-button {
+      padding: 8px 10px;
+      border: none;
+    }
   }
   .message-title {
     font-size: 16px;
     color: #333;
     font-weight: bold;
     padding-right: 8px;
+  }
+}
+</style>
+
+<style lang="scss">
+.error-log-badge {
+  .badge {
+    .el-badge__content.is-fixed {
+      top: 3px;
+      right: 14px;
+    }
   }
 }
 </style>

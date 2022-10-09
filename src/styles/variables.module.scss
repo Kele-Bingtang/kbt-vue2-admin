@@ -12,16 +12,29 @@ $panGreen: #30B08F;
 
 // SideMenu
 // menu 开头代表是一级菜单的样式，sub 开头代表是二级菜单的样式，除了 menuText，menuText 是整个菜单的文字样式，即包含了 sub 的文字样式。
+// 白色主题
+// $sideMenuWidth: 210px;
+// $menuHover:#ecf5ff;
+// $menuBg:#fff;
+// $menuText:#303133;
+// $menuActiveText:#409EFF;
+// $subMenuBg:#fff;
+// $subMenuHover:#ecf5ff;
+// $subMenuActiveText:#409EFF;
+// $elIcon: #909399; 
+// $svgIcon: #909399;
+
+// 黑色主题
 $sideMenuWidth: 210px;
-$menuHover:#ecf5ff; // #263445
-$menuBg:#fff; // #304156
-$menuText:#303133; // #bfcbd9
-$menuActiveText:#409EFF; // #409EFF
-$subMenuBg:#fff; // #1f2d3d
-$subMenuHover:#ecf5ff; // #001528
-$subMenuActiveText:#409EFF; // #f4f4f5
-$elIcon: #909399; // #bfcbd9
-$svgIcon: #909399; // #303133
+$menuHover:#263445;
+$menuBg:#304156;
+$menuText:#bfcbd9;
+$menuActiveText:#409EFF;
+$subMenuBg:#1f2d3d;
+$subMenuHover:#001528;
+$subMenuActiveText:#409EFF;
+$elIcon: #bfcbd9;
+$svgIcon: #bfcbd9;
 
 // Login page
 $lightGray: #eee;

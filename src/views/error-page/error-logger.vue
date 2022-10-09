@@ -1,10 +1,11 @@
 <template>
   <div class="error-logger">
     <el-alert
-      title="如果你在本页面添加错误日志，那么右上角的红色文字不会变成 0，您需要离开该页面，再重新进入，才会将红色数字置为 0，代表已读"
+      title="注意：页面错误日志不会在浏览器持久化存储，刷新页面即会丢失"
+      description="如果你在本页面添加错误日志，那么右上角的红色文字不会变成 0，您需要离开该页面，再重新进入，才会将红色数字置为 0，代表已读"
       type="info"
-      center
-      style="margin-bottom: 10px;"
+      :closable="false"
+      style="margin-bottom: 10px"
     >
     </el-alert>
     <el-button type="primary" @click="addErrorLog">添加一条错误日志</el-button>
@@ -100,10 +101,11 @@ export default class ErrorLooger extends Vue {
     vm: undefined,
     info: "",
     url: "",
+    hasRead: true,
   };
 
   get errorLogs() {
-    return LayoutModule.error.errorLogs;
+    return LayoutModule.errorLogs;
   }
 
   mounted() {

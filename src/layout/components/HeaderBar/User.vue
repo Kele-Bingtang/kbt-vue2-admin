@@ -3,6 +3,7 @@
     <el-dropdown trigger="click" style="height: 100%">
       <div class="avatar-wrapper">
         <img src="@/assets/小乐.png" class="user-avatar" />
+        <span class="username">{{ userInfo.userName }}</span>
         <i class="el-icon-caret-bottom" />
       </div>
       <el-dropdown-menu slot="dropdown">
@@ -27,6 +28,9 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component({})
 export default class User extends Vue {
+  get userInfo() {
+    return UserModule.userInfo;
+  }
 
   get profileLabel() {
     let profile = this.$t("$navbar.profile");
@@ -50,9 +54,11 @@ export default class User extends Vue {
 <style lang="scss" scoped>
 .user-container {
   .avatar-wrapper {
-    line-height: 75px;
     position: relative;
     height: 100%;
+    line-height: 75px;
+    display: flex;
+    align-items: center;
     .user-avatar {
       cursor: pointer;
       width: 35px;
@@ -60,11 +66,17 @@ export default class User extends Vue {
       border-radius: 50%;
     }
 
+    .username {
+      line-height: 0px;
+      display: inline-block;
+      margin: 0 7px 0 9px;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+    }
+
     .el-icon-caret-bottom {
       cursor: pointer;
-      position: absolute;
-      right: -20px;
-      line-height: 45px;
       font-size: 12px;
     }
   }

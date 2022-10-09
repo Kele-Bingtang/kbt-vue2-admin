@@ -48,7 +48,7 @@ export default class SideMenuLogo extends Vue {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: #97979ea9; // #2b2f3a
+  background: #001529; // #2b2f3a #97979ea9 #001529
   text-align: center;
   white-space: nowrap;
 

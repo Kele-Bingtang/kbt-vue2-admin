@@ -8,6 +8,8 @@
       <svg-icon
         :name="isFullscreen ? 'exit-fullscreen' : 'fullscreen'"
         @click="handleChange"
+        width="18px"
+        height="18px"
       />
     </el-tooltip>
   </div>
@@ -18,7 +20,6 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component({})
 export default class FullScreen extends Vue {
-
   public isFullscreen: boolean = false;
 
   get showFullScreenBtn() {

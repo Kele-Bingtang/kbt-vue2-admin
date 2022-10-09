@@ -16,10 +16,7 @@
         <el-header class="header-container">
           <header-bar>
             <full-screen />
-            <error-log
-              :errorCount="errorCount"
-              :hasReadErrorLogs="hasReadErrorLogs"
-            />
+            <error-log :errorCount="errorCount" />
             <size-select :size="size" @handleSetSize="handleSetSize" />
             <lang-select
               :language="language"
@@ -39,12 +36,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { HeaderBar, SideMenu, TagsNav, MainContent } from "./components";
 import { isMobile, setTitle } from "@/utils/index";
 import { LayoutModule } from "@/store/modules/layout";
 import { SettingsModule } from "@/store/modules/settings";
-import { Route } from "vue-router";
 import SideMenuLogo from "./components/SideMenu/SideMenuLogo.vue";
 import FullScreen from "./components/HeaderBar/FullScreen.vue";
 import SizeSelect from "./components/HeaderBar/SizeSelect.vue";
@@ -94,11 +90,10 @@ export default class Layout extends Vue {
   }
 
   get errorCount() {
-    return LayoutModule.error.errorLogs.length;
-  }
-
-  get hasReadErrorLogs() {
-    return LayoutModule.error.hasReadErrorLogs;
+    let noReadErrorLogs = LayoutModule.errorLogs.filter((errorLog) => {
+      return !errorLog.hasRead;
+    });
+    return noReadErrorLogs.length;
   }
 
   // future（目前没有实现，未来打算实现）：菜单栏适配手机端

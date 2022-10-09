@@ -61,7 +61,7 @@ export function removeDuplicateObj<T>(
  * @param {Object} vm Vue 实例
  */
 export const setTitle = (route: Route, vm: any) => {
-  const pageTitle = showTitle(route, vm);
+  const pageTitle = getTitle(route, vm);
   const resTitle = pageTitle ? `${title} - ${pageTitle}` : title;
   window.document.title = resTitle;
 };
@@ -69,7 +69,7 @@ export const setTitle = (route: Route, vm: any) => {
 /**
  * 处理页面标题、侧边菜单、面包屑、tagsNav 展示的 title
  */
-export const showTitle = (
+export const getTitle = (
   route: Route | RouteConfig | RouteRecord | Tag,
   vm: any
 ) => {

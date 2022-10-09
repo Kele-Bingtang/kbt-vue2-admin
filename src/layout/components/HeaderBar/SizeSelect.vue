@@ -3,7 +3,7 @@
     <el-tooltip effect="dark" :content="content" placement="bottom">
       <el-dropdown trigger="click" @command="handleSetSize">
         <div>
-          <svg-icon class="size-icon" name="size" />
+          <svg-icon class="size-icon" name="size" width="18px" height="18px" />
         </div>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item

@@ -2,7 +2,12 @@
   <div class="international">
     <el-dropdown trigger="click" @command="handleSetLanguage">
       <div class="svg-container">
-        <svg-icon name="language" class="international-icon" />
+        <svg-icon
+          name="language"
+          class="international-icon"
+          width="18px"
+          height="18px"
+        />
       </div>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item

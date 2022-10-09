@@ -22,7 +22,7 @@
             <!-- 使用本地的 svg 图标 -->
             <svg-icon v-else :name="breadcrumb.meta.icon" />
           </template>
-          <span>{{ showTitle(breadcrumb) }}</span>
+          <span>{{ getTitle(breadcrumb) }}</span>
         </span>
         <a v-else @click.prevent="handleLink(breadcrumb)">
           <template v-if="breadcrumb.meta && breadcrumb.meta.icon">
@@ -35,7 +35,7 @@
             <!-- 使用本地的 svg 图标 -->
             <svg-icon v-else :name="breadcrumb.meta.icon" />
           </template>
-          <span>{{ showTitle(breadcrumb) }}</span></a
+          <span>{{ getTitle(breadcrumb) }}</span></a
         >
       </el-breadcrumb-item>
     </transition-group>
@@ -46,15 +46,15 @@
 import { compile } from "path-to-regexp";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { RouteRecord } from "vue-router";
-import { showTitle } from "@/utils";
+import { getTitle } from "@/utils";
 
 @Component({})
 export default class Breadcrumb extends Vue {
   @Prop({ required: true })
   public breadcrumbs!: RouteRecord[];
 
-  public showTitle(breadcrumbItem: RouteRecord) {
-    return showTitle(breadcrumbItem, this);
+  public getTitle(breadcrumbItem: RouteRecord) {
+    return getTitle(breadcrumbItem, this);
   }
 
   public handleLink(item: any) {

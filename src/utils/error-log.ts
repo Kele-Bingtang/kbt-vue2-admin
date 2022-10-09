@@ -21,6 +21,7 @@ export const errorHandler = (err: Error, vm: Vue, info: string) => {
     vm,
     info,
     url: window.location.href,
+    hasRead: false,
   });
 };
 

@@ -10,18 +10,26 @@ import { removeToken, setToken } from "@/utils/cookies";
 import { resetRouter } from "@/router";
 import { LayoutModule } from "./layout";
 
-export interface UserState {
-  token: string;
+export interface UserInfo {
   userId: string;
   userName: string;
-  roles: string[];
+  roles?: string[];
+}
+
+export interface UserState {
+  token: string; // 用户的认证 token
+  userInfo: UserInfo; // 用户信息
+  roles: string[]; // 有时候 roles 需要等拿到 userId，再去获取，则不会在 userInfo 里
 }
 
 @Module({ dynamic: true, store, name: "user", namespaced: true })
 class User extends VuexModule implements UserState {
   public token: string = "";
-  public userId: string = "";
-  public userName: string = "";
+  public userInfo: UserInfo = {
+    userId: "v1000",
+    userName: "Visitor",
+    roles: [],
+  };
   public roles: string[] = [];
 
   @Action
@@ -48,10 +56,14 @@ class User extends VuexModule implements UserState {
 
   @Action
   public async getUserInfo() {
-    let roles: string[] = ["admin"];
+    let userInfo: UserInfo = {
+      userId: "k100338",
+      userName: "Kobe Liu",
+      roles: ["admin"],
+    };
+    let roles: string[] = userInfo.roles || ["admin"];
     this.SET_ROLES(roles);
-    this.SET_USER_ID("k100338");
-    this.SET_NAME("Kbt");
+    this.SET_USER_INFO(userInfo);
     return roles;
   }
 
@@ -73,13 +85,8 @@ class User extends VuexModule implements UserState {
   }
 
   @Mutation
-  public SET_USER_ID(userId: string) {
-    this.userId = userId;
-  }
-
-  @Mutation
-  private SET_NAME(userName: string) {
-    this.userName = userName;
+  public SET_USER_INFO(userInfo: UserInfo) {
+    this.userInfo = userInfo;
   }
 
   @Mutation

@@ -28,7 +28,6 @@ import { LayoutModule } from "@/store/modules/layout";
 import { PermissionModule } from "@/store/modules/permission";
 import { RouteConfig } from "vue-router";
 import variables from "@/styles/variables.module.scss";
-import { isExternal } from "@/utils/validate";
 
 export type MenuRoute = RouteConfig & {
   meta: {
@@ -47,7 +46,7 @@ export default class SideMenu extends Vue {
   }
 
   get menuList() {
-    return this.getMenuListByRouter(PermissionModule.allRoutes);
+    return this.getMenuListByRouter(PermissionModule.loadRoutes);
   }
 
   // 对应菜单 Item 的 index，这样才能高亮
@@ -64,8 +63,8 @@ export default class SideMenu extends Vue {
     let menusList: Array<MenuRoute> = [];
     allRolesRoutes.forEach((route) => {
       let r = { ...route };
-      // 如果配置了 hiddenInMenu: true，则隐藏菜单，如果配置了 alwaysShowRoot: false | undefined 且子路由只有一个，则子路由成为一级菜单
-      if (!r.meta || (r.meta && !r.meta.hiddenInMenu)) {
+      // 如果配置了 hideInMenu: true，则隐藏菜单，如果配置了 alwaysShowRoot: false | undefined 且子路由只有一个，则子路由成为一级菜单
+      if (!r.meta || (r.meta && !r.meta.hideInMenu)) {
         // 如果存在 children
         if (r.children && r.children.length !== 0) {
           // 如果 children 长度为 1 且 alwaysShowRoot 为 false | undefined，则子路由成为一级菜单

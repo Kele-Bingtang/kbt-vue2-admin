@@ -5,7 +5,7 @@ const port = process.env.port || 8097 // dev port
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
-  publicPath: '/',
+  publicPath: process.env.VUE_APP_PUBLIC_PATH,
   devServer: {
     host: 'localhost',
     port: port,

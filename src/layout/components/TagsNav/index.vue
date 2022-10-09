@@ -18,11 +18,11 @@
           @contextmenu.prevent.native="openRightMenu(tag, $event)"
         >
           <span class="dot" />
-          <span>{{ showTitle(tag) }}</span>
+          <span>{{ getTitle(tag) }}</span>
           <span
             v-if="!isAffix(tag)"
             class="el-icon-close"
-            @click.prevent.stop="closeSelectedTag(tag)"
+            @click.prevent.stop="handleCloseTag(tag)"
           />
         </router-link>
       </div>
@@ -43,7 +43,7 @@
       class="contextmenu"
     >
       <li @click="refreshselectedTag(selectedTag)">刷新</li>
-      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">
+      <li v-if="!isAffix(selectedTag)" @click="handleCloseTag(selectedTag)">
         关闭
       </li>
       <li @click="closeOthersTabs">关闭其他</li>
@@ -53,19 +53,20 @@
 </template>
 
 <script lang="ts">
-import router from "@/router";
+import beforeClose from "@/router/before-close";
 import { LayoutModule, Tag } from "@/store/modules/layout";
 import { PermissionModule } from "@/store/modules/permission";
-import { showTitle } from "@/utils";
+import { getTitle } from "@/utils";
 import { Component, Vue, Watch } from "vue-property-decorator";
-import { Route, RouteConfig } from "vue-router";
+import { RouteConfig } from "vue-router";
 
 @Component({})
 export default class TabBar extends Vue {
   // 右键菜单显示
   public rightMenuVisible = false;
-  // 右键菜单位置
+  // tagsNav 滚动
   public tagBodyLeft = 0;
+  // 右键菜单位置
   public rightMenuLeft = 0;
   public rightMenuTop = 0;
   // 激活的 tag
@@ -93,6 +94,7 @@ export default class TabBar extends Vue {
   @Watch("$route")
   public routeWatch() {
     this.addTags();
+    // 如果 tag 很多，且 target tag 在边缘，则整体往 target tag 移动
     this.moveToCurrentTag();
   }
 
@@ -101,8 +103,8 @@ export default class TabBar extends Vue {
     this.addTags();
   }
 
-  public showTitle(tag: Tag) {
-    return showTitle(tag, this);
+  public getTitle(tag: Tag) {
+    return getTitle(tag, this);
   }
 
   public isAffix(tag: Tag) {
@@ -113,7 +115,7 @@ export default class TabBar extends Vue {
   public isActive(tag: Tag): boolean {
     return this.$route.path === tag.path;
   }
-  // 过滤出固定在 TagNav 的 tag
+  // 过滤出固定在 TagsNav 的 tag
   public filterAffixTags(routes: Array<RouteConfig>) {
     let tags: Array<Tag> = [];
     routes.forEach((route) => {
@@ -136,14 +138,13 @@ export default class TabBar extends Vue {
   }
   // 刷新页面，将访问的 Tag 进行添加
   public initTags() {
-    this.affixTags = this.filterAffixTags(PermissionModule.allRoutes);
+    this.affixTags = this.filterAffixTags(PermissionModule.loadRoutes);
     for (const tag of this.affixTags) {
       if (tag.name) {
         LayoutModule.addTag(tag);
       }
     }
   }
-  // this.getTagElementByRoute(this.currentRouteObj)
   // 添加 tab，针对携带 tag 的 url 访问
   public addTags(tag?: Tag) {
     if (tag) {
@@ -166,7 +167,7 @@ export default class TabBar extends Vue {
       if (refsTag) {
         for (const tag of refsTag) {
           if (this.$route.path === (tag.to as Tag).path) {
-            this.moveToTag(tag.$el);
+            this.moveToTargetTag(tag.$el);
             // 当 query 不一样
             if ((tag.to as Tag).path !== this.$route.fullPath) {
               LayoutModule.updateVisitedTag(this.$route);
@@ -176,7 +177,7 @@ export default class TabBar extends Vue {
       }
     });
   }
-  public moveToTag(tagElement: HTMLElement) {
+  public moveToTargetTag(tagElement: HTMLElement) {
     const outerWidth = (this.$refs.scrollContainer as HTMLElement).offsetWidth;
     const bodyWidth = (this.$refs.scrollBody as HTMLElement).offsetWidth;
     const outerPadding = 4;
@@ -207,6 +208,22 @@ export default class TabBar extends Vue {
     }
   }
   // 关闭一个 tab，并激活到上一个 tag
+  public async handleCloseTag(tag: Tag) {
+    if (
+      tag.meta &&
+      tag.meta.beforeCloseName &&
+      tag.meta.beforeCloseName in beforeClose
+    ) {
+      let isClose = await new Promise(
+        (beforeClose as any)[tag.meta.beforeCloseName]
+      );
+      if (isClose) {
+        this.closeSelectedTag(tag);
+      }
+    } else {
+      this.closeSelectedTag(tag);
+    }
+  }
   public closeSelectedTag(tag: Tag) {
     LayoutModule.deleteTag(tag);
     // 如果关闭激活的 tag
@@ -217,7 +234,7 @@ export default class TabBar extends Vue {
   }
   /**
    * 跳转到上一个 tag
-   * @param toHome 是否跳到首页。当为 true，如果 tagNavList 为空，则跳到首页，否则跳转到 fixedTabList 最后一个 tag
+   * @param toHome 是否跳到首页。当为 true，如果 tagNavList 为空，则跳到首页，否则跳转到 affixTags 最后一个 tag
    */
   public toLastTag(tagNavList: Array<Tag>, tag: Tag, toHome: boolean = true) {
     // 获取最后一个 tag 数据
@@ -285,7 +302,7 @@ export default class TabBar extends Vue {
       });
     }
   }
-  // 关闭除 fixedTabList 的所有其他 tag
+  // 关闭除 affixTags 的所有其他 tag
   public closeAllTabs(tag: Tag) {
     LayoutModule.deleteAllTags();
     if (this.affixTags.some((tag) => tag.path === this.$route.path)) {
