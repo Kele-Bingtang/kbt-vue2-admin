@@ -1,5 +1,5 @@
 export default {
-  $route: {
+  _route: {
     home: "首页",
     login: "登录",
     errorLoggerPage: "错误日志",
@@ -12,9 +12,11 @@ export default {
     params: "动态路由",
     query: "带参路由",
   },
-  $navbar: {
+  _navbar: {
     profile: "我的主页",
     logOut: "退出登录",
-    size: "布局大小",
   },
+  _message: {
+    changeLanguage: "修改语言成功！",
+  }
 };

@@ -56,7 +56,7 @@
 import beforeClose from "@/router/before-close";
 import { LayoutModule, Tag } from "@/store/modules/layout";
 import { PermissionModule } from "@/store/modules/permission";
-import { getTitle } from "@/utils";
+import { getTitle } from "@/utils/layout";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { RouteConfig } from "vue-router";
 
@@ -120,7 +120,7 @@ export default class TabBar extends Vue {
     let tags: Array<Tag> = [];
     routes.forEach((route) => {
       if (route.meta && route.meta.affix) {
-        const tagPath = route.meta.$fullPath;
+        const tagPath = route.meta._fullPath;
         tags.push({
           path: tagPath,
           name: route.name,
@@ -154,7 +154,7 @@ export default class TabBar extends Vue {
       const { name, fullPath, meta } = route;
       route.meta = {
         ...meta,
-        $fullPath: fullPath,
+        _fullPath: fullPath,
       };
       if (name) {
         LayoutModule.addTag(route);
@@ -251,7 +251,7 @@ export default class TabBar extends Vue {
       ) {
         this.$router
           .replace({
-            path: "/redirect" + PermissionModule.homeRoute.meta!.$fullPath,
+            path: "/redirect" + PermissionModule.homeRoute.meta!._fullPath,
           })
           .catch((err) => {
             console.warn(err);

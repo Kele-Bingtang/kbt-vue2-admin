@@ -128,7 +128,7 @@ export const rolesRoutes: Array<RouteConfig> = [
     path: "/arg",
     component: Layout,
     meta: {
-      hideInMenu: true
+      hideInMenu: true,
     },
     children: [
       {
@@ -136,7 +136,7 @@ export const rolesRoutes: Array<RouteConfig> = [
         name: "params",
         component: () => import("@/views/HomeView.vue"),
         meta: {
-          title: (route: Route) => `{{ $route.params }}-${route.params.id}`,
+          title: (route: Route) => `{{ _route.params }}-${route.params.id}`,
           icon: "component",
           notCache: true,
           beforeCloseName: "before_close_normal",
@@ -147,7 +147,7 @@ export const rolesRoutes: Array<RouteConfig> = [
         name: "qeury",
         component: () => import("@/views/HomeView.vue"),
         meta: {
-          title: (route: Route) => `{{ $route.qeury }}-${route.query.id}`,
+          title: (route: Route) => `{{ _route.qeury }}-${route.query.id}`,
           icon: "component",
           notCache: true,
           beforeCloseName: "before_close_normal",

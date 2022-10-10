@@ -15,12 +15,14 @@
 <script lang="ts">
 import { LayoutModule } from "@/store/modules/layout";
 import { Component, Vue, Watch } from "vue-property-decorator";
-import SideMenuTrigger from "./SideMenuTrigger.vue";
-import Breadcrumb from "./Breadcrumb.vue";
-import { Route, RouteConfig, RouteRecord } from "vue-router";
+import SideMenuTrigger from "./components/SideMenuTrigger.vue";
+import Breadcrumb from "./components/Breadcrumb.vue";
+import { RedirectOption, Route, RouteConfig, RouteRecord } from "vue-router";
 import { PermissionModule } from "@/store/modules/permission";
 
-type RouteMatched = RouteRecord & Partial<Route>;
+export interface Breadcrumbs extends Route {
+  redirect?: RedirectOption;
+}
 
 @Component({
   components: {
@@ -29,7 +31,7 @@ type RouteMatched = RouteRecord & Partial<Route>;
   },
 })
 export default class HeaderBar extends Vue {
-  public breadcrumbs: Array<Route> = [];
+  public breadcrumbs: Array<Breadcrumbs> = [];
 
   // 获取是否展开菜单栏的布尔值
   get isCollapse(): boolean {
@@ -60,20 +62,22 @@ export default class HeaderBar extends Vue {
     let matched = this.$route.matched;
     // 如果是首页，直接返回
     if (homeRoute && matched.some((item) => item.name === homeRoute.name)) {
-      return [homeRoute as Route];
+      return [homeRoute as Breadcrumbs];
     }
     matched = homeRoute ? [homeRoute as RouteRecord].concat(matched) : matched;
-    let routeMatched: Array<Route> = [];
+    let routeMatched: Array<Breadcrumbs> = [];
     /**
      * 如果 route.meta.title 是 function，那么需要 route 的信息，所以将 matched 转成 route，一个面包屑就是一个 route
      * 因为 matched 专门存放匹配的路由 path、name、meta，所以这是匹配路由唯一的，而其他就是 route 唯一，两者并不重复且冲突
+     * 因为需要 redirect，所以 Breadcrumbs 类型是 route + redirect
      */
     matched.forEach((item) => {
       routeMatched.push({
         path: item.path,
         name: item.name,
         meta: item.meta,
-        fullPath: item.meta.$fullPath,
+        fullPath: item.meta._fullPath,
+        redirect: item.redirect,
         matched,
         hash: this.$route.hash,
         params: this.$route.params,
@@ -99,7 +103,7 @@ export default class HeaderBar extends Vue {
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.07);
-  border: 1px solid #e8eaec;
+  border-bottom: 1px solid #e8eaec;
   .side-menu-trigger-container {
     float: left;
     line-height: 46px;
@@ -129,11 +133,23 @@ export default class HeaderBar extends Vue {
       margin: 0 8px;
       height: 100%;
       font-size: 18px;
-      color: #5a5e66;
       vertical-align: text-bottom;
       &:hover {
         cursor: pointer;
         transition: background 0.3s;
+      }
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+.header-bar {
+  .right-menu {
+    .svg-container {
+      .el-button {
+        padding: 0;
+        border: none;
       }
     }
   }

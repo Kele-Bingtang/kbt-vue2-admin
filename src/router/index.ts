@@ -5,7 +5,7 @@ import { getToken } from "@/utils/cookies";
 import { loadRoutes } from "./utils";
 import { UserModule } from "@/store/modules/user";
 import { PermissionModule } from "@/store/modules/permission";
-import { setTitle } from "@/utils";
+import { setTitle } from "@/utils/layout";
 import settings from "@/config/settings";
 
 Vue.use(VueRouter);

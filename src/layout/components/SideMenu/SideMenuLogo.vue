@@ -33,14 +33,6 @@ export default class SideMenuLogo extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.sideMenuLogoFade-enter-active {
-  transition: opacity 1.5s;
-}
-
-.sideMenuLogoFade-enter,
-.sideMenuLogoFade-leave-to {
-  opacity: 0;
-}
 
 .side-menu-logo-container {
   position: relative;

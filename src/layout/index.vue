@@ -15,6 +15,7 @@
         <!-- 头部 -->
         <el-header class="header-container">
           <header-bar>
+            <GlobalSettings />
             <full-screen />
             <error-log :errorCount="errorCount" />
             <size-select :size="size" @handleSetSize="handleSetSize" />
@@ -38,15 +39,16 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { HeaderBar, SideMenu, TagsNav, MainContent } from "./components";
-import { isMobile, setTitle } from "@/utils/index";
+import { isMobile, setTitle } from "@/utils/layout";
 import { LayoutModule } from "@/store/modules/layout";
 import { SettingsModule } from "@/store/modules/settings";
 import SideMenuLogo from "./components/SideMenu/SideMenuLogo.vue";
-import FullScreen from "./components/HeaderBar/FullScreen.vue";
-import SizeSelect from "./components/HeaderBar/SizeSelect.vue";
-import LangSelect from "./components/HeaderBar/LangSelect.vue";
-import User from "./components/HeaderBar/User.vue";
-import ErrorLog from "./components/HeaderBar/ErrorLog.vue";
+import FullScreen from "./components/HeaderBar/components/FullScreen.vue";
+import SizeSelect from "./components/HeaderBar/components/SizeSelect.vue";
+import LangSelect from "./components/HeaderBar/components/LangSelect.vue";
+import User from "./components/HeaderBar/components/User.vue";
+import ErrorLog from "./components/HeaderBar/components/ErrorLog.vue";
+import GlobalSettings from "./components/HeaderBar/components/GlobalSettings.vue";
 
 @Component({
   components: {
@@ -60,6 +62,7 @@ import ErrorLog from "./components/HeaderBar/ErrorLog.vue";
     LangSelect,
     User,
     ErrorLog,
+    GlobalSettings,
   },
 })
 export default class Layout extends Vue {
@@ -111,8 +114,11 @@ export default class Layout extends Vue {
     LayoutModule.setLanguage(lang);
     document.documentElement.lang = lang;
     setTitle(this.$route, this);
+    let message = this.$t("_message.changeLanguage");
+    message =
+      message === "_message.changeLanguage" ? "修改语言成功！" : message;
     this.$message({
-      message: "修改语言成功",
+      message: message as string,
       type: "success",
     });
   }

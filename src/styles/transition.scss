@@ -47,3 +47,12 @@
 .breadcrumb-leave-active {
   position: absolute;
 }
+// sideMenuLogoFade
+.sideMenuLogoFade-enter-active {
+  transition: opacity 1.5s;
+}
+
+.sideMenuLogoFade-enter,
+.sideMenuLogoFade-leave-to {
+  opacity: 0.4;
+}

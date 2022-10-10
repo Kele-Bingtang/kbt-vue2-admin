@@ -10,7 +10,7 @@
     <template v-if="!menuItem.children || menuItem.children.length == 0">
       <side-menu-item-link :to="menuItem">
         <el-menu-item
-          :index="(menuItem.meta && menuItem.meta.$fullPath) || menuItem.name"
+          :index="(menuItem.meta && menuItem.meta._fullPath) || menuItem.name"
           :class="{ 'only-one-item': isFirstMenu }"
         >
           <template v-if="menuItem.meta && menuItem.meta.icon">
@@ -31,7 +31,7 @@
     <!-- 存在二级菜单 -->
     <el-submenu
       v-else
-      :index="(menuItem.meta && menuItem.meta.$fullPath) || menuItem.name"
+      :index="(menuItem.meta && menuItem.meta._fullPath) || menuItem.name"
       popper-append-to-body
     >
       <template slot="title">
@@ -64,7 +64,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { RouteConfig } from "vue-router";
 import SideMenuItemLink from "./SideMenuItemLink.vue";
-import { getTitle } from "@/utils";
+import { getTitle } from "@/utils/layout";
 
 @Component({
   components: {

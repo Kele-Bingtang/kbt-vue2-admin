@@ -1,12 +1,14 @@
 export default {
-  $route: {
+  _route: {
     home: "Home",
     login: "Login",
     errorLoggerPage: "Error Logger",
   },
-  $navbar: {
+  _navbar: {
     profile: "Profile",
     logOut: "Log Out",
-    size: "Global Size",
   },
+  _message: {
+    changeLanguage: "Successfully modified the language！",
+  }
 };

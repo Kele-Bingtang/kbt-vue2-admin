@@ -31,7 +31,7 @@ import variables from "@/styles/variables.module.scss";
 
 export type MenuRoute = RouteConfig & {
   meta: {
-    $fullPath: string; // 完整的路由（针对二级路由以上）
+    _fullPath: string; // 完整的路由（针对二级路由以上）
   };
 };
 

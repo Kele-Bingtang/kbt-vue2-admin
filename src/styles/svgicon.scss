@@ -8,6 +8,15 @@
     stroke: currentColor;
     vertical-align: -0.15em;
 }
+// headerBar 右侧图标
+.right-menu{
+    .svg-icon {
+        color: #5a5e67;
+        &:hover {
+            color: #1890ff;
+        }
+    }
+}
 
 .svg-fill {
     fill: currentColor;
