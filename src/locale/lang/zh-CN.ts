@@ -18,5 +18,12 @@ export default {
   },
   _message: {
     changeLanguage: "修改语言成功！",
+  },
+  _settings: {
+    title: '系统布局配置',
+    theme: '主题色',
+    showTagsNav: '显示 TagsNav',
+    showSideMenuLogo: '显示侧边菜单 Logo',
+    sideMenuTheme: '切换侧边菜单主题色'
   }
 };

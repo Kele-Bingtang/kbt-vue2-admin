@@ -1,5 +1,5 @@
 <template>
-  <div class="layout" :class="classObj()">
+  <div class="layout" :class="classObj()" :style="{'--current-color': theme}">
     <el-container class="layout-container">
       <!-- 侧边菜单栏 -->
       <el-aside
@@ -66,15 +66,20 @@ import GlobalSettings from "./components/HeaderBar/components/GlobalSettings.vue
   },
 })
 export default class Layout extends Vue {
+  get isCollapse() {
+    return LayoutModule.sideMenu.isCollapse;
+  }
+
+  get theme() {
+    return SettingsModule.theme;
+  }
+
   get showSettings() {
     return SettingsModule.showSettings;
   }
   // 是否显示 TagsNav
   get showTagsNav() {
     return SettingsModule.showTagsNav;
-  }
-  get isCollapse() {
-    return LayoutModule.sideMenu.isCollapse;
   }
   // 是否显示 logo
   get showLogo() {
@@ -151,10 +156,8 @@ export default class Layout extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixins.scss";
 @import "~@/styles/variables.module.scss";
 .layout {
-  @include clearfix;
   position: relative;
   height: 100%;
   width: 100%;

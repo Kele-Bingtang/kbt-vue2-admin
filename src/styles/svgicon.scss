@@ -13,7 +13,7 @@
     .svg-icon {
         color: #5a5e67;
         &:hover {
-            color: #1890ff;
+            color: var(--current-color);
         }
     }
 }

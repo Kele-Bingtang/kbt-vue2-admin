@@ -1,35 +1,115 @@
 <template>
   <div class="global-settings">
     <div class="svg-container">
-      <el-button size="small" plain @click="openSettingsDialog">
+      <el-button size="small" plain @click.prevent="openSettingsDrawer">
         <svg-icon name="setting" width="22" height="22"></svg-icon>
       </el-button>
     </div>
 
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-      <span>这是一段信息</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确 定</el-button
-        >
-      </span>
-    </el-dialog>
+    <el-drawer
+      :title="$t('_settings.title')"
+      :visible.sync="drawerVisible"
+      direction="rtl"
+      size="18%"
+      append-to-body
+      custom-class="drawer-container"
+    >
+      <div class="drawer-item">
+        <span>{{ $t("_settings.theme") }}</span>
+        <theme-picker
+          style="float: right; height: 26px; margin: -3px 8px 0 0"
+          @change="themeChange"
+        />
+      </div>
+
+      <div class="drawer-item">
+        <span>{{ $t("_settings.showTagsNav") }}</span>
+        <el-switch v-model="showTagsNav" class="drawer-switch" />
+      </div>
+
+      <div class="drawer-item">
+        <span>{{ $t("_settings.showSideMenuLogo") }}</span>
+        <el-switch v-model="showSideMenuLogo" class="drawer-switch" />
+      </div>
+
+      <div class="drawer-item">
+        <span>{{ $t("_settings.sideMenuTheme") }}</span>
+        <el-switch v-model="sideMenuTheme" class="drawer-switch" />
+      </div>
+    </el-drawer>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import settings from "@/config/settings";
+import ThemePicker from "@/components/ThemePicker/ThemePicker.vue";
+import { SettingsModule } from "@/store/modules/settings";
 
-@Component({})
+@Component({
+  components: {
+    ThemePicker,
+  },
+})
 export default class GloabalSettings extends Vue {
-  public dialogVisible = false;
+  public drawerVisible = false;
 
-  public openSettingsDialog() {
-    this.dialogVisible = true;
+  public openSettingsDrawer() {
+    this.drawerVisible = true;
+  }
+
+  get showTagsNav() {
+    return SettingsModule.showTagsNav;
+  }
+
+  set showTagsNav(value) {
+    SettingsModule.changeSetting({ key: "showTagsNav", value });
+  }
+
+  get showSideMenuLogo() {
+    return SettingsModule.showSideMenuLogo;
+  }
+
+  set showSideMenuLogo(value) {
+    SettingsModule.changeSetting({ key: "showSideMenuLogo", value });
+  }
+
+  get sideMenuTheme() {
+    return SettingsModule.sideMenuTheme == "dark";
+  }
+
+  set sideMenuTheme(value: boolean) {
+    let sideMenuTheme = value ? "dark" : "light";
+    SettingsModule.changeSetting({
+      key: "sideMenuTheme",
+      value: sideMenuTheme,
+    });
+  }
+
+  public themeChange(value: string) {
+    document
+      .getElementsByTagName("body")[0]
+      .style.setProperty("--test", "#fff");
+    SettingsModule.changeSetting({ key: "theme", value });
   }
 }
 </script>
 
 <style lang="scss" scoped></style>
+<style lang="scss">
+.drawer-container {
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  .drawer-item {
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    padding: 12px 0;
+  }
+  .drawer-switch {
+    float: right;
+  }
+  .el-drawer__body {
+    padding: 20px;
+  }
+}
+</style>

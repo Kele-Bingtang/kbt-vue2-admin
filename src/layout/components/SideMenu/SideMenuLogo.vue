@@ -1,5 +1,12 @@
 <template>
-  <div class="side-menu-logo-container" :class="{ 'logo-collapse': isCollapse }">
+  <div
+    class="side-menu-logo-container"
+    :class="{ 'logo-collapse': isCollapse }"
+    :style="{
+      backgroundColor:
+      sideMenuTheme === 'dark' ? variables.menuLogoDark : variables.menuLogoLight,
+    }"
+  >
     <transition name="sideMenuLogoFade">
       <router-link
         v-if="isCollapse"
@@ -22,6 +29,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import settings from "@/config/settings";
+import variables from "@/styles/variables.module.scss";
+import { SettingsModule } from "@/store/modules/settings";
 
 @Component({})
 export default class SideMenuLogo extends Vue {
@@ -29,18 +38,24 @@ export default class SideMenuLogo extends Vue {
   public isCollapse!: boolean;
 
   public title = settings.title;
+
+  get variables() {
+    return variables;
+  }
+
+  get sideMenuTheme() {
+    return SettingsModule.sideMenuTheme;
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-
 .side-menu-logo-container {
   position: relative;
   display: flex;
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: #001529; // #2b2f3a #97979ea9 #001529
   text-align: center;
   white-space: nowrap;
 

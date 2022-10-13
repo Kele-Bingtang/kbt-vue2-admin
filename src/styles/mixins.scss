@@ -1,9 +1,0 @@
-/* Mixins */
-// 清除浮动
-@mixin clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-}

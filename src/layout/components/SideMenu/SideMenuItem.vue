@@ -86,7 +86,6 @@ export default class SideMenuItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/variables.module.scss";
 .side-menu-item {
   &.expand-menu {
     .svg-icon {
@@ -111,10 +110,10 @@ export default class SideMenuItem extends Vue {
   .el-menu-item:not(.is-active),
   .el-submenu > .el-submenu__title {
     .svg-icon {
-      color: $svgIcon;
+      color: var(--svg-icon);
     }
     .icon {
-      color: $elIcon;
+      color: var(--el-icon);
     }
   }
 }
@@ -122,12 +121,11 @@ export default class SideMenuItem extends Vue {
 
 <style lang="scss">
 @import "~@/styles/variables.module.scss";
-
 .side-menu-item {
   // 一级菜单悬停样式
   .el-menu-item:hover,
   .el-submenu .el-submenu__title:hover {
-    background-color: $menuHover !important;
+    background-color: var(--menu-hover) !important;
   }
   // 展开的菜单
   &.expand-menu {
@@ -135,15 +133,14 @@ export default class SideMenuItem extends Vue {
     .nest-menu .el-submenu > .el-submenu__title,
     .el-submenu .el-menu-item {
       min-width: $sideMenuWidth !important;
-      background-color: $subMenuBg !important;
-
+      background-color: var(--sub-menu-bg) !important;
       &:hover {
-        background-color: $subMenuHover !important;
+        background-color: var(--sub-menu-hover) !important;
       }
     }
-    // 多级菜单激活的文字颜色
+    // 多级菜单激活的文字颜色，（不再使用）现在悬停的颜色已经跟全局 theme 保持一致，如果想自定义，取消这个注释
     .el-submenu.is-active > .el-menu .nest-menu .el-menu-item.is-active {
-      color: $subMenuActiveText !important;
+      // color: $subMenuActiveText !important;
     }
   }
 
@@ -193,11 +190,12 @@ export default class SideMenuItem extends Vue {
       .el-submenu > .el-submenu__title,
       .el-menu-item {
         &:hover {
-          background-color: $subMenuHover !important;
+          background-color: var(--sub-menu-hover) !important;
         }
       }
+      // 多级菜单文字激活的样式，（不再使用）现在悬停的颜色已经跟全局 theme 保持一致，如果想自定义，取消这个注释
       .el-menu-item.is-active {
-        color: $subMenuActiveText !important;
+        // color: var(--sub-menu-active-text) !important;
       }
     }
   }

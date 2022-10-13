@@ -5,10 +5,11 @@
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
-        :background-color="variables.menuBg"
-        :text-color="variables.menuText"
-        :active-text-color="variables.menuActiveText"
+        :background-color="sideMenuTheme === 'dark' ? variables.menuDarkBg : variables.menuLightBg"
+        :text-color="sideMenuTheme === 'dark' ? variables.menuDarkText: variables.menuLightText"
+        :active-text-color="theme"
         :collapse-transition="false"
+        :style="sideMenuThemeStyle()"
       >
         <side-menu-item
           v-for="menu in menuList"
@@ -28,6 +29,7 @@ import { LayoutModule } from "@/store/modules/layout";
 import { PermissionModule } from "@/store/modules/permission";
 import { RouteConfig } from "vue-router";
 import variables from "@/styles/variables.module.scss";
+import { SettingsModule } from "@/store/modules/settings";
 
 export type MenuRoute = RouteConfig & {
   meta: {
@@ -53,9 +55,28 @@ export default class SideMenu extends Vue {
   get activeMenu() {
     return this.$route.path || this.$route.name;
   }
+
+  get theme() {
+    return SettingsModule.theme;
+  }
+
+  get sideMenuTheme() {
+    return SettingsModule.sideMenuTheme;
+  }
+
   // 获取全局样式
   get variables() {
     return variables;
+  }
+
+  public sideMenuThemeStyle() {
+    return {
+      "--menu-hover": this.sideMenuTheme === "dark" ? variables.menuDarkHover : variables.menuLightHover,
+      "--sub-menu-bg": this.sideMenuTheme === "dark" ? variables.subMenuDarkBg : variables.subMenuLightBg,
+      "--sub-menu-hover": this.sideMenuTheme === "dark" ? variables.subMenuDarkHover : variables.subMenuLightHover,
+      "--el-icon": this.sideMenuTheme === "dark" ? variables.elIconDark : variables.elIconLight,
+      "--svg-icon": this.sideMenuTheme === "dark" ? variables.svgIconDark :variables.svgIconLight,
+    }
   }
 
   // 通过路由表获取菜单列表
@@ -78,7 +99,9 @@ export default class SideMenu extends Vue {
             r.children = this.getMenuListByRouter(r.children);
           }
         }
-        menusList.push(r as MenuRoute);
+        if(r) {
+          menusList.push(r as MenuRoute);
+        }
       }
     });
     return menusList;
@@ -87,7 +110,6 @@ export default class SideMenu extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/variables.module.scss";
 .side-menu {
   height: 100%;
   overflow: hidden;

@@ -12,40 +12,55 @@ $panGreen: #30B08F;
 
 // SideMenu
 // menu 开头代表是一级菜单的样式，sub 开头代表是二级菜单的样式，除了 menuText，menuText 是整个菜单的文字样式，即包含了 sub 的文字样式。
-// 白色主题
-// $sideMenuWidth: 210px;
-// $menuHover:#ecf5ff;
-// $menuBg:#fff;
-// $menuText:#303133;
-// $menuActiveText:#409EFF;
-// $subMenuBg:#fff;
-// $subMenuHover:#ecf5ff;
-// $subMenuActiveText:#409EFF;
-// $elIcon: #909399; 
-// $svgIcon: #909399;
 
-// 黑色主题
 $sideMenuWidth: 210px;
-$menuHover:#263445;
-$menuBg:#304156;
-$menuText:#bfcbd9;
-$menuActiveText:#409EFF;
-$subMenuBg:#1f2d3d;
-$subMenuHover:#001528;
-$subMenuActiveText:#409EFF;
-$elIcon: #bfcbd9;
-$svgIcon: #bfcbd9;
+// 暗色主题，默认
+$menuBg-dark: #304156;
+$menuHover-dark:#263445;
+$menuText-dark:#bfcbd9;
+$menuActiveText-dark:#409EFF;
+$menuLogo-dark:#001529;
+$subMenuBg-dark:#1f2d3d;
+$subMenuHover-dark:#001528;
+$subMenuActiveText-dark:#409EFF;
+$elIcon-dark: #bfcbd9;
+$svgIcon-dark: #bfcbd9;
 
-// Login page
-$lightGray: #eee;
-$darkGray:#889aa4;
-$loginBg: #2d3a4b;
-$loginCursorColor: #fff;
+// 白色主题
+$menuBg-light:#fff;
+$menuHover-light:#ecf5ff;
+$menuText-light:#303133;
+$menuActiveText-light:#409EFF;
+$menuLogo-light:#97979ea9;
+$subMenuBg-light:#fff;
+$subMenuHover-light:#ecf5ff;
+$subMenuActiveText-light:#409EFF;
+$elIcon-light: #909399; 
+$svgIcon-light: #909399;
 
 // The :export directive is the magic sauce for webpack
 // https://mattferderer.com/use-sass-variables-in-typescript-and-javascript
 :export {
-  menuBg: $menuBg;
-  menuText: $menuText;
-  menuActiveText: $menuActiveText;
+  // 默认，暗色主题
+  menuDarkBg: $menuBg-dark;
+  menuDarkHover: $menuHover-dark;
+  menuDarkText: $menuText-dark;
+  menuDarkActiveText: $menuActiveText-dark;
+  menuLogoDark: $menuLogo-dark;
+  subMenuDarkBg: $subMenuBg-dark;
+  subMenuDarkHover: $subMenuHover-dark;
+  subMenuDarkActiveText: $subMenuActiveText-dark;
+  elIconDark: $elIcon-dark;
+  svgIconDark: $svgIcon-dark;
+  // 白色主题
+  menuLightBg: $menuBg-light;
+  menuLightHover: $menuHover-light;
+  menuLightText: $menuText-light;
+  menuLightActiveText: $menuActiveText-light;
+  menuLogoLight: $menuLogo-light;
+  subMenuLightBg: $subMenuBg-light;
+  subMenuLightHover: $subMenuHover-light;
+  subMenuLightActiveText: $subMenuActiveText-light;
+  elIconLight: $elIcon-light;
+  svgIconLight: $svgIcon-light;
 }

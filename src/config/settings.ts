@@ -12,8 +12,8 @@ interface Settings {
     env: string[]; // 日志收集的环境，默认是 production 生成环境
   };
   /**
-   * 白名单额三种模式：["*"]、["next"]、["to.path, ..."]
-   * * 代表加载所有路由；next 代表直接放行，但不加载权限路由；to.path 表示指定的路由可以放心，可以填多个
+   * 白名单额三种模式：["*"]、["next"]、[to.path, ...]
+   * * 代表加载所有路由；next 代表直接放行，但不加载权限路由；to.path 表示指定的路由可以放行，可以填多个
    * 优先级：* > next > to.path
    */
   whiteList: string[];

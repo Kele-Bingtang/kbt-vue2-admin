@@ -237,7 +237,7 @@ class Layout extends VuexModule implements LayoutState {
   @Mutation
   private DELETE_OTHERS_VISITED_TAGS(tag: Tag) {
     this.tagsNav.tagNavList = this.tagsNav.tagNavList.filter((v) => {
-      return (v.meta && v.meta.affix) || v.path === tag.path;
+      return (v.meta && v.meta.fixedInNav) || v.path === tag.path;
     });
   }
 
@@ -257,11 +257,11 @@ class Layout extends VuexModule implements LayoutState {
 
   @Mutation
   private DELETE_ALL_VISITED_TAGS() {
-    // 除了 affix 的 tag，其他删掉
-    const affixTags = this.tagsNav.tagNavList.filter(
-      (tag) => tag.meta && tag.meta.affix
+    // 除了 fixedInNav 的 tag，其他删掉
+    const fixedTags = this.tagsNav.tagNavList.filter(
+      (tag) => tag.meta && tag.meta.fixedInNav
     );
-    this.tagsNav.tagNavList = affixTags;
+    this.tagsNav.tagNavList = fixedTags;
   }
 
   @Mutation
