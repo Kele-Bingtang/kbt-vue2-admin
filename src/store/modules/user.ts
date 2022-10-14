@@ -6,7 +6,7 @@ import {
   getModule,
 } from "vuex-module-decorators";
 import store from "@/store";
-import { removeToken, setToken } from "@/utils/cookies";
+import { removeCacheToken, setCacheToken } from "@/utils/cache";
 import { resetRouter } from "@/router";
 import { LayoutModule } from "./layout";
 
@@ -35,7 +35,7 @@ class User extends VuexModule implements UserState {
   @Action
   public login() {
     let token = "1";
-    setToken(token);
+    setCacheToken(token);
     this.SET_TOKEN(token);
   }
 
@@ -45,7 +45,7 @@ class User extends VuexModule implements UserState {
       throw Error("LogOut: token is undefined!");
     }
     // await logout()
-    removeToken();
+    removeCacheToken();
     resetRouter();
 
     // 删除 Tags
@@ -69,7 +69,7 @@ class User extends VuexModule implements UserState {
 
   @Action
   public ResetToken() {
-    removeToken();
+    removeCacheToken();
     this.SET_TOKEN("");
     this.SET_ROLES([]);
   }

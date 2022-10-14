@@ -7,8 +7,21 @@ import {
 } from "vuex-module-decorators";
 import store from "@/store";
 import defaultSettings from "@/config/settings";
+import {
+  getCacheSettings,
+  removeCacheSettings,
+  setCacheSettings,
+} from "@/utils/cache";
 
-const { showSettings, showTagsNav, showSideMenuLogo } = defaultSettings;
+const { showSettings, showTagsNav, showSideMenuLogo, theme, sideMenuTheme } =
+  defaultSettings;
+
+const {
+  cacheTheme,
+  cacheSideMenuTheme,
+  cacheShowTagsNav,
+  cacheShowSideMenuLogo,
+} = getCacheSettings();
 
 export interface SettingsState {
   theme: string;
@@ -25,15 +38,25 @@ interface PayLoad {
 
 @Module({ dynamic: true, store, name: "settings", namespaced: true })
 class Settings extends VuexModule implements SettingsState {
-  public theme = "#1890ff";
-  public sideMenuTheme = "light";
+  public theme = cacheTheme || theme;
+  public sideMenuTheme =
+    cacheSideMenuTheme === undefined ? sideMenuTheme : cacheSideMenuTheme;
   public showSettings = showSettings;
-  public showTagsNav = showTagsNav;
-  public showSideMenuLogo = showSideMenuLogo;
+  public showTagsNav =
+    cacheShowTagsNav === undefined ? showTagsNav : cacheShowTagsNav;
+  public showSideMenuLogo =
+    cacheShowSideMenuLogo === undefined
+      ? showSideMenuLogo
+      : cacheShowSideMenuLogo;
 
   @Action
   public changeSetting(payload: PayLoad) {
     this.CHANGE_SETTING(payload);
+  }
+
+  @Action
+  public resetSettings() {
+    removeCacheSettings();
   }
 
   @Mutation
@@ -42,6 +65,14 @@ class Settings extends VuexModule implements SettingsState {
     if (Object.prototype.hasOwnProperty.call(this, key)) {
       (this as any)[key] = value;
     }
+    let settings: SettingsState = {
+      theme: this.theme,
+      sideMenuTheme: this.sideMenuTheme,
+      showTagsNav: this.showTagsNav,
+      showSideMenuLogo: this.showSideMenuLogo,
+      showSettings: this.showSettings,
+    };
+    setCacheSettings(settings);
   }
 }
 

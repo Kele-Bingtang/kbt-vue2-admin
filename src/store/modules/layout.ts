@@ -7,7 +7,7 @@ import {
 } from "vuex-module-decorators";
 import store from "@/store";
 import { Route } from "vue-router";
-import { getSize, setSize, setLanguage } from "@/utils/cookies";
+import { getCacheSize, setCacheSize, setCacheLanguage } from "@/utils/cache";
 import { getLocale } from "@/locale";
 import { UserModule } from "./user";
 
@@ -62,7 +62,7 @@ class Layout extends VuexModule implements LayoutState {
     cachedTagList: [],
   };
 
-  public size: string = getSize() || "medium";
+  public size: string = getCacheSize() || "medium";
 
   public language = getLocale() || "zh-CN";
 
@@ -156,7 +156,7 @@ class Layout extends VuexModule implements LayoutState {
   @Mutation
   private SET_SIZE(size: string) {
     this.size = size;
-    setSize(this.size);
+    setCacheSize(this.size);
   }
 
   @Mutation
@@ -199,7 +199,7 @@ class Layout extends VuexModule implements LayoutState {
   @Mutation
   private SET_LANGUAGE(language: string) {
     this.language = language;
-    setLanguage(this.language);
+    setCacheLanguage(this.language);
   }
 
   @Mutation

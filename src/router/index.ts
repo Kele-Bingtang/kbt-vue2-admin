@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter, { Route } from "vue-router";
 import { constantRoutes, rolesRoutes } from "./routes-config";
-import { getToken } from "@/utils/cookies";
+import { getCacheToken } from "@/utils/cache";
 import { loadRoutes } from "./utils";
 import { UserModule } from "@/store/modules/user";
 import { PermissionModule } from "@/store/modules/permission";
@@ -27,7 +27,7 @@ export function resetRouter() {
 const { whiteList } = settings;
 
 router.beforeEach(async (to: Route, from: Route, next: any) => {
-  let token = UserModule.token || getToken();
+  let token = UserModule.token || getCacheToken();
   if (token) {
     if (to.path === "/login") {
       next({ path: "/" });

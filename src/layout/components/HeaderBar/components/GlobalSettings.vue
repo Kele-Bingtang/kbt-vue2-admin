@@ -36,6 +36,16 @@
         <span>{{ $t("_settings.sideMenuTheme") }}</span>
         <el-switch v-model="sideMenuTheme" class="drawer-switch" />
       </div>
+
+      <el-divider />
+
+      <el-button
+        size="small"
+        plain
+        icon="el-icon-refresh"
+        @click="resetSettings"
+        >重置配置</el-button
+      >
     </el-drawer>
   </div>
 </template>
@@ -86,10 +96,18 @@ export default class GloabalSettings extends Vue {
   }
 
   public themeChange(value: string) {
-    document
-      .getElementsByTagName("body")[0]
-      .style.setProperty("--test", "#fff");
     SettingsModule.changeSetting({ key: "theme", value });
+  }
+
+  resetSettings() {
+    this.$message({
+      message: "正在清除设置缓存并刷新，请稍候...",
+      type: "success",
+      duration: 1000,
+      iconClass: "el-icon-loading",
+    });
+    SettingsModule.resetSettings();
+    setTimeout("window.location.reload()", 1000);
   }
 }
 </script>

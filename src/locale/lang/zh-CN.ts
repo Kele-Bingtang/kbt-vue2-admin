@@ -12,18 +12,17 @@ export default {
     params: "动态路由",
     query: "带参路由",
   },
-  _navbar: {
+  _headerBar: {
+    changeLanguage: "修改语言成功！",
+    changeSize: "修改全局 Size 成功！",
     profile: "我的主页",
     logOut: "退出登录",
   },
-  _message: {
-    changeLanguage: "修改语言成功！",
-  },
   _settings: {
-    title: '系统布局配置',
-    theme: '主题色',
-    showTagsNav: '显示 TagsNav',
-    showSideMenuLogo: '显示侧边菜单 Logo',
-    sideMenuTheme: '切换侧边菜单主题色'
-  }
+    title: "系统布局配置",
+    theme: "主题色",
+    showTagsNav: "显示 TagsNav",
+    showSideMenuLogo: "显示侧边菜单 Logo",
+    sideMenuTheme: "切换侧边菜单主题色",
+  },
 };

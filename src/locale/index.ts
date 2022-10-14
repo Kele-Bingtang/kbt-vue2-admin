@@ -9,7 +9,7 @@ import customEnUs from "./lang/en-US";
 import zhCnLocale from "element-ui/lib/locale/lang/zh-CN"; // 中文
 import zhTwLocale from "element-ui/lib/locale/lang/zh-TW"; // 台湾
 import enLocale from "element-ui/lib/locale/lang/en"; // 英文
-import { getLanguage } from "@/utils/cookies";
+import { getCacheLanguage } from "@/utils/cache";
 
 Vue.use(VueI18n);
 
@@ -29,7 +29,7 @@ const messages = {
 };
 
 export const getLocale = () => {
-  const cookieLanguage = getLanguage();
+  const cookieLanguage = getCacheLanguage();
   if (cookieLanguage) {
     document.documentElement.lang = cookieLanguage;
     return cookieLanguage;

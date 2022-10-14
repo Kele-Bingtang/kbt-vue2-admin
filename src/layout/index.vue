@@ -1,5 +1,5 @@
 <template>
-  <div class="layout" :class="classObj()" :style="{'--current-color': theme}">
+  <div class="layout" :class="classObj()" :style="{ '--current-color': theme }">
     <el-container class="layout-container">
       <!-- 侧边菜单栏 -->
       <el-aside
@@ -15,7 +15,7 @@
         <!-- 头部 -->
         <el-header class="header-container">
           <header-bar>
-            <GlobalSettings />
+            <global-settings />
             <full-screen />
             <error-log :errorCount="errorCount" />
             <size-select :size="size" @handleSetSize="handleSetSize" />
@@ -33,6 +33,11 @@
         </el-main>
       </el-container>
     </el-container>
+    <!-- 如果曾选过主题色，则使用该组件来更新主题色，但是该组件不需要显示在页面 -->
+    <theme-picker
+      v-if="theme.toLowerCase() !== settings.theme.toLowerCase()"
+      v-show="false"
+    />
   </div>
 </template>
 
@@ -49,6 +54,8 @@ import LangSelect from "./components/HeaderBar/components/LangSelect.vue";
 import User from "./components/HeaderBar/components/User.vue";
 import ErrorLog from "./components/HeaderBar/components/ErrorLog.vue";
 import GlobalSettings from "./components/HeaderBar/components/GlobalSettings.vue";
+import ThemePicker from "@/components/ThemePicker/ThemePicker.vue";
+import settings from "@/config/settings";
 
 @Component({
   components: {
@@ -63,11 +70,16 @@ import GlobalSettings from "./components/HeaderBar/components/GlobalSettings.vue
     User,
     ErrorLog,
     GlobalSettings,
+    ThemePicker,
   },
 })
 export default class Layout extends Vue {
   get isCollapse() {
     return LayoutModule.sideMenu.isCollapse;
+  }
+
+  get settings() {
+    return settings;
   }
 
   get theme() {
@@ -85,6 +97,7 @@ export default class Layout extends Vue {
   get showLogo() {
     return SettingsModule.showSideMenuLogo;
   }
+
   get isMobile() {
     return isMobile() == null;
   }
@@ -119,9 +132,9 @@ export default class Layout extends Vue {
     LayoutModule.setLanguage(lang);
     document.documentElement.lang = lang;
     setTitle(this.$route, this);
-    let message = this.$t("_message.changeLanguage");
+    let message = this.$t("_headerBar.changeLanguage");
     message =
-      message === "_message.changeLanguage" ? "修改语言成功！" : message;
+      message === "_headerBar.changeLanguage" ? "修改语言成功！" : message;
     this.$message({
       message: message as string,
       type: "success",
@@ -132,8 +145,10 @@ export default class Layout extends Vue {
     (this as any).$ELEMENT.size = size;
     LayoutModule.setSize(size);
     this.refreshPage();
+    let message = this.$t("_headerBar.changeSize");
+    message = message === "_headerBar.changeSize" ? "修改尺寸成功！" : message;
     this.$message({
-      message: "修改尺寸成功",
+      message: message as string,
       type: "success",
     });
   }

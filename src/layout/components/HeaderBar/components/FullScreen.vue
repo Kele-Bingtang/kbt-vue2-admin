@@ -1,17 +1,11 @@
 <template>
   <div v-if="showFullScreenBtn" class="full-screen">
-    <el-tooltip
-      effect="dark"
-      :content="isFullscreen ? '退出全屏' : '全屏'"
-      placement="bottom"
-    >
-      <svg-icon
-        :name="isFullscreen ? 'exit-fullscreen' : 'fullscreen'"
-        @click="handleChange"
-        width="18px"
-        height="22px"
-      />
-    </el-tooltip>
+    <svg-icon
+      :name="isFullscreen ? 'exit-fullscreen' : 'fullscreen'"
+      @click="handleChange"
+      width="18px"
+      height="22px"
+    />
   </div>
 </template>
 

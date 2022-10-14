@@ -90,6 +90,7 @@ export default class SideMenuItem extends Vue {
   &.expand-menu {
     .svg-icon {
       margin-right: 16px;
+      vertical-align: middle;
     }
     .icon {
       font-size: 18px;
@@ -100,6 +101,7 @@ export default class SideMenuItem extends Vue {
   &.collapse-menu {
     .svg-icon {
       margin-left: 20px;
+      vertical-align: middle;
     }
     .icon {
       font-size: 18px;

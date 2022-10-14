@@ -33,13 +33,13 @@ export default class User extends Vue {
   }
 
   get profileLabel() {
-    let profile = this.$t("_navbar.profile");
-    return profile === "_navbar.profile" ? "我的主页" : profile;
+    let profile = this.$t("_headerBar.profile");
+    return profile === "_headerBar.profile" ? "我的主页" : profile;
   }
 
   get logOutLabel() {
-    let logOut = this.$t("_navbar.logOut");
-    return logOut === "_navbar.logOut" ? "退出登录" : logOut;
+    let logOut = this.$t("_headerBar.logOut");
+    return logOut === "_headerBar.logOut" ? "退出登录" : logOut;
   }
 
   public async logout() {

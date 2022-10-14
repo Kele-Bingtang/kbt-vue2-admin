@@ -88,7 +88,7 @@ export default class TabBar extends Vue {
 
   // 监听右键菜单
   @Watch("rightMenuVisible")
-  public visibleWatch(isVisible: boolean) {
+  public onVisibleChange(isVisible: boolean) {
     if (isVisible) {
       document.body.addEventListener("click", this.closeRightMenu);
     } else {
@@ -97,7 +97,7 @@ export default class TabBar extends Vue {
   }
 
   @Watch("$route")
-  public routeWatch() {
+  public onRouteChange() {
     this.addTags();
     // 如果 tag 很多，且 target tag 在边缘，则整体往 target tag 移动
     this.moveToCurrentTag();
