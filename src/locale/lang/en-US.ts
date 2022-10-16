@@ -3,6 +3,7 @@ export default {
     Home: "Home",
     Login: "Login",
     ErrorLooger: "Error Logger",
+    Profile: "My Profile",
   },
   _tagsNav: {
     refresh: "Refresh Page",

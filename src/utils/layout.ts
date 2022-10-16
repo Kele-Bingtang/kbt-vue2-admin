@@ -89,8 +89,8 @@ export const getTitle = (route: Route | RouteConfig | RouteRecord | Tag, vm: any
     title = route.meta!.title;
     __titleIsFunction__ = route.meta!.__titleIsFunction__;
   }
-  // name 如果有 $noUseI18n-，代表不使用多语言 I18n
-  let noUseI18n = route.name && route.name.startsWith("$noUseI18n-");
+  // name 如果有 $_noUseI18n_，代表不使用多语言 I18n
+  let noUseI18n = route.name && route.name.startsWith("_noUseI18n_");
   if (useI18n && !noUseI18n) {
     if (title.includes("{{") && title.includes("}}") && useI18n) {
       title = title.replace(/({{[\s\S]+?}})/, (m: any, str: string) =>
@@ -102,7 +102,7 @@ export const getTitle = (route: Route | RouteConfig | RouteRecord | Tag, vm: any
       title = title === `_route.${route.name}` ? route.name : title;
     }
   } else {
-    if (!(route.meta && route.meta.title) && title.startsWith("$noUseI18n-")) {
+    if (!(route.meta && route.meta.title) && title.startsWith("_noUseI18n_")) {
       title = title.slice("_noUseI18n_".length);
     }
   }

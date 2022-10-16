@@ -4,7 +4,7 @@
       <el-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbs" :key="breadcrumb.path">
         <span
           v-if="(breadcrumb.meta && breadcrumb.meta.notClickBread) || index === breadcrumbs.length - 1"
-          class="hidden-bread"
+          class="hide-bread"
         >
           <template v-if="breadcrumb.meta && breadcrumb.meta.icon">
             <!-- 使用 Element UI 自带的图标 -->
@@ -88,7 +88,7 @@ export default class Breadcrumb extends Vue {
       font-size: 12px;
       margin-right: 9px;
     }
-    .hidden-bread {
+    .hide-bread {
       color: #97a8be;
       cursor: text;
     }

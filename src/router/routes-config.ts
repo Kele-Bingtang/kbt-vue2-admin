@@ -55,6 +55,20 @@ export const constantRoutes: Array<RouteConfigAndMeta> = [
     ],
   },
   {
+    path: "/profile",
+    redirect: "/profile/index",
+    component: Layout,
+    meta: { hideInMenu: true },
+    children: [
+      {
+        path: "index",
+        name: "Profile",
+        component: () => import("@/views/profile/Profile.vue"),
+        meta: { title: "我的主页", fixedInNav: true },
+      },
+    ],
+  },
+  {
     path: "/error-logger-page",
     redirect: "/index",
     component: Layout,
@@ -133,7 +147,7 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
     children: [
       {
         path: "home",
-        name: "$noUseI18n-redirectToHome1",
+        name: "_noUseI18n_redirectToHome",
         component: () => import("@/views/HomeView.vue"),
         meta: { title: "重定向到Home", icon: "documentation" },
       },

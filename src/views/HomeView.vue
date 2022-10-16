@@ -1,6 +1,6 @@
 <template>
   <div style="height: 80%; display: flex; flex-direction: column; justify-content: center; align-items: center">
-    <el-button type="primary" size="medium" @click="handleClick">{{ timeStr }}</el-button>
+    <el-button v-if="timeStr" type="primary" size="medium" @click="handleClick">{{ timeStr }}</el-button>
     <div style="font-size: 45px; height: 500px; line-height: 500px">{{ timeStr }}</div>
   </div>
 </template>

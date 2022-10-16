@@ -7,7 +7,11 @@ import { LayoutModule } from "./layout";
 export interface UserInfo {
   userId: string; // 用户 ID
   userName: string; // 用户名
-  roles?: string[]; // 用户角色
+  sex: string; // 用户行吧
+  email?: string; // 用户邮箱
+  phone?: string; // 用户联系方式
+  roles: string[]; // 用户角色
+  registerTime?: string; // 用户角色
 }
 
 export interface UserState {
@@ -20,9 +24,13 @@ export interface UserState {
 class User extends VuexModule implements UserState {
   public token: string = "";
   public userInfo: UserInfo = {
-    userId: "v1000",
+    userId: "v10001",
     userName: "Visitor",
-    roles: [],
+    sex: "男",
+    email: "2456019588@qq.com",
+    phone: "13377492843",
+    roles: ["Visitor"],
+    registerTime: "2022-10-01 19:07:27",
   };
   public roles: string[] = [];
 
@@ -50,9 +58,11 @@ class User extends VuexModule implements UserState {
 
   @Action
   public async getUserInfo() {
+    console.log("asd");
     let userInfo: UserInfo = {
       userId: "k100338",
       userName: "Kobe Liu",
+      sex: "男",
       roles: ["admin"],
     };
     let roles: string[] = userInfo.roles || ["admin"];

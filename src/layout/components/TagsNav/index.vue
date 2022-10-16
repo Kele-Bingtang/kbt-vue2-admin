@@ -53,7 +53,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { RouteConfig } from "vue-router";
 
 @Component({})
-export default class TabBar extends Vue {
+export default class TagsNav extends Vue {
   // 右键菜单显示
   public rightMenuVisible = false;
   // tagsNav 滚动
@@ -127,7 +127,7 @@ export default class TabBar extends Vue {
       if (route.meta && route.meta.fixedInNav) {
         const tagPath = route.meta._fullPath;
         tags.push({
-          path: tagPath,
+          path: tagPath, // tag 的 path 其实就是路由完整的 path，懒得改成 fullPath 了
           name: route.name,
           meta: { ...route.meta },
         });
@@ -143,7 +143,17 @@ export default class TabBar extends Vue {
   }
   // 初始化固定在 TagsNav 的 tags
   public initTags() {
-    this.fixedTags = this.filterfixedTags(PermissionModule.loadRoutes);
+    let fixedTags = this.filterfixedTags(PermissionModule.loadRoutes);
+    let f: Array<Tag> = [];
+    // 如果首页固定在 TagsNav，确保是第一个显示
+    fixedTags.forEach(fixedTag => {
+      if (fixedTag.path === PermissionModule.homeRoute.meta!._fullPath) {
+        f.unshift(fixedTag);
+      } else {
+        f.push(fixedTag);
+      }
+    });
+    this.fixedTags = f;
     for (const tag of this.fixedTags) {
       if (tag.name) {
         LayoutModule.addTag(tag);

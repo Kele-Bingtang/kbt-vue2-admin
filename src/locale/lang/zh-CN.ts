@@ -3,6 +3,7 @@ export default {
     Home: "首页",
     Login: "登录",
     ErrorLooger: "错误日志",
+    Profile: "我的主页",
     test1: "测试1",
     test2: "测试2",
     test3: "测试3",
