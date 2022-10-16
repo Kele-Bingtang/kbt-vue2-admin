@@ -1,15 +1,18 @@
-import {
-  VuexModule,
-  Module,
-  Mutation,
-  Action,
-  getModule,
-} from "vuex-module-decorators";
+import { VuexModule, Module, Mutation, Action, getModule } from "vuex-module-decorators";
 import store from "@/store";
 import { Route } from "vue-router";
-import { getCacheSize, setCacheSize, setCacheLanguage } from "@/utils/cache";
+import {
+  getCacheSize,
+  setCacheSize,
+  setCacheLanguage,
+  setCacheSideMenuStatus,
+  getCacheSideMenuStatus,
+  setCacheTagNavList,
+  getCacheTagNavList,
+} from "@/utils/cache";
 import { getLocale } from "@/locale";
 import { UserModule } from "./user";
+import { SettingsModule } from "./settings";
 
 export interface Tag extends Partial<Route> {
   path: string;
@@ -31,20 +34,26 @@ export interface tagsNav {
   cachedTagList: string[]; // 缓存的路由组件
 }
 
+export enum DeviceType {
+  Mobile = "mobile", // 移动端
+  Desktop = "desktop", // 桌面端
+}
+
 export interface ErrorLog {
-  err: Error;
-  vm: any;
-  info: string;
-  url: string;
-  hasRead: boolean;
-  userId?: string;
-  userName?: string;
-  token?: string;
-  roles?: string[];
-  time?: number;
+  err: Error; // 错误对象
+  vm: any; // 发生错误的 Vue 实例
+  info: string; // Vue 组件的错误信息
+  url: string; // 发生错误的 URL
+  hasRead: boolean; // 错误日志是否已读
+  time?: number; // 发生错误的时间
+  userId?: string; // 用户 ID
+  userName?: string; // 用户名
+  token?: string; // 用户 token
+  roles?: string[]; // 用户的角色
 }
 
 export interface LayoutState {
+  device: DeviceType; // 设备类型
   sideMenu: SideMenu; // 侧边菜单
   tagsNav: tagsNav; // 标签页
   size: string; // 布局大小
@@ -55,23 +64,30 @@ export interface LayoutState {
 @Module({ dynamic: true, store, name: "layout", namespaced: true })
 class Layout extends VuexModule implements LayoutState {
   public sideMenu: SideMenu = {
-    isCollapse: false,
+    isCollapse: getCacheSideMenuStatus() === "collapse",
   };
   public tagsNav: tagsNav = {
-    tagNavList: [],
+    tagNavList: getCacheTagNavList() || [],
     cachedTagList: [],
   };
-
+  public device = DeviceType.Desktop;
   public size: string = getCacheSize() || "medium";
-
   public language = getLocale() || "zh-CN";
-
   public errorLogs: Array<ErrorLog> = [];
 
-  // 折叠或者隐藏菜单栏
   @Action
-  public toggleSiderBar() {
+  public closeSideMenu() {
+    this.CLOSE_SIDE_MENU();
+  }
+
+  @Action
+  public toggleSiderMenu() {
     this.TOGGLE_SIDEMENU();
+  }
+
+  @Action
+  public toggleDevice(device: DeviceType) {
+    this.TOGGLE_DEVICE(device);
   }
 
   @Action
@@ -108,17 +124,14 @@ class Layout extends VuexModule implements LayoutState {
   public addTag(tag: Tag) {
     this.ADD_VISITED_TAG(tag);
     this.ADD_CACHED_TAG(tag);
-  }
-
-  @Action
-  public addVisitedTag(tag: Tag) {
-    this.ADD_VISITED_TAG(tag);
+    this.CACHE_TAG_NAV_LIST();
   }
 
   @Action
   public deleteTag(tag: Tag) {
     this.DELETE_VISITED_TAG(tag);
     this.DELETE_CACHED_TAG(tag);
+    this.CACHE_TAG_NAV_LIST();
   }
 
   @Action
@@ -130,12 +143,14 @@ class Layout extends VuexModule implements LayoutState {
   public deleteOthersTags(tag: Tag) {
     this.DELETE_OTHERS_VISITED_TAGS(tag);
     this.DELETE_OTHERS_CACHED_TAGS(tag);
+    this.CACHE_TAG_NAV_LIST();
   }
 
   @Action
   public deleteAllTags() {
     this.DELETE_ALL_VISITED_TAGS();
     this.DELETE_ALL_CACHED_TAGS();
+    this.CACHE_TAG_NAV_LIST();
   }
 
   @Action
@@ -146,11 +161,27 @@ class Layout extends VuexModule implements LayoutState {
   @Action
   public updateVisitedTag(tag: Tag) {
     this.UPDATE_VISITED_TAG(tag);
+    this.CACHE_TAG_NAV_LIST();
+  }
+
+  @Mutation
+  public CLOSE_SIDE_MENU() {
+    this.sideMenu.isCollapse = true;
   }
 
   @Mutation
   private TOGGLE_SIDEMENU() {
     this.sideMenu.isCollapse = !this.sideMenu.isCollapse;
+    if (this.sideMenu.isCollapse) {
+      setCacheSideMenuStatus("collapse");
+    } else {
+      setCacheSideMenuStatus("expand");
+    }
+  }
+
+  @Mutation
+  private TOGGLE_DEVICE(device: DeviceType) {
+    this.device = device;
   }
 
   @Mutation
@@ -190,10 +221,10 @@ class Layout extends VuexModule implements LayoutState {
 
   @Mutation
   private SET_HAS_READ_ERROR_LOGS_STATUS(status: boolean) {
-    this.errorLogs = this.errorLogs.map((errorLog) => {
+    this.errorLogs = this.errorLogs.map(errorLog => {
       errorLog.hasRead = status;
       return errorLog;
-    })
+    });
   }
 
   @Mutation
@@ -204,7 +235,7 @@ class Layout extends VuexModule implements LayoutState {
 
   @Mutation
   private ADD_VISITED_TAG(tag: Tag) {
-    if (this.tagsNav.tagNavList.some((v) => v.path === tag.path)) return;
+    if (this.tagsNav.tagNavList.some(v => v.path === tag.path)) return;
     this.tagsNav.tagNavList.push(tag);
   }
 
@@ -236,7 +267,7 @@ class Layout extends VuexModule implements LayoutState {
 
   @Mutation
   private DELETE_OTHERS_VISITED_TAGS(tag: Tag) {
-    this.tagsNav.tagNavList = this.tagsNav.tagNavList.filter((v) => {
+    this.tagsNav.tagNavList = this.tagsNav.tagNavList.filter(v => {
       return (v.meta && v.meta.fixedInNav) || v.path === tag.path;
     });
   }
@@ -246,10 +277,7 @@ class Layout extends VuexModule implements LayoutState {
     if (!tag.name) return;
     const index = this.tagsNav.cachedTagList.indexOf(tag.name);
     if (index > -1) {
-      this.tagsNav.cachedTagList = this.tagsNav.cachedTagList.slice(
-        index,
-        index + 1
-      );
+      this.tagsNav.cachedTagList = this.tagsNav.cachedTagList.slice(index, index + 1);
     } else {
       this.tagsNav.cachedTagList = [];
     }
@@ -258,9 +286,7 @@ class Layout extends VuexModule implements LayoutState {
   @Mutation
   private DELETE_ALL_VISITED_TAGS() {
     // 除了 fixedInNav 的 tag，其他删掉
-    const fixedTags = this.tagsNav.tagNavList.filter(
-      (tag) => tag.meta && tag.meta.fixedInNav
-    );
+    const fixedTags = this.tagsNav.tagNavList.filter(tag => tag.meta && tag.meta.fixedInNav);
     this.tagsNav.tagNavList = fixedTags;
   }
 
@@ -276,6 +302,21 @@ class Layout extends VuexModule implements LayoutState {
         v = Object.assign(v, tag);
         break;
       }
+    }
+  }
+
+  // 缓存 TagsNav 的所有 tag
+  @Mutation
+  private CACHE_TAG_NAV_LIST() {
+    if (SettingsModule.recordTagsNav) {
+      let tagNavList: Array<Tag> = [];
+      this.tagsNav.tagNavList.forEach(item => {
+        tagNavList.push({
+          ...item,
+          matched: [], // 需要置为空，否则 matched 存在对其他路由的依赖，导致 JSON 转换失败
+        });
+      });
+      setCacheTagNavList(tagNavList);
     }
   }
 }

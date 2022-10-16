@@ -2,25 +2,25 @@
   <div style="height: calc(100% - 38px)">
     <transition name="fade-transform" mode="out-in">
       <!-- 内容由路由跳转实现 -->
-      <!-- <keep-alive> -->
-      <router-view />
-      <!-- </keep-alive> -->
+      <keep-alive :include="cachedTagList">
+        <router-view :key="key" />
+      </keep-alive>
     </transition>
   </div>
 </template>
 
 <script lang="ts">
+import { LayoutModule } from "@/store/modules/layout";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({})
 export default class MainContent extends Vue {
-  // get cacheList() {
-  //   const list = ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
-  //   return list
-  // }
-
+  // 获取缓存的组件名
+  get cachedTagList() {
+    return LayoutModule.tagsNav.cachedTagList;
+  }
   get key() {
-    return this.$route.name || this.$route.path;
+    return this.$route.path || this.$route.name;
   }
 }
 </script>

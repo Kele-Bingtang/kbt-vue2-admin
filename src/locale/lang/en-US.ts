@@ -15,6 +15,5 @@ export default {
     theme: "Theme",
     showTagsNav: "Show TagsNav",
     showSideMenuLogo: "Show the side menu logo",
-    sideMenuTheme: "Toggle the side menu theme color",
   },
 };

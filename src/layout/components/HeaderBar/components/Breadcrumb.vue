@@ -1,24 +1,14 @@
 <template>
   <el-breadcrumb class="breadcrumb" separator="/">
     <transition-group name="breadcrumb" key="a">
-      <el-breadcrumb-item
-        v-for="(breadcrumb, index) in breadcrumbs"
-        :key="breadcrumb.path"
-      >
+      <el-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbs" :key="breadcrumb.path">
         <span
-          v-if="
-            (breadcrumb.meta && breadcrumb.meta.notClickBread) ||
-            index === breadcrumbs.length - 1
-          "
+          v-if="(breadcrumb.meta && breadcrumb.meta.notClickBread) || index === breadcrumbs.length - 1"
           class="hidden-bread"
         >
           <template v-if="breadcrumb.meta && breadcrumb.meta.icon">
             <!-- 使用 Element UI 自带的图标 -->
-            <i
-              v-if="breadcrumb.meta.icon.startsWith('el-')"
-              class="icon"
-              :class="breadcrumb.meta.icon"
-            ></i>
+            <i v-if="breadcrumb.meta.icon.startsWith('el-')" class="icon" :class="breadcrumb.meta.icon"></i>
             <!-- 使用本地的 svg 图标 -->
             <svg-icon v-else :name="breadcrumb.meta.icon" />
           </template>
@@ -27,16 +17,12 @@
         <a v-else @click.prevent="handleLink(breadcrumb)">
           <template v-if="breadcrumb.meta && breadcrumb.meta.icon">
             <!-- 使用 Element UI 自带的图标 -->
-            <i
-              v-if="breadcrumb.meta.icon.startsWith('el-')"
-              class="icon"
-              :class="breadcrumb.meta.icon"
-            ></i>
+            <i v-if="breadcrumb.meta.icon.startsWith('el-')" class="icon" :class="breadcrumb.meta.icon"></i>
             <!-- 使用本地的 svg 图标 -->
             <svg-icon v-else :name="breadcrumb.meta.icon" />
           </template>
-          <span>{{ getTitle(breadcrumb) }}</span></a
-        >
+          <span>{{ getTitle(breadcrumb) }}</span>
+        </a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -52,23 +38,23 @@ import { Breadcrumbs } from "../index.vue";
 export default class Breadcrumb extends Vue {
   @Prop({ required: true })
   public breadcrumbs!: Breadcrumbs[];
-
+  // 获取展示的 title
   public getTitle(breadcrumbItem: Breadcrumbs) {
     return getTitle(breadcrumbItem, this);
   }
-
+  // 点击面包屑跳转
   public handleLink(item: Breadcrumbs) {
     const { redirect, fullPath } = item;
     // 如果是 redirect
     if (this.$route.fullPath !== redirect) {
       if (redirect) {
-        this.$router.push(redirect as string).catch((err) => {
+        this.$router.push(redirect as string).catch(err => {
           console.warn(err);
         });
         return;
       }
       // 这里的面包屑地址以 fullPath 跳转（fullPath 已经保存在面包屑里），你也可以和通过 name 跳转
-      this.$router.push(this.pathCompile(fullPath)).catch((err) => {
+      this.$router.push(this.pathCompile(fullPath)).catch(err => {
         console.warn(err);
       });
     }

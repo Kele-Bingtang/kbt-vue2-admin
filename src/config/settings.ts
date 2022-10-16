@@ -4,6 +4,7 @@ interface Settings {
   showTagsNav: boolean; // 是否使用 tagsNav
   showSideMenuLogo: boolean; // Controls siderbar logo display
   useI18n: boolean; // 是否使用国际化，默认为false，如果不使用，则需要在路由中给需要在菜单中展示的路由设置 meta: {title: 'xxx'} 用来在菜单中显示文字
+  recordTagsNav: boolean; // 是否记录打开过（没关闭）的 tags，下次打开会加载在 tagsNav
   sideMenuTextTheme: boolean; // 如果是 true，则菜单的激活色跟随系统颜色
   theme: string; // 主题色
   sideMenuTheme: "dark" | "light"; // 侧边菜单栏的主题色，暗色和亮色，默认为暗色
@@ -25,8 +26,9 @@ const settings: Settings = {
   showTagsNav: true,
   showSideMenuLogo: true,
   useI18n: true,
+  recordTagsNav: true,
   sideMenuTextTheme: true,
-  theme: "#1890FF", // 偏暗：#1890FF，官方：#409EFF
+  theme: "#1890FF", // 蓝色偏暗：#1890FF，官方：#409EFF
   sideMenuTheme: "dark",
   errorLog: {
     showInHeader: true,

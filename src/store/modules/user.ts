@@ -1,19 +1,13 @@
-import {
-  VuexModule,
-  Module,
-  Mutation,
-  Action,
-  getModule,
-} from "vuex-module-decorators";
+import { VuexModule, Module, Mutation, Action, getModule } from "vuex-module-decorators";
 import store from "@/store";
 import { removeCacheToken, setCacheToken } from "@/utils/cache";
 import { resetRouter } from "@/router";
 import { LayoutModule } from "./layout";
 
 export interface UserInfo {
-  userId: string;
-  userName: string;
-  roles?: string[];
+  userId: string; // 用户 ID
+  userName: string; // 用户名
+  roles?: string[]; // 用户角色
 }
 
 export interface UserState {

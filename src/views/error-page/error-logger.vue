@@ -6,33 +6,25 @@
       type="info"
       :closable="false"
       style="margin-bottom: 10px"
-    >
-    </el-alert>
+    ></el-alert>
     <el-button type="primary" @click="addErrorLog">添加一条错误日志</el-button>
-    <el-popconfirm
-      placement="right"
-      title="您确定删除全部日志吗？"
-      @confirm="clearAll"
-    >
+    <el-popconfirm placement="right" title="您确定删除全部日志吗？" @confirm="clearAll">
       <el-button
         type="danger"
         slot="reference"
         :disabled="errorLogs.length === 0"
         style="margin-left: 10px; margin-bottom: 15px"
-        >删除全部</el-button
       >
+        删除全部
+      </el-button>
     </el-popconfirm>
     <el-table :data="errorLogs" border>
-      <el-table-column type="index" label="序号" width="50"> </el-table-column>
-      <el-table-column prop="err.name" label="名字" width="220px">
-      </el-table-column>
-      <el-table-column prop="err.message" label="信息" width="280px">
-      </el-table-column>
-      <el-table-column prop="url" label="URL" width="380px"> </el-table-column>
+      <el-table-column type="index" label="序号" width="50"></el-table-column>
+      <el-table-column prop="err.name" label="名字" width="220px"></el-table-column>
+      <el-table-column prop="err.message" label="信息" width="280px"></el-table-column>
+      <el-table-column prop="url" label="URL" width="380px"></el-table-column>
       <el-table-column prop="info" label="位置">
-        <template slot-scope="{ row }">
-          {{ row.vm.$vnode.tag }} error in {{ row.info }}
-        </template>
+        <template slot-scope="{ row }">{{ row.vm.$vnode.tag }} error in {{ row.info }}</template>
       </el-table-column>
       <el-table-column prop="time" label="时间" width="180px">
         <template slot-scope="{ row }">
@@ -42,24 +34,14 @@
       <el-table-column label="操作" width="190px">
         <template slot-scope="{ row }">
           <el-button type="primary" @click="handleClick(row)">查看</el-button>
-          <el-popconfirm
-            title="您确定删除这个错误日志吗？"
-            @confirm="handleDelete(row)"
-          >
-            <el-button type="danger" slot="reference" style="margin-left: 10px"
-              >删除</el-button
-            >
+          <el-popconfirm title="您确定删除这个错误日志吗？" @confirm="handleDelete(row)">
+            <el-button type="danger" slot="reference" style="margin-left: 10px">删除</el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
 
-    <el-dialog
-      :visible.sync="dialogErrorStackVisible"
-      title="错误信息"
-      width="50%"
-      append-to-body
-    >
+    <el-dialog :visible.sync="dialogErrorInfoVisible" title="错误信息" width="50%" append-to-body>
       <el-table :data="[clickCurrentRow]" border>
         <el-table-column label="name" width="160px">
           <template slot-scope="{ row }">
@@ -92,10 +74,10 @@ import { ErrorLog, LayoutModule } from "@/store/modules/layout";
 
 @Component({})
 export default class ErrorLooger extends Vue {
-  row!: ErrorLog;
+  public row!: ErrorLog;
 
-  public dialogErrorStackVisible = false;
-
+  public dialogErrorInfoVisible = false;
+  // 当前行的错误信息
   public clickCurrentRow: ErrorLog = {
     err: new Error(),
     vm: undefined,
@@ -103,11 +85,11 @@ export default class ErrorLooger extends Vue {
     url: "",
     hasRead: true,
   };
-
+  // 捕获到的所有错误信息
   get errorLogs() {
     return LayoutModule.errorLogs;
   }
-
+  // 所有错误信息已读
   mounted() {
     LayoutModule.setHasReadErrorLogsStatus(true);
   }
@@ -122,19 +104,15 @@ export default class ErrorLooger extends Vue {
     }
     let date = new Date(timestamp);
     let Y = date.getFullYear();
-    let M =
-      date.getMonth() + 1 < 10
-        ? "0" + (date.getMonth() + 1)
-        : date.getMonth() + 1;
+    let M = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
     let D = date.getDate();
     let h = date.getHours();
     let m = date.getMinutes();
-    let s =
-      date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+    let s = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 
     return Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s;
   }
-
+  // 模拟添加一条错误信息
   public addErrorLog() {
     let letters = [
       "a",
@@ -168,14 +146,14 @@ export default class ErrorLooger extends Vue {
     let errorMessage = letter + " is not undefined";
     (this as any).$throw(new Error(errorMessage), this, "v-on handler");
   }
-
+  // 完全清除错误日志
   public clearAll() {
     LayoutModule.clearErrorLog();
   }
 
   public handleClick(row: ErrorLog) {
     this.clickCurrentRow = row;
-    this.dialogErrorStackVisible = true;
+    this.dialogErrorInfoVisible = true;
   }
 
   public handleDelete(row: ErrorLog) {

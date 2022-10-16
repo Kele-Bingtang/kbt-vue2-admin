@@ -6,17 +6,12 @@
         :default-active="activeMenu"
         :collapse="isCollapse"
         :background-color="sideMenuTheme === 'dark' ? variables.menuDarkBg : variables.menuLightBg"
-        :text-color="sideMenuTheme === 'dark' ? variables.menuDarkText: variables.menuLightText"
+        :text-color="sideMenuTheme === 'dark' ? variables.menuDarkText : variables.menuLightText"
         :active-text-color="theme"
         :collapse-transition="false"
         :style="sideMenuThemeStyle()"
       >
-        <side-menu-item
-          v-for="menu in menuList"
-          :key="menu.name"
-          :menu-item="menu"
-          :is-collapse="isCollapse"
-        />
+        <side-menu-item v-for="menu in menuList" :key="menu.name" :menu-item="menu" :is-collapse="isCollapse" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -43,46 +38,45 @@ export type MenuRoute = RouteConfig & {
   },
 })
 export default class SideMenu extends Vue {
+  // 当前菜单是否折叠
   get isCollapse() {
     return LayoutModule.sideMenu.isCollapse;
   }
-
+  // 获取菜单列表
   get menuList() {
     return this.getMenuListByRouter(PermissionModule.loadRoutes);
   }
-
   // 对应菜单 Item 的 index，这样才能高亮
   get activeMenu() {
     return this.$route.path || this.$route.name;
   }
-
+  // 获取主题色
   get theme() {
     return SettingsModule.theme;
   }
-
+  // 获取菜单主题色
   get sideMenuTheme() {
     return SettingsModule.sideMenuTheme;
   }
-
   // 获取全局样式
   get variables() {
     return variables;
   }
-
+  // 菜单主题色，便于切换
   public sideMenuThemeStyle() {
     return {
       "--menu-hover": this.sideMenuTheme === "dark" ? variables.menuDarkHover : variables.menuLightHover,
       "--sub-menu-bg": this.sideMenuTheme === "dark" ? variables.subMenuDarkBg : variables.subMenuLightBg,
       "--sub-menu-hover": this.sideMenuTheme === "dark" ? variables.subMenuDarkHover : variables.subMenuLightHover,
       "--el-icon": this.sideMenuTheme === "dark" ? variables.elIconDark : variables.elIconLight,
-      "--svg-icon": this.sideMenuTheme === "dark" ? variables.svgIconDark :variables.svgIconLight,
-    }
+      "--svg-icon": this.sideMenuTheme === "dark" ? variables.svgIconDark : variables.svgIconLight,
+    };
   }
 
   // 通过路由表获取菜单列表
   public getMenuListByRouter(allRolesRoutes: Array<RouteConfig>) {
     let menusList: Array<MenuRoute> = [];
-    allRolesRoutes.forEach((route) => {
+    allRolesRoutes.forEach(route => {
       let r = { ...route };
       // 如果配置了 hideInMenu: true，则隐藏菜单，如果配置了 alwaysShowRoot: false | undefined 且子路由只有一个，则子路由成为一级菜单
       if (!r.meta || (r.meta && !r.meta.hideInMenu)) {
@@ -99,7 +93,7 @@ export default class SideMenu extends Vue {
             r.children = this.getMenuListByRouter(r.children);
           }
         }
-        if(r) {
+        if (r) {
           menusList.push(r as MenuRoute);
         }
       }
@@ -132,8 +126,7 @@ export default class SideMenu extends Vue {
 .side-menu {
   // reset element-ui css
   .horizontal-collapse-transition {
-    transition: 0s width ease-in-out, 0s padding-left ease-in-out,
-      0s padding-right ease-in-out;
+    transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
   }
 
   .side-menu-scrollbar {

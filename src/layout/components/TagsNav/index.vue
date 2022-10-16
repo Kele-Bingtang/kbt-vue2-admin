@@ -20,11 +20,7 @@
         >
           <span class="dot" />
           <span>{{ getTitle(tag) }}</span>
-          <span
-            v-if="!isFixedInNav(tag)"
-            class="el-icon-close"
-            @click.prevent.stop="handleCloseTag(tag)"
-          />
+          <span v-if="!isFixedInNav(tag)" class="el-icon-close" @click.prevent.stop="handleCloseTag(tag)" />
         </router-link>
       </div>
     </div>
@@ -38,18 +34,9 @@
         <i class="el-icon-arrow-right" />
       </el-button>
     </div>
-    <ul
-      v-show="rightMenuVisible"
-      :style="{ left: rightMenuLeft + 'px', top: rightMenuTop + 'px' }"
-      class="contextmenu"
-    >
+    <ul v-show="rightMenuVisible" :style="{ left: rightMenuLeft + 'px', top: rightMenuTop + 'px' }" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)">刷新</li>
-      <li
-        v-if="!isFixedInNav(selectedTag)"
-        @click="handleCloseTag(selectedTag)"
-      >
-        关闭
-      </li>
+      <li v-if="!isFixedInNav(selectedTag)" @click="handleCloseTag(selectedTag)">关闭</li>
       <li @click="closeOthersTabs">关闭其他</li>
       <li @click="closeAllTabs(selectedTag)">关闭所有</li>
     </ul>
@@ -98,9 +85,10 @@ export default class TabBar extends Vue {
 
   @Watch("$route")
   public onRouteChange() {
+    // 刷新页面，添加曾打开过的 tags
     this.addTags();
-    // 如果 tag 很多，且 target tag 在边缘，则整体往 target tag 移动
-    this.moveToCurrentTag();
+    // 如果 tag 很多，且目标 tag 在边缘，则整体往目标 tag 移动
+    this.findTargetTag();
   }
 
   mounted() {
@@ -135,7 +123,7 @@ export default class TabBar extends Vue {
   // 过滤出固定在 TagsNav 的 tag
   public filterfixedTags(routes: Array<RouteConfig>) {
     let tags: Array<Tag> = [];
-    routes.forEach((route) => {
+    routes.forEach(route => {
       if (route.meta && route.meta.fixedInNav) {
         const tagPath = route.meta._fullPath;
         tags.push({
@@ -153,7 +141,7 @@ export default class TabBar extends Vue {
     });
     return tags;
   }
-  // 刷新页面，将访问的 Tag 进行添加
+  // 初始化固定在 TagsNav 的 tags
   public initTags() {
     this.fixedTags = this.filterfixedTags(PermissionModule.loadRoutes);
     for (const tag of this.fixedTags) {
@@ -162,7 +150,7 @@ export default class TabBar extends Vue {
       }
     }
   }
-  // 添加 tab，针对携带 tag 的 url 访问
+  // 添加 tab，针对 url 访问或页面刷新
   public addTags(tag?: Tag) {
     if (tag) {
       LayoutModule.addTag(tag);
@@ -178,7 +166,8 @@ export default class TabBar extends Vue {
       }
     }
   }
-  public moveToCurrentTag() {
+  // 找出访问的目标 tag
+  public findTargetTag() {
     this.$nextTick(() => {
       let refsTag = this.$refs.tag as any[];
       if (refsTag) {
@@ -194,6 +183,7 @@ export default class TabBar extends Vue {
       }
     });
   }
+  // 移动到目标 tag，如果目标 tag 在 TagsNav 可视区域外面，则有滚动的动画效果
   public moveToTargetTag(tagElement: HTMLElement) {
     const outerWidth = (this.$refs.scrollContainer as HTMLElement).offsetWidth;
     const bodyWidth = (this.$refs.scrollBody as HTMLElement).offsetWidth;
@@ -205,35 +195,19 @@ export default class TabBar extends Vue {
       this.tagBodyLeft = -tagElement.offsetLeft + outerPadding;
     } else if (
       tagElement.offsetLeft > -this.tagBodyLeft &&
-      tagElement.offsetLeft + tagElement.offsetWidth <
-        -this.tagBodyLeft + outerWidth
+      tagElement.offsetLeft + tagElement.offsetWidth < -this.tagBodyLeft + outerWidth
     ) {
       // 标签在可视区域
-      this.tagBodyLeft = Math.min(
-        0,
-        outerWidth -
-          tagElement.offsetWidth -
-          tagElement.offsetLeft -
-          outerPadding
-      );
+      this.tagBodyLeft = Math.min(0, outerWidth - tagElement.offsetWidth - tagElement.offsetLeft - outerPadding);
     } else {
       // 标签在可视区域右侧
-      this.tagBodyLeft = -(
-        tagElement.offsetLeft -
-        (outerWidth - outerPadding - tagElement.offsetWidth)
-      );
+      this.tagBodyLeft = -(tagElement.offsetLeft - (outerWidth - outerPadding - tagElement.offsetWidth));
     }
   }
   // 关闭一个 tab，并激活到上一个 tag
   public async handleCloseTag(tag: Tag) {
-    if (
-      tag.meta &&
-      tag.meta.beforeCloseName &&
-      tag.meta.beforeCloseName in beforeClose
-    ) {
-      let isClose = await new Promise(
-        (beforeClose as any)[tag.meta.beforeCloseName]
-      );
+    if (tag.meta && tag.meta.beforeCloseName && tag.meta.beforeCloseName in beforeClose) {
+      let isClose = await new Promise((beforeClose as any)[tag.meta.beforeCloseName]);
       if (isClose) {
         this.closeSelectedTag(tag);
       }
@@ -241,6 +215,7 @@ export default class TabBar extends Vue {
       this.closeSelectedTag(tag);
     }
   }
+  // 关闭选择的 tag
   public closeSelectedTag(tag: Tag) {
     LayoutModule.deleteTag(tag);
     // 如果关闭激活的 tag
@@ -257,20 +232,17 @@ export default class TabBar extends Vue {
     // 获取最后一个 tag 数据
     const latestVisitedTag: Tag = tagNavList.slice(-1)[0];
     if (latestVisitedTag) {
-      this.$router.push(latestVisitedTag.path).catch((err) => {
+      this.$router.push(latestVisitedTag.path).catch(err => {
         console.warn(err);
       });
     } else if (this.fixedTags.length === 0 || toHome) {
       // 如果 fixedTags 为空或者 tagNavList 为空，则默认跳转到首页
-      if (
-        this.fixedTags.length === 0 ||
-        tag.name !== PermissionModule.homeRoute.name
-      ) {
+      if (this.fixedTags.length === 0 || tag.name !== PermissionModule.homeRoute.name) {
         this.$router
           .replace({
             path: "/redirect" + PermissionModule.homeRoute.meta!._fullPath,
           })
-          .catch((err) => {
+          .catch(err => {
             console.warn(err);
           });
       }
@@ -305,7 +277,7 @@ export default class TabBar extends Vue {
         .replace({
           path: "/redirect" + tag.path,
         })
-        .catch((err) => {
+        .catch(err => {
           console.warn(err);
         });
     });
@@ -314,7 +286,7 @@ export default class TabBar extends Vue {
   public closeOthersTabs() {
     LayoutModule.deleteOthersTags(this.selectedTag);
     if (this.$route.path !== this.selectedTag.path) {
-      this.$router.push(this.selectedTag.path).catch((err) => {
+      this.$router.push(this.selectedTag.path).catch(err => {
         console.warn(err);
       });
     }
@@ -322,7 +294,7 @@ export default class TabBar extends Vue {
   // 关闭除 fixedTags 的所有其他 tag
   public closeAllTabs(tag: Tag) {
     LayoutModule.deleteAllTags();
-    if (this.fixedTags.some((tag) => tag.path === this.$route.path)) {
+    if (this.fixedTags.some(tag => tag.path === this.$route.path)) {
       return;
     }
     this.toLastTag(LayoutModule.tagsNav.tagNavList, tag, true);
@@ -331,7 +303,7 @@ export default class TabBar extends Vue {
   public closeRightMenu() {
     this.rightMenuVisible = false;
   }
-
+  // 鼠标中键滚动回调
   public handleScrollOnDom(e: any) {
     var type = e.type;
     let delta = 0;
@@ -340,7 +312,7 @@ export default class TabBar extends Vue {
     }
     this.handleScroll(delta);
   }
-
+  // TagsNav 滚动回调
   public handleScroll(offset: number) {
     const outerWidth = (this.$refs.scrollContainer as HTMLElement).offsetWidth;
     const bodyWidth = (this.$refs.scrollBody as HTMLElement).offsetWidth;
@@ -351,10 +323,7 @@ export default class TabBar extends Vue {
         if (this.tagBodyLeft < -(bodyWidth - outerWidth)) {
           this.tagBodyLeft = this.tagBodyLeft;
         } else {
-          this.tagBodyLeft = Math.max(
-            this.tagBodyLeft + offset,
-            outerWidth - bodyWidth
-          );
+          this.tagBodyLeft = Math.max(this.tagBodyLeft + offset, outerWidth - bodyWidth);
         }
       } else {
         this.tagBodyLeft = 0;

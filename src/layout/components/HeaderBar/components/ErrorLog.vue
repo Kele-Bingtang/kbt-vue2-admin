@@ -15,11 +15,11 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class ErrorLog extends Vue {
   @Prop({ default: 0 })
   public errorCount!: number;
-
+  // 获取错误日志的数量
   get count() {
     return this.errorCount === 0 ? 0 : this.errorCount;
   }
-
+  // 打开错误日志页面
   public openErrorLogger() {
     if (this.$route.name !== "errorLoggerPage") {
       this.$router.push({

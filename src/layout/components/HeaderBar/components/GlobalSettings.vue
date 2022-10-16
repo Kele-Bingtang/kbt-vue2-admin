@@ -6,21 +6,37 @@
       </el-button>
     </div>
 
-    <el-drawer
-      :title="$t('_settings.title')"
-      :visible.sync="drawerVisible"
-      direction="rtl"
-      size="18%"
-      append-to-body
-      custom-class="drawer-container"
-    >
-      <div class="drawer-item">
-        <span>{{ $t("_settings.theme") }}</span>
-        <theme-picker
-          style="float: right; height: 26px; margin: -3px 8px 0 0"
-          @change="themeChange"
-        />
+    <el-drawer :visible.sync="drawerVisible" direction="rtl" size="270px" append-to-body custom-class="drawer-container" :with-header="false">
+      <div class="drawer-theme-container">
+        <h3 class="drawer-item-title">主题风格设置</h3>
+
+        <div class="drawer-theme-checbox">
+          <div class="drawer-theme-checbox-item" @click="handleSideMenuTheme('dark')">
+            <img src="@/icons/svg/side-menu-dark.svg" alt="" style="width: 48px; height: 48px" />
+            <!-- <svg-icon name="side-menu-dark" width="48" height="48" /> -->
+            <div v-if="sideMenuTheme === 'dark'" class="drawer-theme-checbox-select-icon">
+              <svg-icon name="tick" width="16" height="16" :style="{ color: theme }" />
+            </div>
+          </div>
+
+          <div class="drawer-theme-checbox-item" @click="handleSideMenuTheme('light')">
+            <img src="@/icons/svg/side-menu-light.svg" alt="" style="width: 48px; height: 48px" />
+            <!-- <svg-icon name="side-menu-light" width="48" height="48" /> -->
+            <div v-if="sideMenuTheme === 'light'" class="drawer-theme-checbox-select-icon">
+              <svg-icon name="tick" width="16" height="16" :style="{ color: theme }" />
+            </div>
+          </div>
+        </div>
+
+        <div class="drawer-item">
+          <span>{{ $t("_settings.theme") }}</span>
+          <theme-picker style="float: right; height: 26px; margin: -3px 8px 0 0" @change="themeChange" />
+        </div>
       </div>
+
+      <el-divider />
+
+      <h3 class="drawer-item-title">{{ $t("_settings.title") }}</h3>
 
       <div class="drawer-item">
         <span>{{ $t("_settings.showTagsNav") }}</span>
@@ -28,24 +44,18 @@
       </div>
 
       <div class="drawer-item">
+        <span>{{ $t("_settings.recordTagsNav") }}</span>
+        <el-switch v-model="recordTagsNav" class="drawer-switch" />
+      </div>
+
+      <div class="drawer-item">
         <span>{{ $t("_settings.showSideMenuLogo") }}</span>
         <el-switch v-model="showSideMenuLogo" class="drawer-switch" />
       </div>
 
-      <div class="drawer-item">
-        <span>{{ $t("_settings.sideMenuTheme") }}</span>
-        <el-switch v-model="sideMenuTheme" class="drawer-switch" />
-      </div>
-
       <el-divider />
 
-      <el-button
-        size="small"
-        plain
-        icon="el-icon-refresh"
-        @click="resetSettings"
-        >重置配置</el-button
-      >
+      <el-button size="small" plain icon="el-icon-refresh" @click="resetSettings">重置配置</el-button>
     </el-drawer>
   </div>
 </template>
@@ -63,8 +73,8 @@ import { SettingsModule } from "@/store/modules/settings";
 export default class GloabalSettings extends Vue {
   public drawerVisible = false;
 
-  public openSettingsDrawer() {
-    this.drawerVisible = true;
+  get theme() {
+    return SettingsModule.theme;
   }
 
   get showTagsNav() {
@@ -73,6 +83,14 @@ export default class GloabalSettings extends Vue {
 
   set showTagsNav(value) {
     SettingsModule.changeSetting({ key: "showTagsNav", value });
+  }
+
+  get recordTagsNav() {
+    return SettingsModule.recordTagsNav;
+  }
+
+  set recordTagsNav(value) {
+    SettingsModule.changeSetting({ key: "recordTagsNav", value });
   }
 
   get showSideMenuLogo() {
@@ -84,40 +102,80 @@ export default class GloabalSettings extends Vue {
   }
 
   get sideMenuTheme() {
-    return SettingsModule.sideMenuTheme == "dark";
+    return SettingsModule.sideMenuTheme;
   }
 
-  set sideMenuTheme(value: boolean) {
-    let sideMenuTheme = value ? "dark" : "light";
+  public handleSideMenuTheme(value: string) {
+    let sideMenuTheme = value;
     SettingsModule.changeSetting({
       key: "sideMenuTheme",
       value: sideMenuTheme,
     });
   }
 
+  public openSettingsDrawer() {
+    this.drawerVisible = true;
+  }
+  // 选择主题色回调
   public themeChange(value: string) {
     SettingsModule.changeSetting({ key: "theme", value });
   }
-
-  resetSettings() {
+  // 重置配置回调
+  public resetSettings() {
     this.$message({
       message: "正在清除设置缓存并刷新，请稍候...",
-      type: "success",
       duration: 1000,
       iconClass: "el-icon-loading",
     });
     SettingsModule.resetSettings();
-    setTimeout("window.location.reload()", 1000);
+    // setTimeout("window.location.reload()", 1000);
   }
 }
 </script>
 
-<style lang="scss" scoped></style>
 <style lang="scss">
 .drawer-container {
   font-size: 14px;
   line-height: 1.5;
   word-wrap: break-word;
+
+  .drawer-theme-container {
+    .drawer-theme-checbox {
+      height: 48px;
+      line-height: 48px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 20px;
+
+      .drawer-theme-checbox-item {
+        height: 100%;
+        position: relative;
+        margin-right: 16px;
+        border-radius: 2px;
+        cursor: pointer;
+
+        .drawer-theme-checbox-select-icon {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 22px;
+          height: 100%;
+          color: #1890ff;
+          font-weight: 700;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .drawer-item-title {
+    margin-bottom: 12px;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 14px;
+    line-height: 22px;
+  }
   .drawer-item {
     color: rgba(0, 0, 0, 0.65);
     font-size: 14px;
@@ -128,6 +186,12 @@ export default class GloabalSettings extends Vue {
   }
   .el-drawer__body {
     padding: 20px;
+  }
+}
+
+.el-message {
+  .el-icon-loading {
+    margin-right: 10px;
   }
 }
 </style>

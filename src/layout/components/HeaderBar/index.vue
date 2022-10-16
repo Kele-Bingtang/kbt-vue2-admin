@@ -1,11 +1,7 @@
 <template>
   <div class="header-bar">
-    <side-menu-trigger
-      :is-collapse="isCollapse"
-      @toggle-trigger="toggleTrigger"
-      class="side-menu-trigger-container"
-    />
-    <breadcrumb :breadcrumbs="breadcrumbs" class="breadcrumb-container" />
+    <side-menu-trigger :is-collapse="isCollapse" @toggle-trigger="toggleTrigger" class="side-menu-trigger-container" />
+    <breadcrumb :breadcrumbs="breadcrumbs" class="breadcrumb-container" v-if="device !== 'mobile'" />
     <div class="right-menu">
       <slot></slot>
     </div>
@@ -32,10 +28,13 @@ export interface Breadcrumbs extends Route {
 })
 export default class HeaderBar extends Vue {
   public breadcrumbs: Array<Breadcrumbs> = [];
-
-  // 获取是否展开菜单栏的布尔值
+  // 当前菜单是否折叠
   get isCollapse(): boolean {
     return LayoutModule.sideMenu.isCollapse;
+  }
+  // 获取当前设备为移动端还是桌面端
+  get device() {
+    return LayoutModule.device;
   }
 
   @Watch("$route")
@@ -52,7 +51,7 @@ export default class HeaderBar extends Vue {
 
   // 折叠或者展开菜单栏
   public toggleTrigger() {
-    LayoutModule.toggleSiderBar();
+    LayoutModule.toggleSiderMenu();
   }
 
   /**
@@ -61,7 +60,7 @@ export default class HeaderBar extends Vue {
   private getBreadcrumbs(homeRoute: RouteConfig) {
     let matched = this.$route.matched;
     // 如果是首页，直接返回
-    if (homeRoute && matched.some((item) => item.name === homeRoute.name)) {
+    if (homeRoute && matched.some(item => item.name === homeRoute.name)) {
       return [homeRoute as Breadcrumbs];
     }
     matched = homeRoute ? [homeRoute as RouteRecord].concat(matched) : matched;
@@ -71,7 +70,7 @@ export default class HeaderBar extends Vue {
      * 因为 matched 专门存放匹配的路由 path、name、meta，所以这是匹配路由唯一的，而其他就是 route 唯一，两者并不重复且冲突
      * 因为需要 redirect，所以 Breadcrumbs 类型是 route + redirect
      */
-    matched.forEach((item) => {
+    matched.forEach(item => {
       routeMatched.push({
         path: item.path,
         name: item.name,
@@ -85,12 +84,8 @@ export default class HeaderBar extends Vue {
         redirectedFrom: this.$route.redirectedFrom,
       });
     });
-    return routeMatched.filter((item) => {
-      return (
-        (item.name || (item.meta && item.meta.title)) &&
-        item.meta &&
-        !item.meta.hideInBread
-      );
+    return routeMatched.filter(item => {
+      return (item.name || (item.meta && item.meta.title)) && item.meta && !item.meta.hideInBread;
     });
   }
 }

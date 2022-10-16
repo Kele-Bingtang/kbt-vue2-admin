@@ -19,9 +19,10 @@ export default class SideMenuItemLink extends Vue {
   public to!: RouteConfig;
 
   public isExternal = isExternal;
-  // 取出完整的 path，_fullPath 在 ./index.vue 已经计算出来，当然你也可以直接通过 name 跳转
+
+  // 取出完整的 path：_fullPath 在 ./index.vue 已经计算出来，当然你也可以直接通过 name 跳转
   get fullPath(): string {
-    if(this.to.meta && this.to.meta._fullPath) {
+    if (this.to.meta && this.to.meta._fullPath) {
       return this.to.meta._fullPath;
     }
     return this.to.path;

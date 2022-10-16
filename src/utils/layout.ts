@@ -4,14 +4,6 @@ import { Route, RouteConfig, RouteRecord } from "vue-router";
 
 const { title, useI18n } = config;
 
-// 判断是否是移动端还是 PC 端，true 是移动端，反之是 PC 端
-export function isMobile() {
-  let flag = navigator.userAgent.match(
-    /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
-  );
-  return flag;
-}
-
 /**
  * 去重
  * @param arr 多个对象的数组
@@ -19,17 +11,13 @@ export function isMobile() {
  * @param keyIsAndOr and：所有 key 都重复才去重；or：所有 key 中，任意一个 key 重复就去重
  * @returns
  */
-export function removeDuplicateObj<T>(
-  arr: Array<T>,
-  removeKeys: string[],
-  keyIsAndOr: "and" | "or" = "and"
-) {
+export function removeDuplicateObj<T>(arr: Array<T>, removeKeys: string[], keyIsAndOr: "and" | "or" = "and") {
   try {
     return arr.reduce((itemArr: any, next: any) => {
       const isSame = itemArr.find((item: any) => {
         if (keyIsAndOr === "and") {
           let isSame: boolean = true;
-          removeKeys.forEach((key) => {
+          removeKeys.forEach(key => {
             if (item[key] !== next[key]) {
               isSame = false;
             }
@@ -37,7 +25,7 @@ export function removeDuplicateObj<T>(
           return isSame;
         } else {
           let isSame: boolean = false;
-          removeKeys.forEach((key) => {
+          removeKeys.forEach(key => {
             if (item[key] === next[key]) {
               isSame = true;
             }
@@ -57,8 +45,6 @@ export function removeDuplicateObj<T>(
 
 /**
  * 根据当前跳转的路由设置显示在浏览器标签的 title
- * @param {Object} routeItem 路由对象
- * @param {Object} vm Vue 实例
  */
 export const setTitle = (route: Route, vm: any) => {
   const pageTitle = getTitle(route, vm);
@@ -69,10 +55,7 @@ export const setTitle = (route: Route, vm: any) => {
 /**
  * 处理页面标题、侧边菜单、面包屑、tagsNav 展示的 title
  */
-export const getTitle = (
-  route: Route | RouteConfig | RouteRecord | Tag,
-  vm: any
-) => {
+export const getTitle = (route: Route | RouteConfig | RouteRecord | Tag, vm: any) => {
   let title = "";
   let __titleIsFunction__ = false;
   // 如果路由没有 meta 或者 meta 没有 title，则以 name 为 title
@@ -125,14 +108,14 @@ export const handleRouteTitle = (route: Route) => {
 };
 
 /**
- * @description 本地存储和获取标签导航列表
+ * 本地存储和获取标签导航列表
  */
 export const setTagNavListInLocalstorage = (list: any) => {
   localStorage.tagNaveList = JSON.stringify(list);
 };
 
 /**
- * @returns {Array} 其中的每个元素只包含路由原信息中的name, path, meta三项
+ * 其中的每个元素只包含路由原信息中的name, path, meta三项
  */
 export const getTagNavListFromLocalstorage = () => {
   const list = localStorage.tagNaveList;

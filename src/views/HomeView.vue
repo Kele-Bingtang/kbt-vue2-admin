@@ -1,7 +1,6 @@
 <template>
-  <div>
-    Home
-    <el-button type="primary">主要按钮</el-button>
+  <div style="width: 850px; margin: 0 auto">
+    <div style="width: 1000pxl; font-size: 50px; height: 500px; line-height: 600px">中午好！</div>
   </div>
 </template>
 

@@ -8,7 +8,7 @@ import router from ".";
 export const loadRoutes = (routes: RouteConfig[], roles: string[]) => {
   const onlyRolesRoutes = filterOnlyRolesRoutes(routes, roles);
   PermissionModule.loadRolesRoutes(onlyRolesRoutes);
-  onlyRolesRoutes.forEach((route) => {
+  onlyRolesRoutes.forEach(route => {
     router.addRoute(route);
   });
 };
@@ -16,12 +16,9 @@ export const loadRoutes = (routes: RouteConfig[], roles: string[]) => {
 /**
  * 过滤出当前系统角色的路由权限
  */
-export const filterOnlyRolesRoutes = (
-  routes: Array<RouteConfig>,
-  roles: string[]
-) => {
+export const filterOnlyRolesRoutes = (routes: Array<RouteConfig>, roles: string[]) => {
   const rolesRoutes: RouteConfig[] = [];
-  routes.forEach((route) => {
+  routes.forEach(route => {
     const r = { ...route };
     if (hasPermission(r, roles)) {
       if (r.children && r.children.length !== 0) {
@@ -42,9 +39,8 @@ const hasPermission = (route: RouteConfig, roles: string[]) => {
     return true;
   }
   if (route.meta && route.meta.roles) {
-    return roles.some((role) => route.meta!.roles.includes(role));
+    return roles.some(role => route.meta!.roles.includes(role));
   } else {
     return true; // 没有添加权限验证
   }
 };
-

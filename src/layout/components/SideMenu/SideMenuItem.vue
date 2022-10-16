@@ -1,11 +1,5 @@
 <template>
-  <div
-    class="side-menu-item"
-    :class="[
-      isCollapse ? 'collapse-menu' : 'expand-menu',
-      { 'first-menu': isFirstMenu },
-    ]"
-  >
+  <div class="side-menu-item" :class="[isCollapse ? 'collapse-menu' : 'expand-menu', { 'first-menu': isFirstMenu }]">
     <!-- 没有二级菜单 -->
     <template v-if="!menuItem.children || menuItem.children.length == 0">
       <side-menu-item-link :to="menuItem">
@@ -15,11 +9,7 @@
         >
           <template v-if="menuItem.meta && menuItem.meta.icon">
             <!-- 使用 Element UI 自带的图标 -->
-            <i
-              v-if="menuItem.meta.icon.startsWith('el-')"
-              class="icon"
-              :class="menuItem.meta.icon"
-            ></i>
+            <i v-if="menuItem.meta.icon.startsWith('el-')" class="icon" :class="menuItem.meta.icon"></i>
             <!-- 使用本地的 svg 图标 -->
             <svg-icon v-else :name="menuItem.meta.icon" />
           </template>
@@ -29,18 +19,10 @@
       </side-menu-item-link>
     </template>
     <!-- 存在二级菜单 -->
-    <el-submenu
-      v-else
-      :index="(menuItem.meta && menuItem.meta._fullPath) || menuItem.name"
-      popper-append-to-body
-    >
+    <el-submenu v-else :index="(menuItem.meta && menuItem.meta._fullPath) || menuItem.name" popper-append-to-body>
       <template slot="title">
         <template v-if="menuItem.meta && menuItem.meta.icon">
-          <i
-            v-if="menuItem.meta.icon.startsWith('el-')"
-            class="icon"
-            :class="menuItem.meta.icon"
-          ></i>
+          <i v-if="menuItem.meta.icon.startsWith('el-')" class="icon" :class="menuItem.meta.icon"></i>
           <svg-icon v-else :name="menuItem.meta.icon" />
         </template>
         <span slot="title">{{ getTitle(menuItem) }}</span>

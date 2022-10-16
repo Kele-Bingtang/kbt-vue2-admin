@@ -2,18 +2,10 @@
   <div
     class="side-menu-logo-container"
     :class="{ 'logo-collapse': isCollapse }"
-    :style="{
-      backgroundColor:
-      sideMenuTheme === 'dark' ? variables.menuLogoDark : variables.menuLogoLight,
-    }"
+    :style="{ backgroundColor: sideMenuTheme === 'dark' ? variables.menuLogoDark : variables.menuLogoLight }"
   >
     <transition name="sideMenuLogoFade">
-      <router-link
-        v-if="isCollapse"
-        key="collapse"
-        class="side-menu-logo-link"
-        to="/"
-      >
+      <router-link v-if="isCollapse" key="collapse" class="side-menu-logo-link" to="/">
         <img src="@/assets/logo.png" class="side-menu-logo" />
       </router-link>
       <router-link v-else key="expand" class="side-menu-logo-link" to="/">

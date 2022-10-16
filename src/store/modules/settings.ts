@@ -1,34 +1,20 @@
-import {
-  VuexModule,
-  Module,
-  Mutation,
-  Action,
-  getModule,
-} from "vuex-module-decorators";
+import { VuexModule, Module, Mutation, Action, getModule } from "vuex-module-decorators";
 import store from "@/store";
 import defaultSettings from "@/config/settings";
-import {
-  getCacheSettings,
-  removeCacheSettings,
-  setCacheSettings,
-} from "@/utils/cache";
+import { getCacheSettings, removeCacheSettings, removeCacheTagNavList, setCacheSettings } from "@/utils/cache";
 
-const { showSettings, showTagsNav, showSideMenuLogo, theme, sideMenuTheme } =
-  defaultSettings;
+const { showSettings, showTagsNav, recordTagsNav, showSideMenuLogo, theme, sideMenuTheme } = defaultSettings;
 
-const {
-  cacheTheme,
-  cacheSideMenuTheme,
-  cacheShowTagsNav,
-  cacheShowSideMenuLogo,
-} = getCacheSettings();
+const { cacheTheme, cacheSideMenuTheme, cacheShowTagsNav, cacheRecordTagsNav, cacheShowSideMenuLogo } =
+  getCacheSettings();
 
 export interface SettingsState {
-  theme: string;
-  sideMenuTheme: string;
-  showSettings: boolean;
-  showTagsNav: boolean;
-  showSideMenuLogo: boolean;
+  theme: string; // Element UI 主题色
+  sideMenuTheme: string; // 侧边菜单栏主题色
+  showSettings: boolean; // 是否显示 settings 配置
+  showTagsNav: boolean; // 是否显示标签页
+  recordTagsNav: boolean; // 是否记录打开过（没关闭）的 tags，下次打开会加载在 tagsNav
+  showSideMenuLogo: boolean; // 是否显示侧边菜单栏的 Logo
 }
 
 interface PayLoad {
@@ -39,15 +25,11 @@ interface PayLoad {
 @Module({ dynamic: true, store, name: "settings", namespaced: true })
 class Settings extends VuexModule implements SettingsState {
   public theme = cacheTheme || theme;
-  public sideMenuTheme =
-    cacheSideMenuTheme === undefined ? sideMenuTheme : cacheSideMenuTheme;
+  public sideMenuTheme = cacheSideMenuTheme === undefined ? sideMenuTheme : cacheSideMenuTheme;
   public showSettings = showSettings;
-  public showTagsNav =
-    cacheShowTagsNav === undefined ? showTagsNav : cacheShowTagsNav;
-  public showSideMenuLogo =
-    cacheShowSideMenuLogo === undefined
-      ? showSideMenuLogo
-      : cacheShowSideMenuLogo;
+  public showTagsNav = cacheShowTagsNav === undefined ? showTagsNav : cacheShowTagsNav;
+  public recordTagsNav = cacheRecordTagsNav === undefined ? recordTagsNav : cacheRecordTagsNav;
+  public showSideMenuLogo = cacheShowSideMenuLogo === undefined ? showSideMenuLogo : cacheShowSideMenuLogo;
 
   @Action
   public changeSetting(payload: PayLoad) {
@@ -57,6 +39,9 @@ class Settings extends VuexModule implements SettingsState {
   @Action
   public resetSettings() {
     removeCacheSettings();
+    if (!this.recordTagsNav) {
+      removeCacheTagNavList();
+    }
   }
 
   @Mutation
@@ -69,10 +54,14 @@ class Settings extends VuexModule implements SettingsState {
       theme: this.theme,
       sideMenuTheme: this.sideMenuTheme,
       showTagsNav: this.showTagsNav,
+      recordTagsNav: this.recordTagsNav,
       showSideMenuLogo: this.showSideMenuLogo,
       showSettings: this.showSettings,
     };
     setCacheSettings(settings);
+    if (key === "recordTagsNav" && !value) {
+      removeCacheTagNavList();
+    }
   }
 }
 

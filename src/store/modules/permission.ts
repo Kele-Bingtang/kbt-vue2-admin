@@ -1,10 +1,4 @@
-import {
-  VuexModule,
-  Module,
-  Mutation,
-  Action,
-  getModule,
-} from "vuex-module-decorators";
+import { VuexModule, Module, Mutation, Action, getModule } from "vuex-module-decorators";
 import store from "@/store";
 import { RouteConfig } from "vue-router";
 import { constantRoutes } from "@/router/routes-config";
@@ -14,7 +8,7 @@ export interface PermissionState {
   rolesRoutes: Array<RouteConfig>; // 当前用户独有的权限路由表
   loadRoutes: Array<RouteConfig>; // 当前用户所有的权限路由表（包含基础路由）
   homeRoute: RouteConfig; // 首页的路由
-  isLoadedRoutes: boolean;
+  isLoadedRoutes: boolean; // 是否已经加载完路由
 }
 
 @Module({ dynamic: true, store, name: "permission", namespaced: true })
@@ -51,11 +45,8 @@ export const PermissionModule = getModule(Permission);
  * _fullPath 放在 meta 里，因为避免开发人员需要用到 fullPath，所以加个 $ 代表关键字
  * 因为目前菜单的跳转是基于 path，如果你觉得下面函数计算完整的 path 比较麻烦，可以直接以 name 跳转：在 @/layout/components/SideMenu/SideMenuItemLink 里修改为 name 即可
  */
-export const getRouteFullPath = (
-  routes: Array<RouteConfig>,
-  basePath = "/"
-) => {
-  return routes.map((route) => {
+export const getRouteFullPath = (routes: Array<RouteConfig>, basePath = "/") => {
+  return routes.map(route => {
     if (!(route.meta && route.meta._fullPath)) {
       let { meta } = route;
       meta = meta || {};
@@ -74,10 +65,7 @@ export const getRouteFullPath = (
       if (isExternal(route.meta!._fullPath)) {
         route.children = getRouteFullPath(route.children, "");
       } else {
-        route.children = getRouteFullPath(
-          route.children,
-          route.meta!._fullPath
-        );
+        route.children = getRouteFullPath(route.children, route.meta!._fullPath);
       }
     }
     return route;
@@ -88,10 +76,7 @@ export const getRouteFullPath = (
  * 用于找到路由列表中 name 为 home 的对象
  * 如果你的首页 name 不为 home，请更改
  */
-export const getHomeRoute = (
-  routes: Array<RouteConfig>,
-  homeName = "home"
-): RouteConfig => {
+export const getHomeRoute = (routes: Array<RouteConfig>, homeName = "home"): RouteConfig => {
   let homeRoute: RouteConfig = {
     name: "",
     path: "",

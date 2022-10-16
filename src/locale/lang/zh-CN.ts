@@ -22,7 +22,7 @@ export default {
     title: "系统布局配置",
     theme: "主题色",
     showTagsNav: "显示 TagsNav",
+    recordTagsNav: "记录 TagsNav 的访问",
     showSideMenuLogo: "显示侧边菜单 Logo",
-    sideMenuTheme: "切换侧边菜单主题色",
   },
 };
