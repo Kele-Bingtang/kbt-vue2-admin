@@ -28,7 +28,7 @@ const settings: Settings = {
   useI18n: true,
   recordTagsNav: true,
   sideMenuTextTheme: true,
-  theme: "#1890FF", // 蓝色偏暗：#1890FF，官方：#409EFF
+  theme: "#168BF7", // 蓝色偏暗：#168BF7，官方：#409EFF
   sideMenuTheme: "dark",
   errorLog: {
     showInHeader: true,

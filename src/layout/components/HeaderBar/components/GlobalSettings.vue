@@ -162,7 +162,7 @@ export default class GloabalSettings extends Vue {
           top: 0;
           left: 22px;
           height: 100%;
-          color: #1890ff;
+          color: #168BF7;
           font-weight: 700;
           font-size: 14px;
         }

@@ -1,41 +1,40 @@
 /* Variables */
 
 // Base color
-$blue:#324157;
-$light-blue:#3A71A8;
-$red:#C03639;
+$blue: #324157;
+$light-blue: #3A71A8;
+$red: #C03639;
 $pink: #E65D6E;
 $green: #30B08F;
 $tiffany: #4AB7BD;
-$yellow:#FEC171;
+$yellow: #FEC171;
 $panGreen: #30B08F;
 
 // SideMenu
 // menu 开头代表是一级菜单的样式，sub 开头代表是二级菜单的样式，除了 menuText，menuText 是整个菜单的文字样式，即包含了 sub 的文字样式。
-
 $sideMenuWidth: 210px;
 // 暗色主题，默认
 $menuBg-dark: #304156;
-$menuHover-dark:#263445;
-$menuText-dark:#bfcbd9;
-$menuActiveText-dark:#409EFF;
-$menuLogo-dark:#001529;
-$subMenuBg-dark:#1f2d3d;
-$subMenuHover-dark:#001528;
-$subMenuActiveText-dark:#409EFF;
-$elIcon-dark: #bfcbd9;
-$svgIcon-dark: #bfcbd9;
+$menuHover-dark: #263445;
+$menuText-dark: #BFCBD9;
+$menuActiveText-dark: #409EFF;
+$menuLogo-dark: #001529;
+$subMenuBg-dark: #1F2D3D;
+$subMenuHover-dark: #001528;
+$subMenuActiveText-dark: #409EFF;
+$elIcon-dark: #BFCbd9;
+$svgIcon-dark: #BFCbd9;
 
 // 白色主题
-$menuBg-light:#fff;
-$menuHover-light:#ecf5ff;
-$menuText-light:#303133;
-$menuActiveText-light:#409EFF;
-$menuLogo-light:#97979ea9;
-$subMenuBg-light:#fff;
-$subMenuHover-light:#ecf5ff;
-$subMenuActiveText-light:#409EFF;
-$elIcon-light: #909399; 
+$menuBg-light: #FFF;
+$menuHover-light: #ECF5FF;
+$menuText-light: #303133;
+$menuActiveText-light: #409EFF;
+$menuLogo-light: #168BF7;
+$subMenuBg-light: #FFF;
+$subMenuHover-light: #ECF5FF;
+$subMenuActiveText-light: #409EFF;
+$elIcon-light: #909399;
 $svgIcon-light: #909399;
 
 // The :export directive is the magic sauce for webpack
