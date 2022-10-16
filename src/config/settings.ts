@@ -1,6 +1,8 @@
 interface Settings {
-  title: string; // 配置显示在浏览器标签的 title
+  title: string; // 项目 title
+  titleMode: string; // 标题在浏览器标签上的多种模式。0：项目 title + 页面 title，1：用户名 + 页面 title，2：项目 title，3：页面 title
   showSettings: boolean; // 是否显示设置
+  showBreadcrumb: boolean; // 是否使用 Breadcrumb
   showTagsNav: boolean; // 是否使用 tagsNav
   showSideMenuLogo: boolean; // Controls siderbar logo display
   useI18n: boolean; // 是否使用国际化，默认为false，如果不使用，则需要在路由中给需要在菜单中展示的路由设置 meta: {title: 'xxx'} 用来在菜单中显示文字
@@ -22,7 +24,9 @@ interface Settings {
 
 const settings: Settings = {
   title: "kbt-vue-admin",
+  titleMode: "0",
   showSettings: true,
+  showBreadcrumb: true,
   showTagsNav: true,
   showSideMenuLogo: true,
   useI18n: true,

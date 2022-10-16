@@ -30,20 +30,22 @@ export const setCacheTagNavList = (tagNavList: Array<Tag>) =>
   localStorage.setItem(tagNavListKey, JSON.stringify(tagNavList));
 export const removeCacheTagNavList = () => localStorage.removeItem(tagNavListKey);
 
-interface cacheSettings {
+interface CacheSettings {
   cacheTheme: string; // 缓存的 Element UI 主题色
   cacheSideMenuTheme: string; // 缓存的侧边菜单栏主题色
   cacheShowTagsNav: boolean; // 缓存的是否显示标签页
   cacheRecordTagsNav: boolean; // 缓存的打开过（没关闭）的 tags，下次打开会加载在 tagsNav
   cacheShowSideMenuLogo: boolean; // 缓存的是否显示侧边菜单栏的 Logo
+  cacheShowBreadcrumb: boolean; // 缓存的是否使用面包屑
+  cacheTitleMode: string; // 缓存的标题在浏览器标签上的多种模式。0：title + 页面 title，1：用户名 + 页面 title，2：title，3：页面 title
 }
 
 // 全局 settings 缓存
-export const getCacheSettings = (): cacheSettings => {
+export const getCacheSettings = (): CacheSettings => {
   return JSON.parse(localStorage.getItem("kbt_settings") || "{}");
 };
 export const setCacheSettings = (value: SettingsState) => {
-  let { theme, sideMenuTheme, showTagsNav, recordTagsNav, showSideMenuLogo } = value;
+  let { theme, sideMenuTheme, showTagsNav, recordTagsNav, showSideMenuLogo, titleMode, showBreadcrumb } = value;
   localStorage.setItem(
     "kbt_settings",
     `{
@@ -51,7 +53,9 @@ export const setCacheSettings = (value: SettingsState) => {
         "cacheSideMenuTheme": "${sideMenuTheme}",
         "cacheShowTagsNav": ${showTagsNav},
         "cacheRecordTagsNav": ${recordTagsNav},
-        "cacheShowSideMenuLogo": ${showSideMenuLogo}
+        "cacheShowSideMenuLogo": ${showSideMenuLogo},
+        "cacheShowBreadcrumb": ${showBreadcrumb},
+        "cacheTitleMode": "${titleMode}"
       }`
   );
 };

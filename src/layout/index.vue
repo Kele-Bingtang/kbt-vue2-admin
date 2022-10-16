@@ -16,7 +16,6 @@
         <!-- 头部 -->
         <el-header class="header-container">
           <header-bar>
-            <global-settings />
             <template v-if="device !== 'mobile'">
               <full-screen />
               <error-log :errorCount="errorCount" v-if="settings.errorLog.showInHeader" />
@@ -50,7 +49,6 @@ import SizeSelect from "./components/HeaderBar/components/SizeSelect.vue";
 import LangSelect from "./components/HeaderBar/components/LangSelect.vue";
 import User from "./components/HeaderBar/components/User.vue";
 import ErrorLog from "./components/HeaderBar/components/ErrorLog.vue";
-import GlobalSettings from "./components/HeaderBar/components/GlobalSettings.vue";
 import ThemePicker from "@/components/ThemePicker/ThemePicker.vue";
 import settings from "@/config/settings";
 
@@ -66,7 +64,6 @@ import settings from "@/config/settings";
     LangSelect,
     User,
     ErrorLog,
-    GlobalSettings,
     ThemePicker,
   },
 })

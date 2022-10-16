@@ -62,7 +62,7 @@ export const constantRoutes: Array<RouteConfigAndMeta> = [
     children: [
       {
         path: "index",
-        name: "errorLoggerPage",
+        name: "ErrorLooger",
         component: () => import("@/views/error-page/error-logger.vue"),
       },
     ],
@@ -77,7 +77,7 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
     children: [
       {
         path: "home",
-        name: "home",
+        name: "Home",
         component: () => import("@/views/HomeView.vue"),
         meta: { title: "首页", icon: "el-icon-s-home", fixedInNav: true },
       },

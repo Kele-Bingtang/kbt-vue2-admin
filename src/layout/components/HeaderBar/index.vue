@@ -1,7 +1,7 @@
 <template>
   <div class="header-bar">
     <side-menu-trigger :is-collapse="isCollapse" @toggle-trigger="toggleTrigger" class="side-menu-trigger-container" />
-    <breadcrumb :breadcrumbs="breadcrumbs" class="breadcrumb-container" v-if="device !== 'mobile'" />
+    <breadcrumb :breadcrumbs="breadcrumbs" class="breadcrumb-container" v-if="showBreadcrumb" />
     <div class="right-menu">
       <slot></slot>
     </div>
@@ -15,6 +15,7 @@ import SideMenuTrigger from "./components/SideMenuTrigger.vue";
 import Breadcrumb from "./components/Breadcrumb.vue";
 import { RedirectOption, Route, RouteConfig, RouteRecord } from "vue-router";
 import { PermissionModule } from "@/store/modules/permission";
+import { SettingsModule } from "@/store/modules/settings";
 
 export interface Breadcrumbs extends Route {
   redirect?: RedirectOption;
@@ -32,9 +33,20 @@ export default class HeaderBar extends Vue {
   get isCollapse(): boolean {
     return LayoutModule.sideMenu.isCollapse;
   }
+
   // 获取当前设备为移动端还是桌面端
   get device() {
     return LayoutModule.device;
+  }
+
+  get showBreadcrumb() {
+    if(SettingsModule.showBreadcrumb) {
+      if(this.device === "mobile") {
+        return false;
+      }
+      return true;
+    }
+    return false;
   }
 
   @Watch("$route")

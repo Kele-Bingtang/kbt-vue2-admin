@@ -21,9 +21,9 @@ export default class ErrorLog extends Vue {
   }
   // 打开错误日志页面
   public openErrorLogger() {
-    if (this.$route.name !== "errorLoggerPage") {
+    if (this.$route.name !== "ErrorLooger") {
       this.$router.push({
-        name: "errorLoggerPage",
+        name: "ErrorLooger",
       });
     }
   }

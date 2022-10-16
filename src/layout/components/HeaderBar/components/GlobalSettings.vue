@@ -1,14 +1,22 @@
 <template>
   <div class="global-settings">
-    <div class="svg-container">
+    <!-- 放到 HeaderBar 中 -->
+    <!-- <div class="svg-container">
       <el-button size="small" plain @click.prevent="openSettingsDrawer">
         <svg-icon name="setting" width="22" height="22"></svg-icon>
       </el-button>
-    </div>
+    </div> -->
 
-    <el-drawer :visible.sync="drawerVisible" direction="rtl" size="270px" append-to-body custom-class="drawer-container" :with-header="false">
+    <el-drawer
+      :visible.sync="drawerVisible"
+      direction="rtl"
+      size="270px"
+      append-to-body
+      custom-class="drawer-container"
+      :with-header="false"
+    >
       <div class="drawer-theme-container">
-        <h3 class="drawer-item-title">主题风格设置</h3>
+        <div class="drawer-item-title">{{ $t("_settings.themeTitle") }}</div>
 
         <div class="drawer-theme-checbox">
           <div class="drawer-theme-checbox-item" @click="handleSideMenuTheme('dark')">
@@ -36,26 +44,53 @@
 
       <el-divider />
 
-      <h3 class="drawer-item-title">{{ $t("_settings.title") }}</h3>
+      <div class="layout-container">
+        <div class="drawer-item-title">{{ $t("_settings.layoutTitle") }}</div>
 
-      <div class="drawer-item">
-        <span>{{ $t("_settings.showTagsNav") }}</span>
-        <el-switch v-model="showTagsNav" class="drawer-switch" />
-      </div>
+        <div class="drawer-item">
+          <span>{{ $t("_settings.showBreadcrumb") }}</span>
+          <el-switch v-model="showBreadcrumb" class="drawer-switch" />
+        </div>
 
-      <div class="drawer-item">
-        <span>{{ $t("_settings.recordTagsNav") }}</span>
-        <el-switch v-model="recordTagsNav" class="drawer-switch" />
-      </div>
+        <div class="drawer-item">
+          <span>{{ $t("_settings.showTagsNav") }}</span>
+          <el-switch v-model="showTagsNav" class="drawer-switch" />
+        </div>
 
-      <div class="drawer-item">
-        <span>{{ $t("_settings.showSideMenuLogo") }}</span>
-        <el-switch v-model="showSideMenuLogo" class="drawer-switch" />
+        <div class="drawer-item">
+          <span>{{ $t("_settings.recordTagsNav") }}</span>
+          <el-switch v-model="recordTagsNav" class="drawer-switch" />
+        </div>
+
+        <div class="drawer-item">
+          <span>{{ $t("_settings.showSideMenuLogo") }}</span>
+          <el-switch v-model="showSideMenuLogo" class="drawer-switch" />
+        </div>
       </div>
 
       <el-divider />
 
-      <el-button size="small" plain icon="el-icon-refresh" @click="resetSettings">重置配置</el-button>
+      <div class="title-mode-container">
+        <div class="drawer-item-title">{{ $t("_settings.titleMode") }}</div>
+
+        <div class="drawer-item">
+          <el-select v-model="titleMode" placeholder="请选择标题模式" size="mini">
+            <el-option
+              v-for="item in titleModeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              :disabled="item.value === titleMode"
+            ></el-option>
+          </el-select>
+        </div>
+      </div>
+
+      <el-divider />
+
+      <el-button size="small" plain icon="el-icon-refresh" @click="resetSettings">
+        {{ $t("_settings.resetSettings") }}
+      </el-button>
     </el-drawer>
   </div>
 </template>
@@ -64,6 +99,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import ThemePicker from "@/components/ThemePicker/ThemePicker.vue";
 import { SettingsModule } from "@/store/modules/settings";
+import { setTitle } from "@/utils/layout";
 
 @Component({
   components: {
@@ -73,8 +109,37 @@ import { SettingsModule } from "@/store/modules/settings";
 export default class GloabalSettings extends Vue {
   public drawerVisible = false;
 
+  get titleModeOptions() {
+    return [
+      {
+        value: "0",
+        label: this.$t("_settings.titleModeOne"),
+      },
+      {
+        value: "1",
+        label: this.$t("_settings.titleModeTwo"),
+      },
+      {
+        value: "2",
+        label: this.$t("_settings.titleModeThree"),
+      },
+      {
+        value: "3",
+        label: this.$t("_settings.titleModeFour"),
+      },
+    ];
+  }
+
   get theme() {
     return SettingsModule.theme;
+  }
+
+  get showBreadcrumb() {
+    return SettingsModule.showBreadcrumb;
+  }
+
+  set showBreadcrumb(value) {
+    SettingsModule.changeSetting({ key: "showBreadcrumb", value });
   }
 
   get showTagsNav() {
@@ -105,6 +170,16 @@ export default class GloabalSettings extends Vue {
     return SettingsModule.sideMenuTheme;
   }
 
+  get titleMode() {
+    return SettingsModule.titleMode;
+  }
+
+  set titleMode(value) {
+    SettingsModule.changeSetting({ key: "titleMode", value });
+    // 根据选择的标题模式，重新渲染浏览器标题
+    setTitle(this.$route, this);
+  }
+
   public handleSideMenuTheme(value: string) {
     let sideMenuTheme = value;
     SettingsModule.changeSetting({
@@ -113,9 +188,13 @@ export default class GloabalSettings extends Vue {
     });
   }
 
+  public handleSelectTitleMode() {}
+
+  // 打开设置窗口
   public openSettingsDrawer() {
     this.drawerVisible = true;
   }
+
   // 选择主题色回调
   public themeChange(value: string) {
     SettingsModule.changeSetting({ key: "theme", value });
@@ -128,7 +207,7 @@ export default class GloabalSettings extends Vue {
       iconClass: "el-icon-loading",
     });
     SettingsModule.resetSettings();
-    // setTimeout("window.location.reload()", 1000);
+    setTimeout("window.location.reload()", 1000);
   }
 }
 </script>
@@ -162,7 +241,7 @@ export default class GloabalSettings extends Vue {
           top: 0;
           left: 22px;
           height: 100%;
-          color: #168BF7;
+          color: #168bf7;
           font-weight: 700;
           font-size: 14px;
         }
@@ -175,6 +254,7 @@ export default class GloabalSettings extends Vue {
     color: rgba(0, 0, 0, 0.85);
     font-size: 14px;
     line-height: 22px;
+    font-weight: 600;
   }
   .drawer-item {
     color: rgba(0, 0, 0, 0.65);

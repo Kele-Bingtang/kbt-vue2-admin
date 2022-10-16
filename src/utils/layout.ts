@@ -1,5 +1,7 @@
 import config from "@/config/settings";
 import { Tag } from "@/store/modules/layout";
+import { SettingsModule } from "@/store/modules/settings";
+import { UserModule } from "@/store/modules/user";
 import { Route, RouteConfig, RouteRecord } from "vue-router";
 
 const { title, useI18n } = config;
@@ -48,7 +50,27 @@ export function removeDuplicateObj<T>(arr: Array<T>, removeKeys: string[], keyIs
  */
 export const setTitle = (route: Route, vm: any) => {
   const pageTitle = getTitle(route, vm);
-  const resTitle = pageTitle ? `${title} - ${pageTitle}` : title;
+  let resTitle = pageTitle ? `${title} - ${pageTitle}` : title; // 默认标题的模式
+  let { titleMode } = SettingsModule;
+  // 展示标题的多种模式判断
+  if (titleMode === "0") {
+    resTitle = pageTitle ? `${title} - ${pageTitle}` : title;
+  } else if (titleMode === "1") {
+    const { userName } = UserModule.userInfo;
+    if (userName && pageTitle) {
+      resTitle = `${userName} - ${pageTitle}`;
+    } else if (userName) {
+      resTitle = `${title} - ${userName}`;
+    } else if (pageTitle) {
+      resTitle = resTitle;
+    } else {
+      resTitle = title;
+    }
+  } else if (titleMode === "2") {
+    resTitle = title;
+  } else if (titleMode === "3") {
+    resTitle = pageTitle;
+  }
   window.document.title = resTitle;
 };
 
@@ -105,19 +127,4 @@ export const handleRouteTitle = (route: Route) => {
     router.meta = meta;
   }
   return router;
-};
-
-/**
- * 本地存储和获取标签导航列表
- */
-export const setTagNavListInLocalstorage = (list: any) => {
-  localStorage.tagNaveList = JSON.stringify(list);
-};
-
-/**
- * 其中的每个元素只包含路由原信息中的name, path, meta三项
- */
-export const getTagNavListFromLocalstorage = () => {
-  const list = localStorage.tagNaveList;
-  return list ? JSON.parse(list) : [];
 };

@@ -32,7 +32,7 @@ class Permission extends VuexModule implements PermissionState {
     let fullPathRolesRoutes = getRouteFullPath(routes);
     this.loadRoutes = fullPathConstantRoutes.concat(fullPathRolesRoutes);
     this.rolesRoutes = fullPathRolesRoutes;
-    this.homeRoute = getHomeRoute(this.loadRoutes, "home");
+    this.homeRoute = getHomeRoute(this.loadRoutes, "Home"); // 路由里首页的 name 值，必须填且正确，默认为 Home
     this.isLoadedRoutes = true;
   }
 }
