@@ -12,6 +12,11 @@
             {{ profileLabel }}
           </el-dropdown-item>
         </router-link>
+        <router-link to="/message">
+          <el-dropdown-item icon="el-icon-bell">
+            {{ messageCenterLabel }}
+          </el-dropdown-item>
+        </router-link>
         <el-dropdown-item @click.prevent.native="openSettingsDrawer" icon="el-icon-setting" v-if="showSettings">
           <span>
             {{ settingsLabel }}
@@ -54,10 +59,16 @@ export default class User extends Vue {
     return profile === "_headerBar.profile" ? "我的主页" : profile;
   }
 
-  get settingsLabel() {
-    let logOut = this.$t("_headerBar.settings");
-    return logOut === "_headerBar.settings" ? "我的设置" : logOut;
+  get messageCenterLabel() {
+    let messageCenter = this.$t("_headerBar.messageCenter");
+    return messageCenter === "_headerBar.messageCenter" ? "我的消息" : messageCenter;
   }
+
+  get settingsLabel() {
+    let settings = this.$t("_headerBar.settings");
+    return settings === "_headerBar.settings" ? "我的设置" : settings;
+  }
+
   get logOutLabel() {
     let logOut = this.$t("_headerBar.logOut");
     return logOut === "_headerBar.logOut" ? "退出登录" : logOut;

@@ -5,7 +5,7 @@ interface Settings {
   showBreadcrumb: boolean; // 是否使用 Breadcrumb
   showTagsNav: boolean; // 是否使用 tagsNav
   showSideMenuLogo: boolean; // Controls siderbar logo display
-  useI18n: boolean; // 是否使用国际化，默认为false，如果不使用，则需要在路由中给需要在菜单中展示的路由设置 meta: {title: 'xxx'} 用来在菜单中显示文字
+  routeUseI18n: boolean; // 「路由」布局是否使用国际化，默认为 false，如果不使用，则需要在路由中给需要在菜单中展示的路由设置 meta: {title: 'xxx'} 用来在菜单中显示文字
   recordTagsNav: boolean; // 是否记录打开过（没关闭）的 tags，下次打开会加载在 tagsNav
   sideMenuTextTheme: boolean; // 如果是 true，则菜单的激活色跟随系统颜色
   theme: string; // 主题色
@@ -29,7 +29,7 @@ const settings: Settings = {
   showBreadcrumb: true,
   showTagsNav: true,
   showSideMenuLogo: true,
-  useI18n: true,
+  routeUseI18n: false,
   recordTagsNav: true,
   sideMenuTextTheme: true,
   theme: "#168BF7", // 蓝色偏暗：#168BF7，官方：#409EFF

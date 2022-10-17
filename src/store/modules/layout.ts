@@ -81,8 +81,8 @@ class Layout extends VuexModule implements LayoutState {
   }
 
   @Action
-  public toggleSiderMenu() {
-    this.TOGGLE_SIDEMENU();
+  public toggleSideMenu() {
+    this.TOGGLE_SIDE_MENU();
   }
 
   @Action
@@ -170,7 +170,7 @@ class Layout extends VuexModule implements LayoutState {
   }
 
   @Mutation
-  private TOGGLE_SIDEMENU() {
+  private TOGGLE_SIDE_MENU() {
     this.sideMenu.isCollapse = !this.sideMenu.isCollapse;
     if (this.sideMenu.isCollapse) {
       setCacheSideMenuStatus("collapse");

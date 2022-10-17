@@ -4,7 +4,7 @@ import { SettingsModule } from "@/store/modules/settings";
 import { UserModule } from "@/store/modules/user";
 import { Route, RouteConfig, RouteRecord } from "vue-router";
 
-const { title, useI18n } = config;
+const { title, routeUseI18n } = config;
 
 /**
  * 去重
@@ -91,8 +91,8 @@ export const getTitle = (route: Route | RouteConfig | RouteRecord | Tag, vm: any
   }
   // name 如果有 $_noUseI18n_，代表不使用多语言 I18n
   let noUseI18n = route.name && route.name.startsWith("_noUseI18n_");
-  if (useI18n && !noUseI18n) {
-    if (title.includes("{{") && title.includes("}}") && useI18n) {
+  if (routeUseI18n && !noUseI18n) {
+    if (title.includes("{{") && title.includes("}}") && routeUseI18n) {
       title = title.replace(/({{[\s\S]+?}})/, (m: any, str: string) =>
         str.replace(/{{([\s\S]*)}}/, (m: any, _: string) => vm.$t(_.trim()))
       );

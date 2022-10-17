@@ -8,6 +8,9 @@
         <el-col :span="18" :xs="24">
           <el-card>
             <el-tabs v-model="activeTab">
+              <el-tab-pane label="时间线" name="timeline">
+                <timeline />
+              </el-tab-pane>
               <el-tab-pane label="资料编辑" name="editorUserInfo">
                 <editor-info :user="user" />
               </el-tab-pane>
@@ -25,19 +28,21 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { UserModule } from "@/store/modules/user";
-import EditorInfo from "./components/EditorInfo.vue";
-import Account from "./components/Account.vue";
-import UserCard from "./components/UserCard.vue";
+import EditorInfo from "./components/editor-info.vue";
+import Account from "./components/account.vue";
+import UserCard from "./components/user-card.vue";
+import Timeline from "./components/timeline.vue";
 
 @Component({
   components: {
     EditorInfo,
     Account,
     UserCard,
+    Timeline,
   },
 })
 export default class Profile extends Vue {
-  public activeTab = "editorUserInfo";
+  public activeTab = "timeline";
 
   get user() {
     return UserModule.userInfo;

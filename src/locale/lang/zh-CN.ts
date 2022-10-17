@@ -2,7 +2,7 @@ export default {
   _route: {
     Home: "首页",
     Login: "登录",
-    ErrorLooger: "错误日志",
+    ErrorLogger: "错误日志",
     Profile: "我的主页",
     test1: "测试1",
     test2: "测试2",
@@ -23,6 +23,7 @@ export default {
     changeLanguage: "修改语言成功！",
     changeSize: "修改全局 Size 成功！",
     profile: "我的主页",
+    messageCenter: "我的消息",
     settings: "我的设置",
     logOut: "退出登录",
   },

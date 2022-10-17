@@ -40,7 +40,7 @@ router.beforeEach(async (to: Route, from: Route, next: any) => {
           }
           next({ ...to, replace: true });
         } catch (err) {
-          UserModule.ResetToken();
+          UserModule.resetToken();
           // next(`/login?redirect=${to.path}`)
         }
       } else {

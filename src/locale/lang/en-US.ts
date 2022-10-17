@@ -2,7 +2,7 @@ export default {
   _route: {
     Home: "Home",
     Login: "Login",
-    ErrorLooger: "Error Logger",
+    ErrorLogger: "Error Logger",
     Profile: "My Profile",
   },
   _tagsNav: {
@@ -16,6 +16,7 @@ export default {
     changeSize: "Successfully modified the global size！",
     profile: "My Profile",
     settings: "My Settings",
+    messageCenter: "My Message",
     logOut: "Log Out",
   },
   _settings: {

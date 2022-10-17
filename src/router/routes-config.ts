@@ -63,8 +63,22 @@ export const constantRoutes: Array<RouteConfigAndMeta> = [
       {
         path: "index",
         name: "Profile",
-        component: () => import("@/views/profile/Profile.vue"),
-        meta: { title: "我的主页", fixedInNav: true },
+        component: () => import("@/views/profile/profile.vue"),
+        meta: { title: "我的主页" },
+      },
+    ],
+  },
+  {
+    path: "/message",
+    redirect: "/message/index",
+    component: Layout,
+    meta: { hideInMenu: true },
+    children: [
+      {
+        path: "index",
+        name: "MessageCenter",
+        component: () => import("@/views/message-center/message-center.vue"),
+        meta: { title: "我的消息", fixedInNav: true },
       },
     ],
   },
@@ -76,8 +90,9 @@ export const constantRoutes: Array<RouteConfigAndMeta> = [
     children: [
       {
         path: "index",
-        name: "ErrorLooger",
+        name: "ErrorLogger",
         component: () => import("@/views/error-page/error-logger.vue"),
+        meta: { title: "错误日志" },
       },
     ],
   },

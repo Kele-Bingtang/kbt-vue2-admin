@@ -21,9 +21,9 @@ export default class ErrorLog extends Vue {
   }
   // 打开错误日志页面
   public openErrorLogger() {
-    if (this.$route.name !== "ErrorLooger") {
+    if (this.$route.name !== "ErrorLogger") {
       this.$router.push({
-        name: "ErrorLooger",
+        name: "ErrorLogger",
       });
     }
   }
@@ -35,7 +35,6 @@ export default class ErrorLog extends Vue {
   line-height: 55px;
   .badge {
     width: 18px;
-    line-height: 25px;
     margin-top: -5px;
   }
   .message-title {
@@ -51,8 +50,8 @@ export default class ErrorLog extends Vue {
 .error-log-badge {
   .badge {
     .el-badge__content.is-fixed {
-      top: 3px;
-      right: 14px;
+      top: 10px;
+      right: 8px;
     }
   }
 }

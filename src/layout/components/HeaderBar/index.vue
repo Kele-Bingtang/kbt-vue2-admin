@@ -63,7 +63,7 @@ export default class HeaderBar extends Vue {
 
   // 折叠或者展开菜单栏
   public toggleTrigger() {
-    LayoutModule.toggleSiderMenu();
+    LayoutModule.toggleSideMenu();
   }
 
   /**
