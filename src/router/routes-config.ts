@@ -78,7 +78,7 @@ export const constantRoutes: Array<RouteConfigAndMeta> = [
         path: "index",
         name: "MessageCenter",
         component: () => import("@/views/message-center/message-center.vue"),
-        meta: { title: "我的消息", fixedInNav: true },
+        meta: { title: "我的消息" },
       },
     ],
   },

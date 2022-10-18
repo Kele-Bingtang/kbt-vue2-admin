@@ -210,10 +210,10 @@ export default class MessageCenter extends Vue {
             top: 0;
             bottom: 0;
             right: -1px;
-            background: var(--current-color);
+            background: var(--theme-color);
           }
           .list-dot {
-            background-color: var(--current-color);
+            background-color: var(--theme-color) !important;
           }
         }
         .el-badge {
@@ -263,7 +263,7 @@ export default class MessageCenter extends Vue {
       }
 
       &.message-content {
-        width: calc(100% - 470px);
+        width: calc(100% - 450px);
         padding: 12px 20px 0;
         overflow: auto;
         .message-content-header {
@@ -296,7 +296,7 @@ export default class MessageCenter extends Vue {
         font-size: 13px;
         display: none;
         &:hover {
-          color: var(--current-color);
+          color: var(--theme-color);
         }
       }
       .el-menu-item {
@@ -306,6 +306,13 @@ export default class MessageCenter extends Vue {
           }
         }
       }
+    }
+  }
+}
+.mobile {
+  .message-center {
+    .message-content {
+      width: 100% !important;
     }
   }
 }

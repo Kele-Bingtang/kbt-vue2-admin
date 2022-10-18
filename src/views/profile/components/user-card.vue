@@ -6,7 +6,13 @@
 
     <div class="user-card-header">
       <div class="header-content">
-        <img src="@/assets/小乐.png" alt="头像" />
+        <slot>
+          <el-image :src="user.avatar" class="user-avatar" alt="头像">
+            <div slot="error">
+              <el-image :src="require('@/assets/default.png')" class="user-avatar" alt="头像" />
+            </div>
+          </el-image>
+        </slot>
       </div>
       <div class="header-content">
         <div class="user-name">
@@ -122,7 +128,7 @@ export default class UserCard extends Vue {
     text-align: center;
 
     .header-content {
-      img {
+      .user-avatar {
         width: 100px;
         height: 100px;
         border-radius: 50%;

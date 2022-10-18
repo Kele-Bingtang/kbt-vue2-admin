@@ -1,9 +1,13 @@
 <template>
   <div class="user-container">
-    <el-dropdown trigger="click" style="height: 100%">
+    <el-dropdown trigger="click" style="height: 100%; line-height: 0">
       <div class="avatar-wrapper">
-        <img src="@/assets/小乐.png" class="user-avatar" />
-        <span class="username">{{ userInfo.userName }}</span>
+        <el-image :src="user.avatar" class="user-avatar" alt="头像">
+          <div slot="error">
+            <el-image :src="require('@/assets/default.png')" class="user-avatar" alt="头像" />
+          </div>
+        </el-image>
+        <span class="username">{{ user.userName }}</span>
         <i class="el-icon-caret-bottom" />
       </div>
       <el-dropdown-menu slot="dropdown">
@@ -46,7 +50,7 @@ import GlobalSettings from "./GlobalSettings.vue";
   },
 })
 export default class User extends Vue {
-  get userInfo() {
+  get user() {
     return UserModule.userInfo;
   }
 
@@ -89,10 +93,10 @@ export default class User extends Vue {
 
 <style lang="scss" scoped>
 .user-container {
+  line-height: 0;
   .avatar-wrapper {
     position: relative;
     height: 100%;
-    line-height: 75px;
     display: flex;
     align-items: center;
     .user-avatar {

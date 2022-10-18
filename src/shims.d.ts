@@ -6,3 +6,5 @@ declare module "*.vue" {
 declare module "element-ui/lib/locale/lang/*" {
   export const elementLocale: any;
 }
+
+declare module "vue-cropper";

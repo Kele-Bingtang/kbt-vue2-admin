@@ -3,7 +3,16 @@
     <div v-if="user.userId">
       <el-row :gutter="20">
         <el-col :span="6" :xs="24">
-          <user-card :user="user" />
+          <user-card :user="user">
+            <user-avatar
+              :user="user"
+              :cropWidth="200"
+              :cropHeight="200"
+              :cropContainerHeight="350"
+              imageType="base64"
+              @uploadImage="uploadImage"
+            />
+          </user-card>
         </el-col>
         <el-col :span="18" :xs="24">
           <el-card>
@@ -31,6 +40,7 @@ import { UserModule } from "@/store/modules/user";
 import EditorInfo from "./components/editor-info.vue";
 import Account from "./components/account.vue";
 import UserCard from "./components/user-card.vue";
+import UserAvatar from "./components/user-avatar.vue";
 import Timeline from "./components/timeline.vue";
 
 @Component({
@@ -39,6 +49,7 @@ import Timeline from "./components/timeline.vue";
     Account,
     UserCard,
     Timeline,
+    UserAvatar,
   },
 })
 export default class Profile extends Vue {
@@ -50,6 +61,10 @@ export default class Profile extends Vue {
 
   get roles() {
     return UserModule.roles;
+  }
+  // 提交图片到云端
+  public uploadImage(imgData: FormData) {
+    console.log(imgData);
   }
 }
 </script>

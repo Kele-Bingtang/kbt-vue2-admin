@@ -1,5 +1,5 @@
 <template>
-  <div class="layout" :class="{ mobile: isMobile() }" :style="{ '--current-color': theme }">
+  <div class="layout" :class="{ mobile: isMobile() }" :style="{ '--theme-color': theme }">
     <el-container
       class="layout-container"
       :class="{ 'side-menu-collapse': isCollapse, 'side-menu-expand': !isCollapse }"

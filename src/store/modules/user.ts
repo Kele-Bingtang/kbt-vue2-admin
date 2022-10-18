@@ -8,9 +8,10 @@ import { readedList, recycleList, unreadList } from "@/test/message";
 export interface UserInfo {
   userId: string; // 用户 ID
   userName: string; // 用户名
-  sex: string; // 用户行吧
+  sex: string; // 用户性别
   email?: string; // 用户邮箱
   phone?: string; // 用户联系方式
+  avatar?: string; // 用户头像
   roles: string[]; // 用户角色
   registerTime?: string; // 用户角色
 }
@@ -45,6 +46,7 @@ class User extends VuexModule implements UserState {
     sex: "男",
     email: "2456019588@qq.com",
     phone: "13377492843",
+    avatar: "https://cdn.staticaly.com/gh/Kele-Bingtang/static@master/user/avatar1.png",
     roles: ["Visitor"],
     registerTime: "2022-10-01 19:07:27",
   };
