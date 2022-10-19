@@ -4,6 +4,7 @@ export default {
     Login: "登录",
     ErrorLogger: "错误日志",
     Profile: "我的主页",
+    MessageCenter: "我的消息",
     test1: "测试1",
     test2: "测试2",
     test3: "测试3",

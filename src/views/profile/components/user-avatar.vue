@@ -35,6 +35,7 @@
             :original="options.original"
             :enlarge="options.enlarge"
             @realTime="realTime"
+            v-if="cropperVisible"
           />
         </div>
         <div class="avatar-img" v-if="previews.url">
@@ -53,16 +54,16 @@
             :before-upload="beforeUpload"
             class="upload-img"
           >
-            <el-button size="mini" type="primary" plain icon="el-icon-upload">选择</el-button>
+            <el-button type="primary" plain icon="el-icon-upload">选择</el-button>
           </el-upload>
-          <el-button size="mini" type="primary" plain icon="el-icon-zoom-in" @click="changeScale(1)">放大</el-button>
-          <el-button size="mini" type="primary" plain icon="el-icon-zoom-out" @click="changeScale(-1)">缩小</el-button>
-          <el-button size="mini" type="primary" plain @click="rotateLeft">↺ 左旋转</el-button>
-          <el-button size="mini" type="primary" plain @click="rotateRight">↻ 右旋转</el-button>
-          <el-button size="mini" type="primary" plain icon="el-icon-download" @click="downloadImg('blob')">
+          <el-button type="primary" plain icon="el-icon-zoom-in" @click="changeScale(1)">放大</el-button>
+          <el-button type="primary" plain icon="el-icon-zoom-out" @click="changeScale(-1)">缩小</el-button>
+          <el-button type="primary" plain @click="rotateLeft">↺ 左旋转</el-button>
+          <el-button type="primary" plain @click="rotateRight">↻ 右旋转</el-button>
+          <el-button type="primary" plain icon="el-icon-download" @click="downloadImg('blob')">
             下载
           </el-button>
-          <el-button size="mini" type="primary" plain icon="el-icon-download" @click="uploadImage" class="upload-btn">
+          <el-button type="primary" icon="el-icon-upload2" @click="uploadImage" class="upload-btn">
             提交
           </el-button>
         </div>
@@ -72,7 +73,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import { VueCropper } from "vue-cropper";
 import { UserInfo } from "@/store/modules/user";
 
@@ -99,6 +100,7 @@ interface Cropper {
 })
 export default class UserAvatar extends Vue {
   public dialogVisible = false;
+  public cropperVisible = false;
   // 缩略图对象
   public previews: Cropper = {
     div: {
@@ -149,13 +151,14 @@ export default class UserAvatar extends Vue {
   public cropContainerHeight!: number; // 截图容器高度
 
   mounted() {
-    this.options.img = this.user.avatar || "";
     this.options.autoCropWidth = this.cropWidth || 200;
     this.options.autoCropHeight = this.cropHeight || 200;
   }
 
   public openDialog() {
+    this.options.img = this.user.avatar || "";
     this.dialogVisible = true;
+    this.cropperVisible = true;
   }
 
   // 实时缩略图的回调
@@ -183,12 +186,12 @@ export default class UserAvatar extends Vue {
       (this.$refs.cropper as any).getCropBlob((data: Blob) => {
         let timer = new Date().getTime();
         formData.append("file", data, timer + ".png");
-        this.$emit("uploadImage", formData);
+        this.$emit("upload-image", formData);
       });
     } else if (this.imageType === "base64") {
       (this.$refs.cropper as any).getCropData((data: string) => {
         formData.append("images", data);
-        this.$emit("uploadImage", formData);
+        this.$emit("upload-image", formData);
       });
     } else {
       this.$message({
@@ -217,21 +220,22 @@ export default class UserAvatar extends Vue {
   }
 
   // 向左旋转
-  rotateLeft() {
+  public rotateLeft() {
     (this.$refs.cropper as any).rotateLeft();
   }
   // 向右旋转
-  rotateRight() {
+  public rotateRight() {
     (this.$refs.cropper as any).rotateRight();
   }
   // 图片缩放
-  changeScale(num: number) {
+  public changeScale(num: number) {
     num = num || 1;
     (this.$refs.cropper as any).changeScale(num);
   }
 
   public handleClose() {
     this.dialogVisible = false;
+    this.cropperVisible = false;
   }
   // 手动上传的回调，目前为了取消自动上传
   public handleHttpRequest() {}
@@ -286,14 +290,14 @@ export default class UserAvatar extends Vue {
   }
   .btn-container {
     .scope-btn {
-      margin-top: 20px;
+      margin-top: 30px;
       .upload-img {
         display: inline-block;
         margin-right: 30px;
       }
     }
     .upload-btn {
-      margin-left: 50px;
+      margin-left: 30px;
     }
   }
 }

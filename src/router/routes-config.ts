@@ -107,7 +107,7 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
       {
         path: "home",
         name: "Home",
-        component: () => import("@/views/HomeView.vue"),
+        component: () => import("@/views/home-view.vue"),
         meta: { title: "首页", icon: "el-icon-s-home", fixedInNav: true },
       },
     ],
@@ -125,13 +125,13 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
       {
         path: "/test1",
         name: "test1",
-        component: () => import("@/views/HomeView.vue"),
+        component: () => import("@/views/home-view.vue"),
         meta: { title: "测试1", icon: "el-icon-s-home", alwaysShowRoot: true },
         children: [
           {
             path: "test1-1",
             name: "test1-1",
-            component: () => import("@/views/HomeView.vue"),
+            component: () => import("@/views/home-view.vue"),
             meta: { title: "测试1-1", icon: "el-icon-s-home" },
           },
         ],
@@ -139,19 +139,19 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
       {
         path: "test2",
         name: "test2",
-        component: () => import("@/views/HomeView.vue"),
+        component: () => import("@/views/home-view.vue"),
         meta: { title: "测试2", icon: "component" },
       },
       {
         path: "test3",
         name: "test3",
-        component: () => import("@/views/HomeView.vue"),
+        component: () => import("@/views/home-view.vue"),
         meta: { title: "测试3", icon: "component" },
       },
       {
         path: "test4",
         name: "test4",
-        component: () => import("@/views/HomeView.vue"),
+        component: () => import("@/views/home-view.vue"),
         meta: { title: "测试4", icon: "component" },
       },
     ],
@@ -163,7 +163,7 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
       {
         path: "home",
         name: "_noUseI18n_redirectToHome",
-        component: () => import("@/views/HomeView.vue"),
+        component: () => import("@/views/home-view.vue"),
         meta: { title: "重定向到Home", icon: "documentation" },
       },
     ],
@@ -178,7 +178,7 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
       {
         path: "params/:id",
         name: "params",
-        component: () => import("@/views/HomeView.vue"),
+        component: () => import("@/views/home-view.vue"),
         meta: {
           title: (route: Route) => `{{ _route.params }}-${route.params.id}`,
           icon: "component",
@@ -189,7 +189,7 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
       {
         path: "query/:id",
         name: "query",
-        component: () => import("@/views/HomeView.vue"),
+        component: () => import("@/views/home-view.vue"),
         meta: {
           title: (route: Route) => `{{ _route.query }}-${route.query.id}`,
           icon: "component",

@@ -17,8 +17,8 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" size="mini" @click="submit">保存</el-button>
-        <el-button type="danger" size="mini" @click="reset">重置</el-button>
+        <el-button type="primary" @click="submit">保存</el-button>
+        <el-button type="danger" @click="reset">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { UserInfo, UserModule } from "@/store/modules/user";
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
 @Component({})
 export default class EditorInfo extends Vue {
@@ -58,16 +58,21 @@ export default class EditorInfo extends Vue {
   public submit() {
     (this.$refs.form as any).validate((valid: boolean) => {
       if (valid) {
+        UserModule.setUserInfo({
+          ...this.user,
+        });
         this.$message({
           message: "修改成功",
           type: "success",
         });
+        (this.$refs.form as any).clearValidate();
       }
     });
   }
-
+  @Emit("reset-user")
   public reset() {
-    window.location.reload();
+    (this.$refs.form as any).clearValidate();
+    return "";
   }
 }
 </script>

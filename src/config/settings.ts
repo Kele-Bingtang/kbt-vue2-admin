@@ -29,11 +29,11 @@ const settings: Settings = {
   showBreadcrumb: true,
   showTagsNav: true,
   showSideMenuLogo: true,
-  routeUseI18n: false,
+  routeUseI18n: true,
   recordTagsNav: true,
   sideMenuTextTheme: true,
   theme: "#168BF7", // 蓝色偏暗：#168BF7，官方：#409EFF
-  sideMenuTheme: "dark",
+  sideMenuTheme: "light",
   errorLog: {
     showInHeader: true,
     env: ["development", "production"],

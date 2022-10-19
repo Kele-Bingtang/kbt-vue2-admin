@@ -10,16 +10,18 @@
         <span class="username">{{ user.userName }}</span>
         <i class="el-icon-caret-bottom" />
       </div>
-      <el-dropdown-menu slot="dropdown">
+      <el-dropdown-menu slot="dropdown" class="user-dropdown">
         <router-link to="/profile">
           <el-dropdown-item icon="el-icon-user">
             {{ profileLabel }}
           </el-dropdown-item>
         </router-link>
         <router-link to="/message">
-          <el-dropdown-item icon="el-icon-bell">
-            {{ messageCenterLabel }}
-          </el-dropdown-item>
+          <el-badge :is-dot="messageCount > 0" class="message-badge">
+            <el-dropdown-item icon="el-icon-bell">
+              {{ messageCenterLabel }}
+            </el-dropdown-item>
+          </el-badge>
         </router-link>
         <el-dropdown-item @click.prevent.native="openSettingsDrawer" icon="el-icon-setting" v-if="showSettings">
           <span>
@@ -78,6 +80,10 @@ export default class User extends Vue {
     return logOut === "_headerBar.logOut" ? "退出登录" : logOut;
   }
 
+  get messageCount() {
+    return UserModule.message.unreadList.length;
+  }
+
   public openSettingsDrawer() {
     (this.$refs.globalSettings as any).openSettingsDrawer();
   }
@@ -118,6 +124,16 @@ export default class User extends Vue {
     .el-icon-caret-bottom {
       cursor: pointer;
       font-size: 12px;
+    }
+  }
+}
+</style>
+<style lang="scss">
+.user-dropdown {
+  .message-badge {
+    .is-dot {
+      top: 7px;
+      right: 17px !important;
     }
   }
 }

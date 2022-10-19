@@ -12,7 +12,7 @@ export default class SideMenuTrigger extends Vue {
   @Prop({ default: false })
   public isCollapse!: boolean;
 
-  @Emit("toggle-trigger")
+  @Emit()
   public toggleTrigger() {
     return;
   }

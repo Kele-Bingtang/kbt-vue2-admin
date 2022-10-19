@@ -34,7 +34,7 @@ export default class LangSelecr extends Vue {
   })
   public language!: string;
 
-  @Emit("handleSetLanguage")
+  @Emit("on-change")
   public handleSetLanguage(lang: string) {
     return lang;
   }

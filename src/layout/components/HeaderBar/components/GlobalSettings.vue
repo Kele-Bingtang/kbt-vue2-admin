@@ -19,18 +19,18 @@
         <div class="drawer-item-title">{{ $t("_settings.themeTitle") }}</div>
 
         <div class="drawer-theme-checbox">
-          <div class="drawer-theme-checbox-item" @click="handleSideMenuTheme('dark')">
-            <img src="@/icons/svg/side-menu-dark.svg" alt="" style="width: 48px; height: 48px" />
-            <!-- <svg-icon name="side-menu-dark" width="48" height="48" /> -->
-            <div v-if="sideMenuTheme === 'dark'" class="drawer-theme-checbox-select-icon">
-              <svg-icon name="tick" width="16" height="16" :style="{ color: theme }" />
-            </div>
-          </div>
-
           <div class="drawer-theme-checbox-item" @click="handleSideMenuTheme('light')">
             <img src="@/icons/svg/side-menu-light.svg" alt="" style="width: 48px; height: 48px" />
             <!-- <svg-icon name="side-menu-light" width="48" height="48" /> -->
             <div v-if="sideMenuTheme === 'light'" class="drawer-theme-checbox-select-icon">
+              <svg-icon name="tick" width="16" height="16" :style="{ color: theme }" />
+            </div>
+          </div>
+
+          <div class="drawer-theme-checbox-item" @click="handleSideMenuTheme('dark')">
+            <img src="@/icons/svg/side-menu-dark.svg" alt="" style="width: 48px; height: 48px" />
+            <!-- <svg-icon name="side-menu-dark" width="48" height="48" /> -->
+            <div v-if="sideMenuTheme === 'dark'" class="drawer-theme-checbox-select-icon">
               <svg-icon name="tick" width="16" height="16" :style="{ color: theme }" />
             </div>
           </div>

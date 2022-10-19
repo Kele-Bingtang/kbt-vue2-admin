@@ -66,10 +66,10 @@ class User extends VuexModule implements UserState {
 
   @Action
   public async LogOut() {
+    debugger
     if (this.token === "") {
       throw Error("LogOut: token is undefined!");
     }
-    // await logout()
     removeCacheToken();
     resetRouter();
 
@@ -89,7 +89,7 @@ class User extends VuexModule implements UserState {
     };
     let roles: string[] = userInfo.roles || ["admin"];
     this.SET_ROLES(roles);
-    this.SET_USER_INFO(userInfo);
+    this.setUserInfo(userInfo);
     return roles;
   }
 
@@ -103,6 +103,11 @@ class User extends VuexModule implements UserState {
   @Action
   public changeRoles(roles: string[]) {
     this.SET_ROLES(roles);
+  }
+
+  @Action
+  public setUserInfo(userInfo: UserInfo) {
+    this.SET_USER_INFO(userInfo);
   }
 
   // 获取消息列表，其中包含未读、已读、回收站三个列表

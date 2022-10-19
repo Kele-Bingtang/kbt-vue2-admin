@@ -18,10 +18,10 @@
           <header-bar>
             <template v-if="device !== 'mobile'">
               <full-screen />
-              <error-log :errorCount="errorCount" v-if="settings.errorLog.showInHeader" />
+              <error-log :error-count="errorCount" v-if="settings.errorLog.showInHeader" />
             </template>
-            <size-select :size="size" @handleSetSize="handleSetSize" />
-            <lang-select :language="language" @handleSetLanguage="handleSetLanguage" />
+            <size-select :size="size" @on-change="handleSetSize" />
+            <lang-select :language="language" @on-change="handleSetLanguage" />
             <user style="margin-right: 33px"></user>
           </header-bar>
         </el-header>

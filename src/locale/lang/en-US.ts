@@ -4,6 +4,7 @@ export default {
     Login: "Login",
     ErrorLogger: "Error Logger",
     Profile: "My Profile",
+    MessageCenter: "Message Center",
   },
   _tagsNav: {
     refresh: "Refresh Page",

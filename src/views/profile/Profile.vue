@@ -6,11 +6,11 @@
           <user-card :user="user">
             <user-avatar
               :user="user"
-              :cropWidth="200"
-              :cropHeight="200"
-              :cropContainerHeight="350"
-              imageType="base64"
-              @uploadImage="uploadImage"
+              :crop-width="200"
+              :crop-height="200"
+              :crop-container-height="350"
+              image-type="base64"
+              @upload-image="uploadImage"
             />
           </user-card>
         </el-col>
@@ -21,7 +21,7 @@
                 <timeline />
               </el-tab-pane>
               <el-tab-pane label="资料编辑" name="editorUserInfo">
-                <editor-info :user="user" />
+                <editor-info ref="editorUser" :user="canEditUser" @reset-user="resetUser" />
               </el-tab-pane>
               <el-tab-pane label="密码修改" name="updatePassword">
                 <account />
@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { UserModule } from "@/store/modules/user";
+import { UserInfo, UserModule } from "@/store/modules/user";
 import EditorInfo from "./components/editor-info.vue";
 import Account from "./components/account.vue";
 import UserCard from "./components/user-card.vue";
@@ -54,9 +54,17 @@ import Timeline from "./components/timeline.vue";
 })
 export default class Profile extends Vue {
   public activeTab = "timeline";
+  public canEditUser: UserInfo = {
+    userId: "",
+    userName: "",
+    sex: "",
+    roles: [],
+  };
 
   get user() {
-    return UserModule.userInfo;
+    let { userInfo } = UserModule;
+    this.canEditUser = { ...userInfo };
+    return userInfo;
   }
 
   get roles() {
@@ -65,6 +73,10 @@ export default class Profile extends Vue {
   // 提交图片到云端
   public uploadImage(imgData: FormData) {
     console.log(imgData);
+  }
+
+  public resetUser() {
+    this.canEditUser = { ...this.user };
   }
 }
 </script>
