@@ -25,7 +25,11 @@
       </div>
 
       <div class="message-page message-list" v-loading="listLoading">
-        <el-menu default-active="1" @select="handleListSelect">
+        <el-menu
+          default-active="1"
+          @select="handleListSelect"
+          :class="{ 'unread-list': selectedMessageType === 'readed' }"
+        >
           <el-menu-item v-for="message in messageList" :key="`message_${message.id}`" :index="message.id">
             <p class="list-title">{{ message.title }}</p>
             <div class="list-time">
@@ -258,6 +262,11 @@ export default class MessageCenter extends Vue {
             float: right;
             margin-right: 17px;
             padding-top: 3px;
+          }
+        }
+        .unread-list {
+          .el-menu-item:not(.is-active) {
+            color: #aaa9a9;
           }
         }
       }

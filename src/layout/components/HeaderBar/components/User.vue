@@ -81,6 +81,7 @@ export default class User extends Vue {
   }
 
   get messageCount() {
+    // TODO：unreadList 是空的，因为没有请求数据，只有打开我的消息才会请求数据，这里应该请求 API 未读消息的数量
     return UserModule.message.unreadList.length;
   }
 

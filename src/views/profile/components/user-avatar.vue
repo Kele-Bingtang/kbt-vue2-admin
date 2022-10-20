@@ -16,6 +16,7 @@
       @close="handleClose"
       class="user-avatar-dialog"
       destroy-on-close
+      :close-on-click-modal="false"
     >
       <div class="operate-container" :style="{ height: cropContainerHeight + 'px' }">
         <div class="avatar-img">
@@ -38,7 +39,7 @@
             v-if="cropperVisible"
           />
         </div>
-        <div class="avatar-img" v-if="previews.url">
+        <div class="avatar-img show-previews" v-if="previews.url">
           <div class="previews-img" :style="previews.div">
             <img :src="previews.url" :style="previews.img" class="img" alt="头像" />
           </div>
@@ -60,12 +61,8 @@
           <el-button type="primary" plain icon="el-icon-zoom-out" @click="changeScale(-1)">缩小</el-button>
           <el-button type="primary" plain @click="rotateLeft">↺ 左旋转</el-button>
           <el-button type="primary" plain @click="rotateRight">↻ 右旋转</el-button>
-          <el-button type="primary" plain icon="el-icon-download" @click="downloadImg('blob')">
-            下载
-          </el-button>
-          <el-button type="primary" icon="el-icon-upload2" @click="uploadImage" class="upload-btn">
-            提交
-          </el-button>
+          <el-button type="primary" plain icon="el-icon-download" @click="downloadImg('blob')">下载</el-button>
+          <el-button type="primary" icon="el-icon-upload2" @click="uploadImage" class="upload-btn">提交</el-button>
         </div>
       </div>
     </el-dialog>
@@ -277,10 +274,15 @@ export default class UserAvatar extends Vue {
       width: 50%;
       height: 100%;
       position: relative;
+    }
+    .show-previews {
+      display: flex;
+      display: --webkit-flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding-left: 10px;
       .previews-img {
-        position: absolute;
-        top: 45%;
-        transform: translate(50%, -50%);
         border-radius: 50%;
         overflow: hidden;
         -webkit-box-shadow: 0 0 4px #ccc;
