@@ -49,7 +49,7 @@ import SizeSelect from "./components/HeaderBar/components/SizeSelect.vue";
 import LangSelect from "./components/HeaderBar/components/LangSelect.vue";
 import User from "./components/HeaderBar/components/User.vue";
 import ErrorLog from "./components/HeaderBar/components/ErrorLog.vue";
-import ThemePicker from "@/components/ThemePicker/ThemePicker.vue";
+import ThemePicker from "@/components/ThemePicker/index.vue";
 import settings from "@/config/settings";
 
 @Component({

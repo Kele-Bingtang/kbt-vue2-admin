@@ -8,3 +8,5 @@ declare module "element-ui/lib/locale/lang/*" {
 }
 
 declare module "vue-cropper";
+
+declare module 'vue-count-to';

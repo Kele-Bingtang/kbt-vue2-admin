@@ -63,7 +63,7 @@ export const constantRoutes: Array<RouteConfigAndMeta> = [
       {
         path: "index",
         name: "Profile",
-        component: () => import("@/views/profile/profile.vue"),
+        component: () => import("@/views/profile/index.vue"),
         meta: { title: "我的主页" },
       },
     ],
@@ -77,7 +77,7 @@ export const constantRoutes: Array<RouteConfigAndMeta> = [
       {
         path: "index",
         name: "MessageCenter",
-        component: () => import("@/views/message-center/message-center.vue"),
+        component: () => import("@/views/message-center/index.vue"),
         meta: { title: "我的消息" },
       },
     ],
@@ -91,7 +91,7 @@ export const constantRoutes: Array<RouteConfigAndMeta> = [
       {
         path: "index",
         name: "ErrorLogger",
-        component: () => import("@/views/error-page/error-logger.vue"),
+        component: () => import("@/views/error-page/index.vue"),
         meta: { title: "错误日志" },
       },
     ],
@@ -107,7 +107,7 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
       {
         path: "home",
         name: "Home",
-        component: () => import("@/views/home-view.vue"),
+        component: () => import("@/views/home/index.vue"),
         meta: { title: "首页", icon: "el-icon-s-home", fixedInNav: true },
       },
     ],
@@ -164,7 +164,7 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         path: "home",
         name: "_noUseI18n_redirectToHome",
         component: () => import("@/views/home-view.vue"),
-        meta: { title: "重定向到Home", icon: "documentation" },
+        meta: { title: "重定向到Home", icon: "component" },
       },
     ],
   },

@@ -97,7 +97,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import ThemePicker from "@/components/ThemePicker/ThemePicker.vue";
+import ThemePicker from "@/components/ThemePicker/index.vue";
 import { SettingsModule } from "@/store/modules/settings";
 import { setTitle } from "@/utils/layout";
 
