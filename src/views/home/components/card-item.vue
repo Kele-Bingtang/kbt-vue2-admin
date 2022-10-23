@@ -17,7 +17,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({})
-export default class CardInfo extends Vue {
+export default class HomeCardItem extends Vue {
   @Prop({ default: "" })
   public shadow!: string;
   @Prop({ default: "" })

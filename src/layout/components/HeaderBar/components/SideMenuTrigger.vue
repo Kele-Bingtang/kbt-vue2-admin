@@ -1,5 +1,5 @@
 <template>
-  <div :class="[{ 'is-collapse': isCollapse }]" @click="toggleTrigger">
+  <div class="side-menu-trigger" :class="[{ 'not-collapse': !isCollapse }]" @click="toggleTrigger">
     <svg-icon name="fold" width="20" height="20" />
   </div>
 </template>
@@ -20,11 +20,12 @@ export default class SideMenuTrigger extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.svg-icon {
-  vertical-align: middle;
+.side-menu-trigger {
+  .svg-icon {
+    vertical-align: middle;
+  }
 }
-
-.is-collapse {
-  transform: rotate(180deg);
+.not-collapse {
+  transform: rotate(180deg) !important;
 }
 </style>

@@ -5,6 +5,11 @@ export default {
     ErrorLogger: "Error Logger",
     Profile: "My Profile",
     MessageCenter: "Message Center",
+    Components: "Components",
+    CountTo: "CountTo",
+    Clipper: "Images Clipper",
+    params: "params",
+    query: "query",
   },
   _tagsNav: {
     refresh: "Refresh Page",

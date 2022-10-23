@@ -6,10 +6,17 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import * as echarts from "echarts";
 
+interface BarData {
+  title: string;
+  data: number[];
+}
+
 @Component({})
 export default class ChartBar extends Vue {
   public chart: any;
 
+  @Prop({ required: true })
+  public data!: Array<BarData>;
   @Prop({ default: "100%" })
   public width!: string;
   @Prop({ default: "300px" })
@@ -61,9 +68,9 @@ export default class ChartBar extends Vue {
       ],
       series: [
         {
-          name: "搜索引擎",
+          name: this.data[0].title,
           type: "bar",
-          data: [862, 1018, 964, 1026, 1679, 1600, 1570],
+          data: this.data[0].data,
           emphasis: {
             focus: "series",
           },
@@ -75,41 +82,41 @@ export default class ChartBar extends Vue {
           },
         },
         {
-          name: "百度",
+          name: this.data[1].title,
           type: "bar",
           barWidth: 5,
           stack: "搜索引擎",
           emphasis: {
             focus: "series",
           },
-          data: [620, 732, 701, 734, 1090, 1130, 1120],
+          data: this.data[1].data,
         },
         {
-          name: "谷歌",
+          name: this.data[2].title,
           type: "bar",
           stack: "搜索引擎",
           emphasis: {
             focus: "series",
           },
-          data: [120, 132, 101, 134, 290, 230, 220],
+          data: this.data[2].data,
         },
         {
-          name: "Bing",
+          name: this.data[3].title,
           type: "bar",
           stack: "搜索引擎",
           emphasis: {
             focus: "series",
           },
-          data: [60, 72, 71, 74, 190, 130, 110],
+          data: this.data[3].data,
         },
         {
-          name: "其他",
+          name: this.data[4].title,
           type: "bar",
           stack: "搜索引擎",
           emphasis: {
             focus: "series",
           },
-          data: [62, 82, 91, 84, 109, 110, 120],
+          data: this.data[4].data,
         },
       ],
     });

@@ -1,5 +1,5 @@
 <template>
-  <div style="height: calc(100% - 38px)">
+  <div class="main-content">
     <transition name="fade-transform" mode="out-in">
       <!-- 内容由路由跳转实现 -->
       <keep-alive :include="cachedTagList">
@@ -25,4 +25,9 @@ export default class MainContent extends Vue {
 }
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.main-content {
+  height: calc(100% - 38px);
+  overflow: auto;
+}
+</style>
