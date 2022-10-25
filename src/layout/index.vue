@@ -1,21 +1,53 @@
 <template>
   <div class="layout" :class="{ mobile: isMobile() }" :style="{ '--theme-color': theme }">
-    <el-container
-      class="layout-container"
-      :class="{ 'side-menu-collapse': isCollapse, 'side-menu-expand': !isCollapse }"
-    >
-      <!-- 侧边菜单栏 -->
-      <el-aside class="side-menu-container">
-        <side-menu>
-          <side-menu-logo v-if="showSideMenuLogo" :is-collapse="isCollapse" />
-        </side-menu>
-      </el-aside>
-      <!-- 移动端打开菜单栏，空白处出现遮罩 -->
-      <div v-if="isMobile() && !isCollapse" class="drawer-bg" @click="handleClickOutSide" />
-      <el-container>
+    <!-- 布局 1：SideMenu 占屏幕左侧，Header 和 Main Content 占右侧 -->
+    <template v-if="layoutMode === '0'">
+      <el-container
+        class="layout-container"
+        :class="{ 'side-menu-collapse': isCollapse, 'side-menu-expand': !isCollapse }"
+      >
+        <!-- 侧边菜单栏 -->
+        <el-aside class="side-menu-container">
+          <side-menu>
+            <layout-logo v-if="showLayoutLogo" :is-collapse="isCollapse" position="sideMenu" />
+          </side-menu>
+        </el-aside>
+        <!-- 移动端打开菜单栏，空白处出现遮罩 -->
+        <div v-if="isMobile() && !isCollapse" class="drawer-bg" @click="handleClickOutSide" />
+        <el-container>
+          <!-- 头部 -->
+          <el-header class="header-container">
+            <header-bar>
+              <template v-if="device !== 'mobile'">
+                <full-screen />
+                <error-log :error-count="errorCount" v-if="settings.errorLog.showInHeader" />
+              </template>
+              <size-select :size="size" @on-change="handleSetSize" />
+              <lang-select :language="language" @on-change="handleSetLanguage" />
+              <user style="margin-right: 33px"></user>
+            </header-bar>
+          </el-header>
+          <!-- 内容 -->
+          <el-main class="main-container">
+            <tags-nav v-if="showTagsNav" />
+            <main-content />
+          </el-main>
+        </el-container>
+      </el-container>
+    </template>
+
+    <!-- 布局 2：Header 占顶部一行，SideMenu 占下方左侧，Main Content 占下方右侧 -->
+    <template v-if="layoutMode === '1'">
+      <el-container
+        class="layout-container"
+        :class="{ 'side-menu-collapse': isCollapse, 'side-menu-expand': !isCollapse }"
+      >
         <!-- 头部 -->
         <el-header class="header-container">
           <header-bar>
+            <template #logo>
+              <layout-logo v-if="showLayoutLogo" :is-collapse="isCollapse" position="header" />
+            </template>
             <template v-if="device !== 'mobile'">
               <full-screen />
               <error-log :error-count="errorCount" v-if="settings.errorLog.showInHeader" />
@@ -25,13 +57,21 @@
             <user style="margin-right: 33px"></user>
           </header-bar>
         </el-header>
-        <!-- 内容 -->
-        <el-main class="main-container">
-          <tags-nav v-if="showTagsNav" />
-          <main-content />
-        </el-main>
+        <!-- 移动端打开菜单栏，空白处出现遮罩 -->
+        <div v-if="isMobile() && !isCollapse" class="drawer-bg" @click="handleClickOutSide" />
+        <el-container>
+          <!-- 侧边菜单栏 -->
+          <el-aside class="side-menu-container">
+            <side-menu></side-menu>
+          </el-aside>
+          <!-- 内容 -->
+          <el-main class="main-container">
+            <tags-nav v-if="showTagsNav" />
+            <main-content />
+          </el-main>
+        </el-container>
       </el-container>
-    </el-container>
+    </template>
     <!-- 如果曾选过主题色，则使用该组件来更新主题色，但是该组件不需要显示在页面 -->
     <theme-picker v-if="theme.toLowerCase() !== settings.theme.toLowerCase()" v-show="false" />
   </div>
@@ -43,7 +83,7 @@ import { HeaderBar, SideMenu, TagsNav, MainContent } from "./components";
 import { setTitle } from "@/utils/layout";
 import { DeviceType, LayoutModule } from "@/store/modules/layout";
 import { SettingsModule } from "@/store/modules/settings";
-import SideMenuLogo from "./components/SideMenu/SideMenuLogo.vue";
+import LayoutLogo from "./components/Logo/index.vue";
 import FullScreen from "./components/HeaderBar/components/FullScreen.vue";
 import SizeSelect from "./components/HeaderBar/components/SizeSelect.vue";
 import LangSelect from "./components/HeaderBar/components/LangSelect.vue";
@@ -58,7 +98,7 @@ import settings from "@/config/settings";
     TagsNav,
     SideMenu,
     MainContent,
-    SideMenuLogo,
+    LayoutLogo,
     FullScreen,
     SizeSelect,
     LangSelect,
@@ -68,6 +108,9 @@ import settings from "@/config/settings";
   },
 })
 export default class Layout extends Vue {
+  // 如果是 get 获取，那么一旦 SettingsModule.layoutMode 改变，布局也会改变，此时发生布局紊乱，所以不需要 get 获取，而是利用刷新解决布局问题
+  public layoutMode = SettingsModule.layoutMode;
+
   // 当前菜单是否折叠
   get isCollapse() {
     return LayoutModule.sideMenu.isCollapse;
@@ -89,8 +132,8 @@ export default class Layout extends Vue {
     return SettingsModule.showTagsNav;
   }
   // 是否显示侧边菜单栏的 Logo
-  get showSideMenuLogo() {
-    return SettingsModule.showSideMenuLogo;
+  get showLayoutLogo() {
+    return SettingsModule.showLayoutLogo;
   }
   // 获取当前语言
   get language() {

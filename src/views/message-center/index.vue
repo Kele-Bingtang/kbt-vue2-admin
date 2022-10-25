@@ -9,10 +9,10 @@
               <el-badge :value="unreadCount" type="danger" :max="99"></el-badge>
             </span>
           </el-menu-item>
-          <el-menu-item index="readed">
+          <el-menu-item index="hasRead">
             <span class="category">
               已读消息
-              <el-badge :value="readedCount" type="success"></el-badge>
+              <el-badge :value="readCount" type="success"></el-badge>
             </span>
           </el-menu-item>
           <el-menu-item index="recycle">
@@ -28,7 +28,10 @@
         <el-menu
           default-active="1"
           @select="handleListSelect"
-          :class="{ 'unread-list': selectedMessageType === 'readed' }"
+          :class="{
+            'unread-list': selectedMessageType === 'hasRead',
+            'recycle-list': selectedMessageType === 'recycle',
+          }"
         >
           <el-menu-item v-for="message in messageList" :key="`message_${message.id}`" :index="message.id">
             <p class="list-title">{{ message.title }}</p>
@@ -40,7 +43,9 @@
               type="text"
               class="list-operate"
               :loading="message.loading"
-              :icon="selectedMessageType === 'readed' ? 'el-icon-delete operate-icon' : 'el-icon-top-left operate-icon'"
+              :icon="
+                selectedMessageType === 'hasRead' ? 'el-icon-delete operate-icon' : 'el-icon-top-left operate-icon'
+              "
               @click.stop="handleOperate(message)"
               v-if="selectedMessageType !== 'unread'"
             ></el-button>
@@ -60,19 +65,21 @@
 </template>
 
 <script lang="ts">
-import { Message, UserModule } from "@/store/modules/user";
+import { MessageItem, MessageModule } from "@/store/modules/message";
 import { Component, Vue } from "vue-property-decorator";
+
+type MessageType = "unread" | "hasRead" | "recycle";
 
 @Component({})
 export default class MessageCenter extends Vue {
   public listLoading = false;
   public contentLoading = false;
 
-  public selectedMessageType = "unread";
+  public selectedMessageType: MessageType = "unread";
 
-  public lastReadedMessageId = "";
+  public lastReadMessageId = "";
 
-  public selectedMessageItem: Message = {
+  public selectedMessageItem: MessageItem = {
     id: "",
     title: "",
     content: "",
@@ -80,23 +87,23 @@ export default class MessageCenter extends Vue {
   };
 
   get unreadCount() {
-    return UserModule.message.unreadList.length;
+    return MessageModule.message.unreadList.length;
   }
 
-  get readedCount() {
-    return UserModule.message.readedList.length;
+  get readCount() {
+    return MessageModule.message.hasReadList.length;
   }
 
   get recycleCount() {
-    return UserModule.message.recycleList.length;
+    return MessageModule.message.recycleList.length;
   }
 
   get messageList() {
-    let { unreadList, readedList, recycleList } = UserModule.message;
+    let { unreadList, hasReadList, recycleList } = MessageModule.message;
     if (this.selectedMessageType === "unread") {
       return unreadList;
-    } else if (this.selectedMessageType === "readed") {
-      return readedList;
+    } else if (this.selectedMessageType === "hasRead") {
+      return hasReadList;
     } else if (this.selectedMessageType === "recycle") {
       return recycleList;
     }
@@ -106,7 +113,7 @@ export default class MessageCenter extends Vue {
   mounted() {
     // 请求获取消息列表
     this.listLoading = true;
-    UserModule.getMessageList()
+    MessageModule.getMessageList()
       .then(() => {
         // 模拟延迟
         setTimeout(() => {
@@ -116,7 +123,7 @@ export default class MessageCenter extends Vue {
       .catch(() => (this.listLoading = false));
   }
 
-  public handleCategorySelect(id: string) {
+  public handleCategorySelect(id: MessageType) {
     this.selectedMessageType = id;
     this.messageHasRead();
   }
@@ -137,19 +144,19 @@ export default class MessageCenter extends Vue {
   }
 
   public messageHasRead(id?: string) {
-    if (this.lastReadedMessageId) {
-      UserModule.messageHasRead({ id: this.lastReadedMessageId }).then(() => {
-        this.lastReadedMessageId = id ? id : "";
+    if (this.lastReadMessageId) {
+      MessageModule.messageHasRead({ id: this.lastReadMessageId }).then(() => {
+        this.lastReadMessageId = id ? id : "";
       });
     } else {
-      this.lastReadedMessageId = id ? id : "";
+      this.lastReadMessageId = id ? id : "";
     }
   }
 
-  public handleOperate(message: Message) {
+  public handleOperate(message: MessageItem) {
     message.loading = true;
     const { id } = message;
-    if (this.selectedMessageType === "readed") {
+    if (this.selectedMessageType === "hasRead") {
       // 删除
       this.$confirm("您确定将该消息放到回收站吗？", "提示", {
         confirmButtonText: "确定",
@@ -157,7 +164,7 @@ export default class MessageCenter extends Vue {
         type: "warning",
       })
         .then(() => {
-          UserModule.removeReadedMessage({ id });
+          MessageModule.removeReadMessage({ id });
           this.$message({
             type: "success",
             message: "删除成功!",
@@ -175,7 +182,7 @@ export default class MessageCenter extends Vue {
         type: "warning",
       })
         .then(() => {
-          UserModule.restoreRecycleMessage({ id });
+          MessageModule.restoreRecycleMessage({ id });
           this.$message({
             type: "success",
             message: "恢复成功!",

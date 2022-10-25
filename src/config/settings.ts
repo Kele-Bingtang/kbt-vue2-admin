@@ -1,10 +1,11 @@
 interface Settings {
   title: string; // 项目 title
   titleMode: string; // 标题在浏览器标签上的多种模式。0：项目 title + 页面 title，1：用户名 + 页面 title，2：项目 title，3：页面 title
+  layoutMode: string; // 布局设置，0：SideMenu 占屏幕左侧，Header 和 Main Content 占右侧，1：Header 占顶部一行，SideMenu 占下方左侧，Main Content 占下方右侧
   showSettings: boolean; // 是否显示设置
   showBreadcrumb: boolean; // 是否使用 Breadcrumb
   showTagsNav: boolean; // 是否使用 tagsNav
-  showSideMenuLogo: boolean; // Controls siderbar logo display
+  showLayoutLogo: boolean; // 是否显示布局 Logo
   routeUseI18n: boolean; // 「路由」布局是否使用国际化，默认为 false，如果不使用，则需要在路由中给需要在菜单中展示的路由设置 meta: {title: 'xxx'} 用来在菜单中显示文字
   recordTagsNav: boolean; // 是否记录打开过（没关闭）的 tags，下次打开会加载在 tagsNav
   sideMenuTextTheme: boolean; // 如果是 true，则菜单的激活色跟随系统颜色
@@ -25,10 +26,11 @@ interface Settings {
 const settings: Settings = {
   title: "kbt-vue-admin",
   titleMode: "0",
+  layoutMode: "0",
   showSettings: true,
   showBreadcrumb: true,
   showTagsNav: true,
-  showSideMenuLogo: true,
+  showLayoutLogo: true,
   routeUseI18n: true,
   recordTagsNav: true,
   sideMenuTextTheme: true,

@@ -35,9 +35,10 @@ interface CacheSettings {
   cacheSideMenuTheme: string; // 缓存的侧边菜单栏主题色
   cacheShowTagsNav: boolean; // 缓存的是否显示标签页
   cacheRecordTagsNav: boolean; // 缓存的打开过（没关闭）的 tags，下次打开会加载在 tagsNav
-  cacheShowSideMenuLogo: boolean; // 缓存的是否显示侧边菜单栏的 Logo
+  cacheShowLayoutLogo: boolean; // 缓存的是否显示侧边菜单栏的 Logo
   cacheShowBreadcrumb: boolean; // 缓存的是否使用面包屑
   cacheTitleMode: string; // 缓存的标题在浏览器标签上的多种模式。0：title + 页面 title，1：用户名 + 页面 title，2：title，3：页面 title
+  cacheLayoutMode: string; // 缓存的布局设置，0：SideMenu 占屏幕左侧，Header 和 Main Content 占右侧，1：Header 占顶部一行，SideMenu 占下方左侧，Main Content 占下方右侧
 }
 
 // 全局 settings 缓存
@@ -45,7 +46,8 @@ export const getCacheSettings = (): CacheSettings => {
   return JSON.parse(localStorage.getItem("kbt_settings") || "{}");
 };
 export const setCacheSettings = (value: SettingsState) => {
-  let { theme, sideMenuTheme, showTagsNav, recordTagsNav, showSideMenuLogo, titleMode, showBreadcrumb } = value;
+  let { theme, sideMenuTheme, showTagsNav, recordTagsNav, showLayoutLogo, titleMode, showBreadcrumb, layoutMode } =
+    value;
   localStorage.setItem(
     "kbt_settings",
     `{
@@ -53,9 +55,10 @@ export const setCacheSettings = (value: SettingsState) => {
         "cacheSideMenuTheme": "${sideMenuTheme}",
         "cacheShowTagsNav": ${showTagsNav},
         "cacheRecordTagsNav": ${recordTagsNav},
-        "cacheShowSideMenuLogo": ${showSideMenuLogo},
+        "cacheShowLayoutLogo": ${showLayoutLogo},
         "cacheShowBreadcrumb": ${showBreadcrumb},
-        "cacheTitleMode": "${titleMode}"
+        "cacheTitleMode": "${titleMode}",
+        "cacheLayoutMode": "${layoutMode}"
       }`
   );
 };

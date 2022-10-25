@@ -4,7 +4,7 @@
       <el-col :xs="12" :sm="12" :md="8" :lg="5" v-for="(info, i) in cardInfo" :key="`info-${i}`" class="card-col">
         <card-item shadow="hover" :icon="info.icon" :color="info.color" :icon-size="48">
           <div class="card-title">{{ info.title }}</div>
-          <count-to :start-val="0" :end-val="info.count" :duration="2700" class="count-style" />
+          <count-to :start-val="0" :end-val="info.count" :duration="2.7" class="count-style" />
         </card-item>
       </el-col>
     </el-row>
@@ -40,7 +40,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import CardItem from "./components/card-item.vue";
-import CountTo from "vue-count-to";
+import CountTo from "@/components/CountTo/index.vue";
 import ChartPie from "./components/chart-pie.vue";
 import ChartBar from "./components/chart-bar.vue";
 import ChartLineBar from "./components/chart-line-bar.vue";

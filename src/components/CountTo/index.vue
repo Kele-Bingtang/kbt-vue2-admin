@@ -91,13 +91,13 @@ export default class CountTo extends Vue {
   public useEasing!: boolean;
 
   /*
-   * @description 是否使用分组，分组后每三位会用一个符号分隔
+   * @description 是否使用分组，分组后每三位会用一个符号分隔，即 1000 位 1,000
    */
   @Prop({ default: true })
   public useGroup!: boolean;
 
   /**
-   * @description 用于分组(useGroup)的符号
+   * @description 用于分组（useGroup）的符号
    */
   @Prop({ default: "," })
   public separator!: string;
@@ -127,9 +127,12 @@ export default class CountTo extends Vue {
   @Prop({ default: "" })
   unitClass!: string;
 
-  @Watch("endVal") public onEndChangge(newVal: number) {
+  @Watch("endVal")
+  private onEndChange(newVal: number) {
     let endVal = this.getValue(newVal);
-    this.counter.update(endVal);
+    if (this.autoplay) {
+      this.counter.update(endVal);
+    }
   }
 
   get counterId() {
@@ -138,19 +141,23 @@ export default class CountTo extends Vue {
 
   mounted() {
     this.$nextTick(() => {
-      let endVal = this.getValue(this.endVal);
-      this.counter = new (CountUp as any)(this.counterId, this.startVal, endVal, this.decimals, this.duration, {
-        useEasing: this.useEasing,
-        useGrouping: this.useGroup,
-        separator: this.separator,
-        decimal: this.decimal,
-      });
       if (this.autoplay) {
-        setTimeout(() => {
-          if (!this.counter.error) this.counter.start();
-        }, this.delay);
+        this.initCountUp();
       }
     });
+  }
+
+  private initCountUp() {
+    let endVal = this.getValue(this.endVal);
+    this.counter = new (CountUp as any)(this.counterId, this.startVal, endVal, this.decimals, this.duration, {
+      useEasing: this.useEasing,
+      useGrouping: this.useGroup,
+      separator: this.separator,
+      decimal: this.decimal,
+    });
+    setTimeout(() => {
+      if (!this.counter.error) this.counter.start();
+    }, this.delay);
   }
 
   private getHandleVal(val: number, len: number) {
@@ -192,7 +199,15 @@ export default class CountTo extends Vue {
   }
 
   public start() {
-    this.counter.start();
+    this.initCountUp();
+  }
+
+  public pause() {
+    this.counter.pauseResume();
+  }
+
+  public reset() {
+    this.counter.reset();
   }
 }
 </script>

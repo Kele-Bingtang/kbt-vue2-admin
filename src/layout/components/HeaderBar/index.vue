@@ -1,6 +1,7 @@
 <template>
   <div class="header-bar">
     <side-menu-trigger :is-collapse="isCollapse" @toggle-trigger="toggleTrigger" class="side-menu-trigger-container" />
+    <slot name="logo"></slot>
     <breadcrumb :breadcrumbs="breadcrumbs" class="breadcrumb-container" v-if="showBreadcrumb" />
     <div class="right-menu">
       <slot></slot>

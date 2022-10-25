@@ -124,14 +124,14 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
     children: [
       {
         path: "/count-to",
-        name: "CountTo",
+        name: "CountToDemo",
         component: () => import("@/views/components/count-to/index.vue"),
         meta: { title: "数字渐变", icon: "el-icon-star-on" },
       },
       {
         path: "/images-clipper",
-        name: "Clipper",
-        component: () => import("@/views/home/index.vue"),
+        name: "ClipperDemo",
+        component: () => import("@/views/components/clipper/index.vue"),
         meta: { title: "数字渐变", icon: "el-icon-star-on" },
       },
     ],

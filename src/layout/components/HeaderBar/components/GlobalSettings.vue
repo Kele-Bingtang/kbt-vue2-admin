@@ -1,11 +1,11 @@
 <template>
   <div class="global-settings">
     <!-- 放到 HeaderBar 中 -->
-    <!-- <div class="svg-container">
+    <div class="svg-container">
       <el-button size="small" plain @click.prevent="openSettingsDrawer">
         <svg-icon name="setting" width="22" height="22"></svg-icon>
       </el-button>
-    </div> -->
+    </div>
 
     <el-drawer
       :visible.sync="drawerVisible"
@@ -15,22 +15,20 @@
       custom-class="drawer-container"
       :with-header="false"
     >
-      <div class="drawer-theme-container">
+      <div class="drawer-theme-container drawer-checkbox-container">
         <div class="drawer-item-title">{{ $t("_settings.themeTitle") }}</div>
 
-        <div class="drawer-theme-checbox">
-          <div class="drawer-theme-checbox-item" @click="handleSideMenuTheme('light')">
+        <div class="drawer-theme-checkbox drawer-checkbox">
+          <div class="drawer-theme-checkbox-item drawer-checkbox-item" @click="handleSideMenuTheme('light')">
             <img src="@/icons/svg/side-menu-light.svg" alt="" style="width: 48px; height: 48px" />
-            <!-- <svg-icon name="side-menu-light" width="48" height="48" /> -->
-            <div v-if="sideMenuTheme === 'light'" class="drawer-theme-checbox-select-icon">
+            <div v-if="sideMenuTheme === 'light'" class="drawer-theme-checkbox-select-icon drawer-checkbox-select-icon">
               <svg-icon name="tick" width="16" height="16" :style="{ color: theme }" />
             </div>
           </div>
 
-          <div class="drawer-theme-checbox-item" @click="handleSideMenuTheme('dark')">
+          <div class="drawer-theme-checkbox-item drawer-checkbox-item" @click="handleSideMenuTheme('dark')">
             <img src="@/icons/svg/side-menu-dark.svg" alt="" style="width: 48px; height: 48px" />
-            <!-- <svg-icon name="side-menu-dark" width="48" height="48" /> -->
-            <div v-if="sideMenuTheme === 'dark'" class="drawer-theme-checbox-select-icon">
+            <div v-if="sideMenuTheme === 'dark'" class="drawer-theme-checkbox-select-icon drawer-checkbox-select-icon">
               <svg-icon name="tick" width="16" height="16" :style="{ color: theme }" />
             </div>
           </div>
@@ -44,8 +42,30 @@
 
       <el-divider />
 
-      <div class="layout-container">
+      <div class="drawer-layout-container drawer-checkbox-container">
         <div class="drawer-item-title">{{ $t("_settings.layoutTitle") }}</div>
+
+        <div class="drawer-layout-checkbox drawer-checkbox">
+          <div class="drawer-layout-checkbox-item drawer-checkbox-item" @click="handleLayoutMode(0)">
+            <img src="@/icons/svg/layout-one.svg" alt="" style="width: 48px; height: 48px" />
+            <div v-if="layoutMode === '0'" class="drawer-layout-checkbox-select-icon drawer-checkbox-select-icon">
+              <svg-icon name="tick" width="16" height="16" :style="{ color: theme }" />
+            </div>
+          </div>
+
+          <div class="drawer-layout-checkbox-item drawer-checkbox-item" @click="handleLayoutMode(1)">
+            <img src="@/icons/svg/layout-two.svg" alt="" style="width: 48px; height: 48px" />
+            <div v-if="layoutMode === '1'" class="drawer-layout-checkbox-select-icon drawer-checkbox-select-icon">
+              <svg-icon name="tick" width="16" height="16" :style="{ color: theme }" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <el-divider />
+
+      <div class="layout-components-container">
+        <div class="drawer-item-title">{{ $t("_settings.layoutComponents") }}</div>
 
         <div class="drawer-item">
           <span>{{ $t("_settings.showBreadcrumb") }}</span>
@@ -63,8 +83,8 @@
         </div>
 
         <div class="drawer-item">
-          <span>{{ $t("_settings.showSideMenuLogo") }}</span>
-          <el-switch v-model="showSideMenuLogo" class="drawer-switch" />
+          <span>{{ $t("_settings.showLayoutLogo") }}</span>
+          <el-switch v-model="showLayoutLogo" class="drawer-switch" />
         </div>
       </div>
 
@@ -106,7 +126,7 @@ import { setTitle } from "@/utils/layout";
     ThemePicker,
   },
 })
-export default class GloabalSettings extends Vue {
+export default class GlobalSettings extends Vue {
   public drawerVisible = false;
 
   get titleModeOptions() {
@@ -158,12 +178,12 @@ export default class GloabalSettings extends Vue {
     SettingsModule.changeSetting({ key: "recordTagsNav", value });
   }
 
-  get showSideMenuLogo() {
-    return SettingsModule.showSideMenuLogo;
+  get showLayoutLogo() {
+    return SettingsModule.showLayoutLogo;
   }
 
-  set showSideMenuLogo(value) {
-    SettingsModule.changeSetting({ key: "showSideMenuLogo", value });
+  set showLayoutLogo(value) {
+    SettingsModule.changeSetting({ key: "showLayoutLogo", value });
   }
 
   get sideMenuTheme() {
@@ -180,15 +200,20 @@ export default class GloabalSettings extends Vue {
     setTitle(this.$route, this);
   }
 
-  public handleSideMenuTheme(value: string) {
-    let sideMenuTheme = value;
-    SettingsModule.changeSetting({
-      key: "sideMenuTheme",
-      value: sideMenuTheme,
-    });
+  get layoutMode() {
+    return SettingsModule.layoutMode;
   }
 
-  public handleSelectTitleMode() {}
+  public handleSideMenuTheme(value: string) {
+    SettingsModule.changeSetting({ key: "sideMenuTheme", value });
+  }
+
+  public handleLayoutMode(value: number) {
+    SettingsModule.changeSetting({ key: "layoutMode", value });
+    this.$nextTick(() => {
+      window.location.reload();
+    });
+  }
 
   // 打开设置窗口
   public openSettingsDrawer() {
@@ -218,8 +243,8 @@ export default class GloabalSettings extends Vue {
   line-height: 1.5;
   word-wrap: break-word;
 
-  .drawer-theme-container {
-    .drawer-theme-checbox {
+  .drawer-checkbox-container {
+    .drawer-checkbox {
       height: 48px;
       line-height: 48px;
       display: flex;
@@ -228,14 +253,14 @@ export default class GloabalSettings extends Vue {
       margin-top: 10px;
       margin-bottom: 20px;
 
-      .drawer-theme-checbox-item {
+      .drawer-checkbox-item {
         height: 100%;
         position: relative;
         margin-right: 16px;
         border-radius: 2px;
         cursor: pointer;
 
-        .drawer-theme-checbox-select-icon {
+        .drawer-checkbox-select-icon {
           display: block;
           position: absolute;
           top: 0;

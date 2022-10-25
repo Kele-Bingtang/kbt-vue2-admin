@@ -6,11 +6,6 @@
           <user-card :user="user">
             <user-avatar
               :user="user"
-              :crop-width="200"
-              :crop-height="200"
-              :crop-container-height="350"
-              image-type="base64"
-              @upload-image="uploadImage"
             />
           </user-card>
         </el-col>
@@ -69,10 +64,6 @@ export default class Profile extends Vue {
 
   get roles() {
     return UserModule.roles;
-  }
-  // 提交图片到云端
-  public uploadImage(imgData: FormData) {
-    console.log(imgData);
   }
 
   public resetUser() {

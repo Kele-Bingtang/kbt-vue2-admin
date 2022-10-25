@@ -1,7 +1,7 @@
-import { Message } from "@/store/modules/user";
+import { MessageItem } from "@/store/modules/message";
 import { myHtml } from "./html";
 
-export const unreadList: Array<Message> = [
+export const unreadList: Array<MessageItem> = [
   {
     id: "01",
     title: "未读测试 01",
@@ -48,7 +48,7 @@ export const unreadList: Array<Message> = [
   },
 ];
 
-export const readedList: Array<Message> = [
+export const hasReadList: Array<MessageItem> = [
   {
     id: "11",
     title: "已读测试 11",
@@ -83,7 +83,7 @@ export const readedList: Array<Message> = [
     createTime: "2022-10-15",
   },
 ];
-export const recycleList: Array<Message> = [
+export const recycleList: Array<MessageItem> = [
   {
     id: "21",
     title: "回收站测试 21",

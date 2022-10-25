@@ -18,7 +18,7 @@
             <span>添加前缀和后缀</span>
           </div>
           <div class="count-to-content">
-            <count-to :start-val="0" :end-val="2727" prefix="Cost " suffix=" Money" count-class="count-text" />
+            <count-to :start-val="0" :end-val="2727" prefix="Lucky " suffix=" Num" count-class="count-text" />
           </div>
         </el-card>
       </el-col>
@@ -37,37 +37,55 @@
       <el-col :span="8">
         <el-card shadow="hover">
           <div slot="header" class="title">
-            <span>持续时间 10,000 毫秒</span>
+            <span>动画持续 10 秒</span>
           </div>
           <div class="count-to-content">
             <count-to
               :start-val="0"
               :end-val="2727"
               :decimals="2"
-              :duration="5"
+              :duration="10"
               :use-easing="false"
               count-class="count-text"
             />
-            <count-to1 :start-val="0" :end-val="2727" :decimals="2" :duration="5000" />
-            <count-to1 :end-val="2727" :decimals="2" :duration="5000" :use-easing="false" style="display: block" />
           </div>
         </el-card>
       </el-col>
     </el-row>
 
     <el-row :gutter="20" class="count-to-row">
-      <el-col :span="5">
-        <el-card shadow="hover">
+      <el-col :span="8">
+        <el-card shadow="hover" style="height: 270px">
           <div slot="header" class="title">
-            <span>转换单位简化数据</span>
+            <span>单位转换（自带）</span>
           </div>
           <div class="count-to-content">
-            <count-to :simplify="true" :end-val="2727" count-class="count-text" unit-class="unit-class" />
+            <count-to
+              :simplify="true"
+              :end-val="27272"
+              prefix="原始数据：27272 => "
+              count-class="count-text"
+              unit-class="unit-class"
+            />
+            <count-to
+              :simplify="true"
+              :end-val="27272727"
+              prefix="原始数据：27272727 => "
+              count-class="count-text"
+              unit-class="unit-class"
+            />
+            <count-to
+              :simplify="true"
+              :end-val="27272727277"
+              prefix="原始数据：27272727277 => "
+              count-class="count-text"
+              unit-class="unit-class"
+            />
           </div>
         </el-card>
       </el-col>
 
-      <el-col :span="5">
+      <el-col :span="8">
         <el-card shadow="hover">
           <div slot="header" class="title">
             <span>自定义单位</span>
@@ -89,7 +107,6 @@
               :unit="customUnit"
               count-class="count-text"
               unit-class="unit-class"
-              class="count"
             >
               <span slot="prefix">原始数据：27272 =>&nbsp;</span>
             </count-to>
@@ -107,22 +124,27 @@
         </el-card>
       </el-col>
 
-      <el-col :span="5">
-        <el-card shadow="hover">
+      <el-col :span="8">
+        <el-card shadow="hover" style="height: 270px">
           <div slot="header" class="title">
             <span>异步更新数据</span>
           </div>
-          <div class="count-to-content">
-            <count-to :end-val="asynEndVal" count-class="count-text" />
+          <div class="count-to-content" style="line-height: 149px">
+            <count-to :end-val="asyncEndVal" count-class="count-text" />
           </div>
         </el-card>
       </el-col>
     </el-row>
 
-    <el-row>
+    <el-row class="count-to-row">
       <el-card shadow="hover">
         <div slot="header" class="title">
-          <span>综合实力</span>
+          <span>
+            完整 Demo： &lt;count-to :start-val=&#x27;{{ startVal }}&#x27; :end-val=&#x27;{{ endVal }}&#x27;
+            :duration=&#x27;{{ duration }}&#x27; :decimals=&#x27;{{ decimals }}&#x27; :separator=&#x27;{{
+              separator
+            }}&#x27; :prefix=&#x27;{{ prefix }}&#x27; :suffix=&#x27;{{ suffix }}&#x27; :autoplay=false&gt;
+          </span>
         </div>
         <div class="count-to-content">
           <count-to
@@ -138,30 +160,31 @@
             class="count-demo"
           />
           <el-form :inline="true" :model="countToParams" class="demo-form-inline">
-            <el-form-item label="startVal：">
+            <el-form-item label="起始值：">
               <el-input v-model="countToParams.startVal" placeholder="startVal"></el-input>
             </el-form-item>
-            <el-form-item label="endVal：">
+            <el-form-item label="结束值：">
               <el-input v-model="countToParams.endVal" placeholder="endVal"></el-input>
             </el-form-item>
-            <el-form-item label="duration：">
+            <el-form-item label="持续时间：">
               <el-input v-model="countToParams.duration" placeholder="duration"></el-input>
             </el-form-item>
-            <el-form-item label="decimals：">
+            <el-form-item label="保留小数：">
               <el-input v-model="countToParams.decimals" placeholder="decimals"></el-input>
-            </el-form-item>
-            <el-form-item label="separator：">
-              <el-input v-model="countToParams.separator" placeholder="separator"></el-input>
-            </el-form-item>
-            <el-form-item label="prefix：">
-              <el-input v-model="countToParams.prefix" placeholder="prefix"></el-input>
-            </el-form-item>
-            <el-form-item label="suffix：">
-              <el-input v-model="countToParams.suffix" placeholder="suffix"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="start">Start</el-button>
-              <el-button type="primary" @click="pauseResume">pause/resume</el-button>
+              <el-button type="primary" @click="pauseResume">Pause/Resume</el-button>
+              <el-button type="primary" @click="reset">Reset</el-button>
+            </el-form-item>
+            <el-form-item label="分隔符：">
+              <el-input v-model="countToParams.separator" placeholder="separator"></el-input>
+            </el-form-item>
+            <el-form-item label="前缀：">
+              <el-input v-model="countToParams.prefix" placeholder="prefix"></el-input>
+            </el-form-item>
+            <el-form-item label="后缀：">
+              <el-input v-model="countToParams.suffix" placeholder="suffix"></el-input>
             </el-form-item>
           </el-form>
         </div>
@@ -173,26 +196,24 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import CountTo from "@/components/CountTo/index.vue";
-import CountTo1 from "vue-count-to";
 
 @Component({
   components: {
     CountTo,
-    CountTo1,
   },
 })
 export default class CountToDemo extends Vue {
-  public asynEndVal = 199;
+  public asyncEndVal = 199;
   public timer = 0;
 
   public countToParams = {
     startVal: 0,
-    endVal: 2017,
+    endVal: 1999,
     duration: 4,
     decimals: 0,
-    separator: "",
-    suffix: " rmb",
-    prefix: "¥ ",
+    separator: ",",
+    suffix: " Year",
+    prefix: "Be ",
   };
 
   public customUnit = [
@@ -219,7 +240,7 @@ export default class CountToDemo extends Vue {
 
   public init() {
     this.timer = setInterval(() => {
-      this.asynEndVal += parseInt(Math.random() * 30 + "");
+      this.asyncEndVal += parseInt(Math.random() * 30 + "");
     }, 2000);
   }
 
@@ -250,7 +271,7 @@ export default class CountToDemo extends Vue {
   get decimals() {
     if (this.countToParams.decimals) {
       if (this.countToParams.decimals < 0 || this.countToParams.decimals > 20) {
-        alert("digits argument must be between 0 and 20");
+        alert("decimals 值应该在 0 - 20 区间内");
         return 0;
       }
       return this.countToParams.decimals;
@@ -276,7 +297,11 @@ export default class CountToDemo extends Vue {
   }
 
   public pauseResume() {
-    this.$refs.count && (this.$refs.count as any).pauseResume();
+    this.$refs.count && (this.$refs.count as any).pause();
+  }
+
+  public reset() {
+    this.$refs.count && (this.$refs.count as any).reset();
   }
 }
 </script>
@@ -290,12 +315,9 @@ export default class CountToDemo extends Vue {
   .count-to-content {
     text-align: center;
   }
-  .count {
-    margin: 20px 0;
-  }
   .count-demo {
     font-size: 50px;
-    color: #f6416c;
+    color: var(--theme-color);
     display: block;
     margin-bottom: 20px;
     text-align: center;
@@ -308,11 +330,11 @@ export default class CountToDemo extends Vue {
 .count-to-container {
   .count-text {
     font-size: 50px;
-    color: #dc9387;
+    color: var(--theme-color);
   }
   .unit-class {
     font-size: 30px;
-    color: #dc9387;
+    color: var(--theme-color);
   }
 }
 </style>
