@@ -2,18 +2,18 @@
   <div ref="outerWrapper" class="split-pane-components" :class="{ 'no-select': isMoving }">
     <div v-if="isHorizontal" class="split-horizontal">
       <div :style="{ bottom: `${anotherOffset}%` }" :class="[`split-pane`, 'top-pane']"><slot name="top" /></div>
-      <div class="split-trigger-container" :style="{ top: `${offset}%` }" @mousedown="handleMousedown">
-        <slot name="trigger">
-          <trigger mode="horizontal" />
+      <div class="split-line-container" :style="{ top: `${offset}%` }" @mousedown="handleMousedown">
+        <slot name="line">
+          <split-line mode="horizontal" />
         </slot>
       </div>
       <div :style="{ top: `${offset}%` }" class="split-pane bottom-pane"><slot name="bottom" /></div>
     </div>
     <div v-else class="split-vertical">
       <div :style="{ right: `${anotherOffset}%` }" class="split-pane left-pane"><slot name="left" /></div>
-      <div class="split-trigger-container" :style="{ left: `${offset}%` }" @mousedown="handleMousedown">
-        <slot name="trigger">
-          <trigger mode="vertical" />
+      <div class="split-line-container" :style="{ left: `${offset}%` }" @mousedown="handleMousedown">
+        <slot name="line">
+          <split-line mode="vertical" />
         </slot>
       </div>
       <div :style="{ left: `${offset}%` }" class="split-pane right-pane"><slot name="right" /></div>
@@ -23,12 +23,12 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import Trigger from "./trigger.vue";
+import SplitLine from "./SplitLine.vue";
 
 type NumAndStr = number | string;
 
 @Component({
-  components: { Trigger },
+  components: { SplitLine },
 })
 export default class SplitPane extends Vue {
   @Prop({ default: 0.5 })
@@ -172,20 +172,20 @@ export default class SplitPane extends Vue {
     }
   }
   .split-vertical {
-    .split-trigger-container {
+    .split-line-container {
       top: 50%;
       left: 50%;
       height: 100%;
       width: 0;
     }
   }
-  .split-trigger-container {
+  .split-line-container {
     position: absolute;
     transform: translate(-50%, -50%);
     z-index: 10;
   }
   .split-horizontal {
-    .split-trigger-container {
+    .split-line-container {
       top: 50%;
       left: 50%;
       height: 0;

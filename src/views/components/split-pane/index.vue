@@ -20,7 +20,7 @@ import { Component, Vue } from "vue-property-decorator";
 import SplitPane from "@/components/SplitPane/index.vue";
 
 /**
- * SplitPane 接收的位置为 left、right、top、bottom
+ * SplitPane 接收的插槽位置为 left、right、top、bottom，即 <div slot="left/right/top/bottom">位置</div>
  *
  * 布局参数：mode
  * mode 为 vertical，代表是竖线分割，即传入 left 和 right 位置的内容。
@@ -37,6 +37,8 @@ import SplitPane from "@/components/SplitPane/index.vue";
  *   3. on-moving 移动过程的回调，参数为移动的事件
  *
  * 另外 SplitPane 可传入的参数还有 min、max，分别为分割线移动的最小距离和最大距离
+ *
+ * 如果你想自定义自己的分割线，可传入插槽，name 为 line，即 <div slot="line">分割线</div>
  *
  * 详细代码，请看 src/components/SplitPane/index.vue 组件内容
  */
