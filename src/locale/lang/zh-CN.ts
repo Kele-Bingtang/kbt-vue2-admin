@@ -8,6 +8,7 @@ export default {
     Components: "组件",
     CountToDemo: "数字渐变",
     ClipperDemo: "图片裁剪",
+    SplitPaneDemo: "分割窗口",
     params: "动态路由",
     query: "带参路由",
   },

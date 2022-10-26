@@ -131,8 +131,14 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
       {
         path: "/images-clipper",
         name: "ClipperDemo",
-        component: () => import("@/views/components/clipper/index.vue"),
+        component: () => import("@/views/components/cropper/index.vue"),
         meta: { title: "数字渐变", icon: "el-icon-star-on" },
+      },
+      {
+        path: "/split-pane",
+        name: "SplitPaneDemo",
+        component: () => import("@/views/components/split-pane/index.vue"),
+        meta: { title: "分割窗口", icon: "el-icon-star-on" },
       },
     ],
   },

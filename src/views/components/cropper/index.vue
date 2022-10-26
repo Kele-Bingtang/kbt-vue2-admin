@@ -1,6 +1,6 @@
 <template>
-  <div class="clipper-container">
-    <el-card class="clipper-card">
+  <div class="cropper-container">
+    <el-card class="cropper-card">
       <cropper
         imgLink="https://cdn.staticaly.com/gh/Kele-Bingtang/static@master/user/avatar1.png"
         :crop-width="200"
@@ -22,7 +22,7 @@ import Cropper from "@/components/Cropper/index.vue";
     Cropper,
   },
 })
-export default class ClipperDemo extends Vue {
+export default class CropperDemo extends Vue {
   // 提交图片到云端
   public uploadImage(imgData: FormData) {
     console.log(imgData);
@@ -31,9 +31,9 @@ export default class ClipperDemo extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.clipper-container {
+.cropper-container {
   padding: 20px;
-  .clipper-card {
+  .cropper-card {
     width: 1000px;
     text-align: center;
   }

@@ -3,7 +3,7 @@
     <!-- 布局 1：SideMenu 占屏幕左侧，Header 和 Main Content 占右侧 -->
     <template v-if="layoutMode === '0'">
       <el-container
-        class="layout-container"
+        class="layout-container layout-container-one"
         :class="{ 'side-menu-collapse': isCollapse, 'side-menu-expand': !isCollapse }"
       >
         <!-- 侧边菜单栏 -->
@@ -14,7 +14,7 @@
         </el-aside>
         <!-- 移动端打开菜单栏，空白处出现遮罩 -->
         <div v-if="isMobile() && !isCollapse" class="drawer-bg" @click="handleClickOutSide" />
-        <el-container>
+        <el-container class="core-container">
           <!-- 头部 -->
           <el-header class="header-container">
             <header-bar>
@@ -39,7 +39,7 @@
     <!-- 布局 2：Header 占顶部一行，SideMenu 占下方左侧，Main Content 占下方右侧 -->
     <template v-if="layoutMode === '1'">
       <el-container
-        class="layout-container"
+        class="layout-container layout-container-two"
         :class="{ 'side-menu-collapse': isCollapse, 'side-menu-expand': !isCollapse }"
       >
         <!-- 头部 -->
@@ -59,7 +59,7 @@
         </el-header>
         <!-- 移动端打开菜单栏，空白处出现遮罩 -->
         <div v-if="isMobile() && !isCollapse" class="drawer-bg" @click="handleClickOutSide" />
-        <el-container>
+        <el-container class="core-container">
           <!-- 侧边菜单栏 -->
           <el-aside class="side-menu-container">
             <side-menu></side-menu>
@@ -268,6 +268,9 @@ export default class Layout extends Vue {
     &.side-menu-collapse .side-menu-container {
       transition-duration: 0.3s;
       width: 54px !important;
+    }
+    &.layout-container-two .core-container {
+      height: calc(100% - 50px);
     }
     .header-container {
       height: 50px !important;

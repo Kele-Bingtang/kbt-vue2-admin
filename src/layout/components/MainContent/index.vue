@@ -28,6 +28,6 @@ export default class MainContent extends Vue {
 <style lang="css" scoped>
 .main-content {
   height: calc(100% - 38px);
-  overflow: auto;
+  overflow: hidden auto;
 }
 </style>

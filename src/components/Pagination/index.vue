@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ hidden: hidden }" class="pagination-container">
+  <div :class="{ hidden: hidden }" class="pagination-component">
     <el-pagination
       :background="background"
       :current-page.sync="currentPage"
@@ -61,12 +61,12 @@ export default class Pagination extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.pagination-container {
+.pagination-component {
   background: #fff;
   padding: 32px 16px;
 }
 
-.pagination-container.hidden {
+.pagination-component.hidden {
   display: none;
 }
 </style>

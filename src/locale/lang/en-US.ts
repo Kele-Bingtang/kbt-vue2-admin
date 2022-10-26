@@ -8,6 +8,7 @@ export default {
     Components: "Components",
     CountToDemo: "CountTo",
     ClipperDemo: "Images Clipper",
+    SplitPaneDemo: "Split Pane",
     params: "params",
     query: "query",
   },

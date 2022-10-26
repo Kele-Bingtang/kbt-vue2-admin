@@ -1,0 +1,79 @@
+<template>
+  <div class="split-pane-container">
+    <split-pane v-model="offset1" mode="vertical" @on-moving="handleMoving">
+      <div slot="left" class="pane left-pane">
+        <split-pane v-model="offset2" mode="horizontal" @on-moving="handleMoving">
+          <div slot="top" class="pane top-pane"></div>
+          <div slot="bottom" class="pane bottom-pane"></div>
+        </split-pane>
+      </div>
+      <split-pane slot="right" v-model="offset3" class="pane right-pane" mode="vertical">
+        <div slot="left" class="pane left-pane"></div>
+        <div slot="right" class="pane right-pane"></div>
+      </split-pane>
+    </split-pane>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import SplitPane from "@/components/SplitPane/index.vue";
+
+/**
+ * SplitPane 接收的位置为 left、right、top、bottom
+ *
+ * 布局参数：mode
+ * mode 为 vertical，代表是竖线分割，即传入 left 和 right 位置的内容。
+ * mode 为 horizontal，代表是水平线分割，即传入 top 和 bottom 位置的内容，默认为 horizontal
+ * 如果不按照 mode 的规则传入对应的位置，则效果失效，如 mode 为 vertical，却传入 top 和 bottom 位置的内容，页面将会不显示
+ *
+ * SplitPane 需要绑定一个 v-model 值，值可填入数值、字符串，影响分割线的位置和移动
+ * 数值：偏移量多少，0 最小，1 最大
+ * 字符串：位移多少 px，如 250 代表分割离位置（看你传入的位置是哪个） 250px。0 最小，页面宽度 width 值最大
+ *
+ * SplitPane 事件：
+ *   1. on-move-start 开始移动的回调，无参数
+ *   2. on-move-end 结束移动的回调，无参数
+ *   3. on-moving 移动过程的回调，参数为移动的事件
+ *
+ * 另外 SplitPane 可传入的参数还有 min、max，分别为分割线移动的最小距离和最大距离
+ *
+ * 详细代码，请看 src/components/SplitPane/index.vue 组件内容
+ */
+
+@Component({
+  components: { SplitPane },
+})
+export default class SplitPaneDemo extends Vue {
+  public offset1 = 0.4; // 数值单位 1 最大，0 最小
+  public offset2 = "250"; // 页面宽度最大， 0px 最小
+  public offset3 = "600";
+
+  public handleMoving(e: any) {
+    // console.log(e.atMin, e.atMax);
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.split-pane-container {
+  padding: 20px;
+  height: 100%;
+  .pane {
+    width: 100%;
+    height: 100%;
+    &.left-pane {
+      background: sandybrown;
+    }
+    &.right-pane {
+      background: powderblue;
+    }
+    &.top-pane {
+      background: teal;
+    }
+    &.bottom-pane {
+      background: palegreen;
+    }
+  }
+}
+</style>
