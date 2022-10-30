@@ -1,7 +1,7 @@
 <template>
-  <div ref="outerWrapper" class="split-pane-components" :class="{ 'no-select': isMoving }">
+  <div ref="splitPane" class="split-pane-components" :class="{ 'no-select': isMoving }">
     <div v-if="isHorizontal" class="split-horizontal">
-      <div :style="{ bottom: `${anotherOffset}%` }" :class="[`split-pane`, 'top-pane']"><slot name="top" /></div>
+      <div :style="{ bottom: `${anotherOffset}%` }" class="split-pane top-pane"><slot name="top" /></div>
       <div class="split-line-container" :style="{ top: `${offset}%` }" @mousedown="handleMousedown">
         <slot name="line">
           <split-line mode="horizontal" />
@@ -77,7 +77,7 @@ export default class SplitPane extends Vue {
 
   public init() {
     let value = this.valueIsString
-      ? this.px2percent(this.value as string, (this.$refs.outerWrapper as any)[this.offsetSize])
+      ? this.px2percent(this.value as string, (this.$refs.splitPane as any)[this.offsetSize])
       : this.value;
     this.offset = ((value as number) * 10000) / 100;
   }
@@ -87,7 +87,7 @@ export default class SplitPane extends Vue {
   }
   public getComputedThresholdValue(type: string) {
     let _this = this as any;
-    let size = (this.$refs.outerWrapper as any)[this.offsetSize];
+    let size = (this.$refs.splitPane as any)[this.offsetSize];
     if (this.valueIsString) return typeof _this[type] === "string" ? _this[type] : size * _this[type];
     else return typeof _this[type] === "string" ? _this.px2percent(_this[type], size) : _this[type];
   }
@@ -102,14 +102,14 @@ export default class SplitPane extends Vue {
   public getAnotherOffset(value: NumAndStr) {
     let res: NumAndStr = "0";
     if (this.valueIsString)
-      (res as string) = `${(this.$refs.outerWrapper as any)[this.offsetSize] - parseFloat(value as string)}px`;
+      (res as string) = `${(this.$refs.splitPane as any)[this.offsetSize] - parseFloat(value as string)}px`;
     else res = 1 - (value as number);
     return res;
   }
   public handleMove(e: any) {
     let pageOffset = this.isHorizontal ? e.pageY : e.pageX;
     let offset = pageOffset - this.initOffset;
-    let outerWidth = (this.$refs.outerWrapper as any)[this.offsetSize];
+    let outerWidth = (this.$refs.splitPane as any)[this.offsetSize];
     let value = this.valueIsString
       ? `${parseFloat(this.oldOffset as string) + offset}px`
       : this.px2percent((outerWidth * (this.oldOffset as number) + offset) as unknown as string, outerWidth);
@@ -172,6 +172,7 @@ export default class SplitPane extends Vue {
     }
   }
   .split-vertical {
+    height: 100%;
     .split-line-container {
       top: 50%;
       left: 50%;
@@ -185,6 +186,7 @@ export default class SplitPane extends Vue {
     z-index: 10;
   }
   .split-horizontal {
+    width: 100%;
     .split-line-container {
       top: 50%;
       left: 50%;

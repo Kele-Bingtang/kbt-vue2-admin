@@ -30,6 +30,7 @@ import SplitPane from "@/components/SplitPane/index.vue";
  * SplitPane 需要绑定一个 v-model 值，值可填入数值、字符串，影响分割线的位置和移动
  * 数值：偏移量多少，0 最小，1 最大
  * 字符串：位移多少 px，如 250 代表分割离位置（看你传入的位置是哪个） 250px。0 最小，页面宽度 width 值最大
+ * 如果使用字符串出现一些 bug，请使用数值
  *
  * SplitPane 事件：
  *   1. on-move-start 开始移动的回调，无参数
@@ -48,8 +49,8 @@ import SplitPane from "@/components/SplitPane/index.vue";
 })
 export default class SplitPaneDemo extends Vue {
   public offset1 = 0.4; // 数值单位 1 最大，0 最小
-  public offset2 = "250"; // 页面宽度最大， 0px 最小
-  public offset3 = "600";
+  public offset2 = "500px"; // 页面宽度最大， 0 最小
+  public offset3 = 0.5;
 
   public handleMoving(e: any) {
     // console.log(e.atMin, e.atMax);

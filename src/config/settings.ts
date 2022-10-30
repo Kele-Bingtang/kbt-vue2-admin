@@ -38,7 +38,7 @@ const settings: Settings = {
   sideMenuTheme: "light",
   errorLog: {
     showInHeader: true,
-    env: ["development", "production"],
+    env: ["production"],
   },
   whiteList: ["*"],
 };

@@ -1,4 +1,4 @@
-import Vue from "vue";
+import Vue, { DirectiveOptions } from "vue";
 import "@/styles/normalize.css"; // CSS Reset
 import App from "./App.vue";
 import router from "./router";
@@ -8,9 +8,11 @@ import ElementUI from "element-ui";
 import SvgIcon from "vue-svgicon";
 import "@/icons/components";
 import "@/styles/element-variables.scss";
-import "@/styles/index.scss";
+// import "@/styles/index.scss";
 import { LayoutModule } from "@/store/modules/layout";
 import "@/utils/error-log";
+import Vue2OrgTree from "vue2-org-tree";
+import * as directives from "@/directives";
 
 Vue.config.productionTip = false;
 
@@ -24,6 +26,13 @@ Vue.use(SvgIcon, {
   defaultWidth: "1em",
   defaultHeight: "1em",
 });
+
+// Register global directives
+Object.keys(directives).forEach(key => {
+  Vue.directive(key, (directives as { [key: string]: DirectiveOptions })[key]);
+});
+
+Vue.use(Vue2OrgTree);
 
 new Vue({
   router,

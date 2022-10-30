@@ -1,5 +1,5 @@
 <template>
-  <div class="my-prifle">
+  <div class="my-profile">
     <div v-if="user.userId">
       <el-row :gutter="20">
         <el-col :span="6" :xs="24">
@@ -72,7 +72,7 @@ export default class Profile extends Vue {
 }
 </script>
 <style lang="scss" scoped>
-.my-prifle {
+.my-profile {
   padding: 20px;
 }
 </style>

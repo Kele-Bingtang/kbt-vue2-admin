@@ -140,6 +140,36 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         component: () => import("@/views/components/split-pane/index.vue"),
         meta: { title: "分割窗口", icon: "el-icon-star-on" },
       },
+      {
+        path: "/org-tree",
+        name: "OrgTreeDemo",
+        component: () => import("@/views/components/org-tree/index.vue"),
+        meta: { title: "组织结构树", icon: "el-icon-star-on" },
+      },
+      {
+        path: "/animation-mixin",
+        name: "AnimationMixinDemo",
+        component: () => import("@/views/components/animation-mixin/index.vue"),
+        meta: { title: "动画混入", icon: "el-icon-star-on" },
+      },
+      {
+        path: "/draggable-list",
+        name: "DraggableListDemo",
+        component: () => import("@/views/components/draggable-list/index.vue"),
+        meta: { title: "列表拖拽", icon: "el-icon-star-on" },
+      },
+      {
+        path: "/draggable-item",
+        name: "DraggableItemDemo",
+        component: () => import("@/views/components/draggable-item/index.vue"),
+        meta: { title: "面板拖拽", icon: "el-icon-star-on" },
+      },
+      {
+        path: "/draggable-dialog",
+        name: "DraggableDialogDemo",
+        component: () => import("@/views/components/draggable-dialog/index.vue"),
+        meta: { title: "模态框拖拽", icon: "el-icon-star-on" },
+      },
     ],
   },
   {
