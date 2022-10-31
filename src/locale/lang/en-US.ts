@@ -14,6 +14,7 @@ export default {
     DraggableListDemo: "List Drag",
     DraggableItemDemo: "Item Drag",
     DraggableDialogDemo: "Dialog Drag",
+    DragDrawerDemo: "Drawer Drag",
     params: "params",
     query: "query",
   },

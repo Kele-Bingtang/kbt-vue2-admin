@@ -14,6 +14,7 @@ export default {
     DraggableListDemo: "列表拖拽",
     DraggableItemDemo: "看板拖拽",
     DraggableDialogDemo: "模态框拖拽",
+    DragDrawerDemo: "抽屉拖拽",
     params: "动态路由",
     query: "带参路由",
   },

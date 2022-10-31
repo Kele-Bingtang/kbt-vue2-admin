@@ -170,6 +170,12 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         component: () => import("@/views/components/draggable-dialog/index.vue"),
         meta: { title: "模态框拖拽", icon: "el-icon-star-on" },
       },
+      {
+        path: "/drag-drawer",
+        name: "DragDrawerDemo",
+        component: () => import("@/views/components/drag-drawer/index.vue"),
+        meta: { title: "抽屉拖拽", icon: "el-icon-star-on" },
+      },
     ],
   },
   {
