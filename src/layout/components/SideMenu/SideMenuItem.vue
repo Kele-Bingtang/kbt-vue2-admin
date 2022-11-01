@@ -49,6 +49,7 @@ import SideMenuItemLink from "./SideMenuItemLink.vue";
 import { getTitle } from "@/utils/layout";
 
 @Component({
+  name: "SideMenuItem",
   components: {
     SideMenuItemLink,
   },
