@@ -10,6 +10,8 @@
       ref="drawerWrapper"
       v-bind="$attrs"
       v-on="$listeners"
+      :modal-append-to-body="!inner"
+      :class="{ 'drag-drawer-inner': inner }"
     >
       <template v-for="(slots, slotsName) in $slots">
         <template v-if="slotsName !== 'default'">
@@ -70,6 +72,8 @@ export default class DragDrawer extends Vue {
   public draggable!: boolean;
   @Prop({ default: 256 })
   public minWidth!: string | number;
+  @Prop({ default: false })
+  public inner!: boolean;
 
   public canMove = false;
   public wrapperWidth = 0;
@@ -103,14 +107,16 @@ export default class DragDrawer extends Vue {
       direction = "right";
     } else if (this.direction === "ltr") {
       direction = "left";
-    } else if (this.direction === "ttb") {
-      direction = "top";
-    } else if (this.direction === "btt") {
-      direction = "bottom";
     }
+    // TODO：支持 top 和 bottom 移动
+    // else if (this.direction === "ttb") {
+    //   direction = "top";
+    // } else if (this.direction === "btt") {
+    //   direction = "bottom";
+    // }
     return {
       [direction]: `${this.innerWidth}px`,
-      position: this.$attrs.inner ? "absolute" : "fixed",
+      position: this.inner ? "absolute" : "fixed",
     };
   }
   mounted() {
@@ -188,6 +194,16 @@ export default class DragDrawer extends Vue {
     border-top: 1px solid #e8e8e8;
     padding: 10px 16px;
     background: #fff;
+  }
+}
+</style>
+<style lang="scss">
+.drag-drawer-components {
+  .drag-drawer-inner {
+    position: absolute;
+    & + .v-modal {
+      position: absolute;
+    }
   }
 }
 </style>

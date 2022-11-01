@@ -49,7 +49,7 @@ import SideMenuItemLink from "./SideMenuItemLink.vue";
 import { getTitle } from "@/utils/layout";
 
 @Component({
-  name: "SideMenuItem",
+  name: "SideMenuItem", // 解决 Vercel 打包后递归组件失效
   components: {
     SideMenuItemLink,
   },

@@ -1,15 +1,37 @@
 <template>
   <div class="drag-drawer-container">
-    <el-button @click="visible = true" type="primary" style="margin-left: 16px">点我打开</el-button>
+    <div class="drag-drawer-header">
+      <el-switch
+        v-model="placement"
+        active-text="左"
+        inactive-text="右"
+        active-value="right"
+        inactive-value="left"
+        class="drag-drawer-switch"
+      ></el-switch>
+      <el-switch v-model="draggable" active-text="是否可拖拽"></el-switch>
+      <el-button @click="visible1 = true" type="primary" style="margin-left: 16px">打开容器内抽屉</el-button>
+      <el-button @click="visible2 = true" type="primary" style="margin-left: 16px">打开全屏抽屉</el-button>
+    </div>
+
+    <div class="drag-drawer-inner-box">
+      <drag-drawer
+        :visible.sync="visible1"
+        :width.sync="width1"
+        :draggable="draggable"
+        :inner="true"
+        placement="placement"
+        @on-resize="handleResize"
+      ></drag-drawer>
+    </div>
 
     <drag-drawer
-      :visible.sync="visible"
+      :visible.sync="visible2"
       :placement="placement"
-      :width.sync="width"
+      :width.sync="width2"
       :draggable="draggable"
       @on-resize="handleResize"
-    >
-  </drag-drawer>
+    ></drag-drawer>
   </div>
 </template>
 
@@ -21,9 +43,11 @@ import DragDrawer from "@/components/DragDrawer/index.vue";
   components: { DragDrawer },
 })
 export default class DragDrawerDemo extends Vue {
-  public visible = false;
-  public placement = "top";
-  public width = 300;
+  public visible1 = false;
+  public visible2 = false;
+  public placement = "right";
+  public width1 = 200;
+  public width2 = 300;
   public draggable = true;
 
   public handleResize(event: any) {
@@ -36,5 +60,18 @@ export default class DragDrawerDemo extends Vue {
 <style lang="scss" scoped>
 .drag-drawer-container {
   padding: 20px;
+  .drag-drawer-header {
+    margin-bottom: 30px;
+    .drag-drawer-switch {
+      margin-right: 30px;
+    }
+  }
+  .drag-drawer-inner-box {
+    position: relative;
+    width: 500px;
+    height: 400px;
+    background: var(--theme-color);
+    border: 1px solid var(--theme-color);
+  }
 }
 </style>
