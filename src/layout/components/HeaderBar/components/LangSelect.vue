@@ -1,7 +1,7 @@
 <template>
   <div class="international">
     <el-dropdown trigger="click" @command="handleSetLanguage" style="height: 95%">
-      <div class="svg-container">
+      <div class="layout-svg-btn">
         <svg-icon name="language" class="international-icon" width="20px" height="20px" />
       </div>
       <el-dropdown-menu slot="dropdown">
@@ -43,6 +43,6 @@ export default class LangSelecr extends Vue {
 
 <style lang="scss" scoped>
 .international {
-  margin-left: 6px !important;
+  margin-left: 6px;
 }
 </style>

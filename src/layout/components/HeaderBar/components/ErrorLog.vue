@@ -1,6 +1,6 @@
 <template>
   <div class="error-log-badge">
-    <el-badge :value="count" :max="99" :hidden="count === 0" class="badge svg-container">
+    <el-badge :value="count" :max="99" :hidden="count === 0" class="badge layout-svg-btn">
       <el-button size="small" plain @click="openErrorLogger">
         <svg-icon name="bug" width="20px" height="20px" />
       </el-button>
@@ -32,7 +32,6 @@ export default class ErrorLog extends Vue {
 
 <style lang="scss" scoped>
 .error-log-badge {
-  line-height: 55px;
   .badge {
     width: 18px;
     margin-top: -5px;

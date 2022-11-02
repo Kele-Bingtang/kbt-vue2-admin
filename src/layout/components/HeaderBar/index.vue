@@ -3,7 +3,7 @@
     <side-menu-trigger :is-collapse="isCollapse" @toggle-trigger="toggleTrigger" class="side-menu-trigger-container" />
     <slot name="logo"></slot>
     <breadcrumb :breadcrumbs="breadcrumbs" class="breadcrumb-container" v-if="showBreadcrumb" />
-    <div class="right-menu">
+    <div class="right-menu layout-svg-container">
       <slot></slot>
     </div>
   </div>
@@ -41,8 +41,8 @@ export default class HeaderBar extends Vue {
   }
 
   get showBreadcrumb() {
-    if(SettingsModule.showBreadcrumb) {
-      if(this.device === "mobile") {
+    if (SettingsModule.showBreadcrumb) {
+      if (this.device === "mobile") {
         return false;
       }
       return true;
@@ -142,23 +142,6 @@ export default class HeaderBar extends Vue {
       height: 100%;
       font-size: 18px;
       vertical-align: text-bottom;
-      &:hover {
-        cursor: pointer;
-        transition: background 0.3s;
-      }
-    }
-  }
-}
-</style>
-
-<style lang="scss">
-.header-bar {
-  .right-menu {
-    .svg-container {
-      .el-button {
-        padding: 0;
-        border: none;
-      }
     }
   }
 }

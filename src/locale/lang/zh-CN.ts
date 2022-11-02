@@ -15,6 +15,7 @@ export default {
     DraggableItemDemo: "看板拖拽",
     DraggableDialogDemo: "模态框拖拽",
     DragDrawerDemo: "抽屉拖拽",
+    TinymceDemo: "富文本",
     params: "动态路由",
     query: "带参路由",
   },

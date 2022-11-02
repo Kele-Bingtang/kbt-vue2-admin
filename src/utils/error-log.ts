@@ -36,5 +36,6 @@ export const errorHandler = (err: Error, vm: Vue, info: string) => {
  */
 if (checkNeed()) {
   Vue.config.errorHandler = errorHandler;
-  (Vue.prototype as any).$throw = (err: Error, vm: Vue, info: string) => errorHandler(err, vm, info);
 }
+
+(Vue.prototype as any).$throw = (err: Error, vm: Vue, info: string) => errorHandler(err, vm, info);

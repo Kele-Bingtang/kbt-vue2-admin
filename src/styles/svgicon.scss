@@ -8,12 +8,22 @@
   stroke: currentColor;
   vertical-align: -0.15em;
 }
-// headerBar 右侧图标
-.right-menu {
+
+.layout-svg-container {
   .svg-icon {
     color: #5a5e67;
     &:hover {
       color: var(--theme-color);
+    }
+  }
+  & > *:hover {
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .layout-svg-btn {
+    .el-button {
+      padding: 0;
+      border: none;
     }
   }
 }

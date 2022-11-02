@@ -64,13 +64,13 @@ import DragDrawerTrigger from "./DragDrawerTrigger.vue";
 export default class DragDrawer extends Vue {
   @Prop({ default: false })
   public visible!: boolean;
-  @Prop({ default: 256 })
+  @Prop({ default: 200 })
   public width!: string | number;
   @Prop({ default: "right" })
   public placement!: string;
   @Prop({ default: false })
   public draggable!: boolean;
-  @Prop({ default: 256 })
+  @Prop({ default: 200 })
   public minWidth!: string | number;
   @Prop({ default: false })
   public inner!: boolean;
@@ -203,6 +203,9 @@ export default class DragDrawer extends Vue {
     position: absolute;
     & + .v-modal {
       position: absolute;
+    }
+    .el-drawer {
+      overflow: visible;
     }
   }
 }

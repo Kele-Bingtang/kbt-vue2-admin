@@ -1,5 +1,5 @@
 <template>
-  <div class="side-menu">
+  <div class="side-menu" :style="sideMenuThemeStyle()">
     <slot></slot>
     <el-scrollbar wrap-class="side-menu-scrollbar">
       <el-menu
@@ -9,7 +9,6 @@
         :text-color="sideMenuTheme === 'dark' ? variables.menuDarkText : variables.menuLightText"
         :active-text-color="theme"
         :collapse-transition="false"
-        :style="sideMenuThemeStyle()"
       >
         <side-menu-item v-for="menu in menuList" :key="menu.name" :menu-item="menu" :is-collapse="isCollapse" />
       </el-menu>

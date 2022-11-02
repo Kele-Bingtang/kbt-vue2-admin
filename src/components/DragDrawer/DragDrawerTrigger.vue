@@ -26,7 +26,7 @@ export default class DragDrawerTrigger extends Vue {}
   width: 8px;
   background: rgb(243, 243, 243);
   transform: translate(-50%, -50%);
-  border-radius: "4px / 6px";
+  border-radius: 4px / 6px;
   box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
   cursor: col-resize;
   .drag-drawer-move-trigger-point {

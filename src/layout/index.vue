@@ -24,7 +24,7 @@
               </template>
               <size-select :size="size" @on-change="handleSetSize" />
               <lang-select :language="language" @on-change="handleSetLanguage" />
-              <user style="margin-right: 33px"></user>
+              <user style="margin-right: 33px" />
             </header-bar>
           </el-header>
           <!-- 内容 -->
@@ -54,7 +54,7 @@
             </template>
             <size-select :size="size" @on-change="handleSetSize" />
             <lang-select :language="language" @on-change="handleSetLanguage" />
-            <user style="margin-right: 33px"></user>
+            <user style="margin-right: 33px" />
           </header-bar>
         </el-header>
         <!-- 移动端打开菜单栏，空白处出现遮罩 -->

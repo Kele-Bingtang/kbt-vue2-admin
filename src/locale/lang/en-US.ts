@@ -15,6 +15,7 @@ export default {
     DraggableItemDemo: "Item Drag",
     DraggableDialogDemo: "Dialog Drag",
     DragDrawerDemo: "Drawer Drag",
+    TinymceDemo: "Tinymce",
     params: "params",
     query: "query",
   },

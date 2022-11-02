@@ -1,7 +1,7 @@
 <template>
   <div class="global-settings">
     <!-- 放到 HeaderBar 中 -->
-    <div class="svg-container">
+    <div class="layout-svg-btn">
       <el-button size="small" plain @click.prevent="openSettingsDrawer">
         <svg-icon name="setting" width="22" height="22"></svg-icon>
       </el-button>

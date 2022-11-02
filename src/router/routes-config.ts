@@ -83,8 +83,8 @@ export const constantRoutes: Array<RouteConfigAndMeta> = [
     ],
   },
   {
-    path: "/error-logger-page",
-    redirect: "/index",
+    path: "/error-logger",
+    redirect: "/error-logger/index",
     component: Layout,
     meta: { hideInMenu: true },
     children: [
@@ -176,6 +176,12 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         component: () => import("@/views/components/drag-drawer/index.vue"),
         meta: { title: "抽屉拖拽", icon: "el-icon-star-on" },
       },
+      // {
+      //   path: "/tinymce",
+      //   name: "TinymceDemo",
+      //   component: () => import("@/views/components/tinymce/index.vue"),
+      //   meta: { title: "富文本", icon: "el-icon-star-on" },
+      // },
     ],
   },
   {

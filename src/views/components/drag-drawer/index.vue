@@ -3,8 +3,8 @@
     <div class="drag-drawer-header">
       <el-switch
         v-model="placement"
-        active-text="左"
-        inactive-text="右"
+        active-text="右"
+        inactive-text="左"
         active-value="right"
         inactive-value="left"
         class="drag-drawer-switch"
@@ -17,10 +17,10 @@
     <div class="drag-drawer-inner-box">
       <drag-drawer
         :visible.sync="visible1"
+        :placement="placement"
         :width.sync="width1"
         :draggable="draggable"
         :inner="true"
-        placement="placement"
         @on-resize="handleResize"
       ></drag-drawer>
     </div>
