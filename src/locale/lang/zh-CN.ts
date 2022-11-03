@@ -39,6 +39,7 @@ export default {
     layoutComponents: "布局组件配置",
     titleMode: "浏览器标题模式配置",
     theme: "主题色",
+    changeTheme: "正在修改主题色",
     showBreadcrumb: "显示面包屑",
     showTagsNav: "显示标签页",
     recordTagsNav: "缓存标签页的选项卡",
@@ -47,6 +48,7 @@ export default {
     titleModeTwo: "用户名 + 页面 Title",
     titleModeThree: "项目 Title",
     titleModeFour: "页面 Title",
-    resetSettings: "重置配置",
+    resetSettingsTitle: "重置配置",
+    resetSettings: "正在清除设置缓存并刷新，请稍候...",
   },
 };

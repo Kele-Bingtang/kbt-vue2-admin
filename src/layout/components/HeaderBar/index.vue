@@ -71,6 +71,13 @@ export default class HeaderBar extends Vue {
    * 获取面包屑列表
    */
   private getBreadcrumbs(homeRoute: RouteConfig) {
+    if (!homeRoute.path || !homeRoute.name) {
+      this.$message({
+        message: "您的首页无法获取，请前往 store/permission.ts 下的 35 行，修改为您首页路由的 name 值",
+        type: "error",
+        duration: 10000,
+      });
+    }
     let matched = this.$route.matched;
     // 如果是首页，直接返回
     if (homeRoute && matched.some(item => item.name === homeRoute.name)) {

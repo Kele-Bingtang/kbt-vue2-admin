@@ -213,28 +213,34 @@ export default class Layout extends Vue {
   public handleSetSize(size: string) {
     (this as any).$ELEMENT.size = size;
     LayoutModule.setSize(size);
-    this.refreshPage();
     let message = this.$t("_headerBar.changeSize");
     message = message === "_headerBar.changeSize" ? "修改尺寸成功！" : message;
     this.$message({
       message: message as string,
       type: "success",
     });
+    this.refreshPage("all");
   }
   // 刷新页面
-  private refreshPage() {
-    // 重新渲染整个页面
-    LayoutModule.deleteAllCachedTags();
-    const { fullPath } = this.$route;
-    this.$nextTick(() => {
-      this.$router
-        .replace({
-          path: "/redirect" + fullPath,
-        })
-        .catch(err => {
-          console.warn(err);
-        });
-    });
+  private refreshPage(target: string) {
+    if (target === "all") {
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } else {
+      // 重新渲染整个页面
+      LayoutModule.deleteAllCachedTags();
+      const { fullPath } = this.$route;
+      this.$nextTick(() => {
+        this.$router
+          .replace({
+            path: "/redirect" + fullPath,
+          })
+          .catch(err => {
+            console.warn(err);
+          });
+      });
+    }
   }
 }
 </script>

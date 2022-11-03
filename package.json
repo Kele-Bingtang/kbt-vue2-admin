@@ -31,7 +31,6 @@
     "vuex-module-decorators": "^2.0.0"
   },
   "devDependencies": {
-    "@types/js-cookie": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~5.0.0",

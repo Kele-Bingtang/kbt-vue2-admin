@@ -1,11 +1,13 @@
 <template>
   <div class="global-settings">
-    <!-- 放到 HeaderBar 中 -->
-    <div class="layout-svg-btn">
-      <el-button size="small" plain @click.prevent="openSettingsDrawer">
-        <svg-icon name="setting" width="22" height="22"></svg-icon>
-      </el-button>
-    </div>
+    <template v-if="showSvg">
+      <!-- 放到 HeaderBar 中 -->
+      <div class="layout-svg-btn">
+        <el-button size="small" plain @click.prevent="openSettingsDrawer">
+          <svg-icon name="setting" width="22" height="22"></svg-icon>
+        </el-button>
+      </div>
+    </template>
 
     <el-drawer
       :visible.sync="drawerVisible"
@@ -109,14 +111,14 @@
       <el-divider />
 
       <el-button size="small" plain icon="el-icon-refresh" @click="resetSettings">
-        {{ $t("_settings.resetSettings") }}
+        {{ $t("_settings.resetSettingsTitle") }}
       </el-button>
     </el-drawer>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import ThemePicker from "@/components/ThemePicker/index.vue";
 import { SettingsModule } from "@/store/modules/settings";
 import { setTitle } from "@/utils/layout";
@@ -127,6 +129,8 @@ import { setTitle } from "@/utils/layout";
   },
 })
 export default class GlobalSettings extends Vue {
+  @Prop({ default: false })
+  public showSvg!: boolean;
   public drawerVisible = false;
 
   get titleModeOptions() {
@@ -226,8 +230,10 @@ export default class GlobalSettings extends Vue {
   }
   // 重置配置回调
   public resetSettings() {
+    let message = this.$t("_settings.resetSettings");
+    message = message === "_settings.resetSettings" ? "正在清除设置缓存并刷新，请稍候..." : message;
     this.$message({
-      message: "正在清除设置缓存并刷新，请稍候...",
+      message: message as string,
       duration: 1000,
       iconClass: "el-icon-loading",
     });

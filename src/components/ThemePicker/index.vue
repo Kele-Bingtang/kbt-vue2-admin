@@ -42,8 +42,10 @@ export default class ThemePicker extends Vue {
     const oldValue = this.chalk ? this.theme : ORIGINAL_THEME;
     const themeCluster = this.getThemeCluster(value.replace("#", ""));
     const originalCluster = this.getThemeCluster(oldValue.replace("#", ""));
+    let m = this.$t("_settings.changeTheme");
+    m = m === "_settings.changeTheme" ? "正在修改主题色" : m;
     const message = this.$message({
-      message: "Compiling the theme",
+      message: m as string,
       customClass: "theme-message",
       type: "success",
       duration: 0,

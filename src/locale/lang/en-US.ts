@@ -39,6 +39,7 @@ export default {
     layoutComponents: "Layout Components Configuration",
     titleMode: "Browser Title Configuration",
     theme: "Theme",
+    changeTheme: "Compiling the theme",
     showBreadcrumb: "Show Breadcrumb",
     showTagsNav: "Show TagsNav",
     recordTagsNav: "Cache Tabs Access",
@@ -47,6 +48,7 @@ export default {
     titleModeTwo: "User Name + Page Title",
     titleModeThree: "Project Title",
     titleModeFour: "Page Title",
-    resetSettings: "Reset Settings",
+    resetSettingsTitle: "Reset Settings",
+    resetSettings: "Clearing Settings Cache And Refreshing",
   },
 };
