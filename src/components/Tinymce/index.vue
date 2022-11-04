@@ -6,14 +6,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import tinymce from "tinymce/tinymce";
 import TinymceEditor from "@tinymce/tinymce-vue";
 import { plugins, toolbar } from "./config";
 import { LayoutModule } from "@/store/modules/layout";
 // Docs: https://www.tiny.cloud/docs/advanced/usage-with-module-loaders/
-// Import TinyMCE
+import "tinymce/tinymce";
+// Default icons are required for TinyMCE 5.3 or above
 import "tinymce/icons/default";
 import "tinymce/themes/silver";
+import "tinymce/themes/mobile";
+import "tinymce/skins/content/default/content.css";
+import "tinymce/plugins/advlist";
+import "tinymce/plugins/anchor";
 import "tinymce/plugins/autoresize";
 import "tinymce/plugins/autolink";
 import "tinymce/plugins/autosave";
@@ -22,21 +26,29 @@ import "tinymce/plugins/code";
 import "tinymce/plugins/codesample";
 import "tinymce/plugins/directionality";
 import "tinymce/plugins/emoticons";
+import "tinymce/plugins/fullpage";
 import "tinymce/plugins/fullscreen";
 import "tinymce/plugins/help";
+import "tinymce/plugins/hr";
 import "tinymce/plugins/image";
-import "tinymce/plugins/importcss";
+import "tinymce/plugins/imagetools";
 import "tinymce/plugins/insertdatetime";
 import "tinymce/plugins/link";
 import "tinymce/plugins/lists";
 import "tinymce/plugins/media";
 import "tinymce/plugins/nonbreaking";
+import "tinymce/plugins/noneditable";
 import "tinymce/plugins/pagebreak";
+import "tinymce/plugins/paste";
 import "tinymce/plugins/preview";
+import "tinymce/plugins/print";
 import "tinymce/plugins/save";
 import "tinymce/plugins/searchreplace";
+import "tinymce/plugins/spellchecker";
+import "tinymce/plugins/tabfocus";
 import "tinymce/plugins/table";
 import "tinymce/plugins/template";
+import "tinymce/plugins/textpattern";
 import "tinymce/plugins/visualblocks";
 import "tinymce/plugins/visualchars";
 import "tinymce/plugins/wordcount";
@@ -53,7 +65,7 @@ export default class Tinymce extends Vue {
   public id!: string;
   @Prop({ default: () => [] })
   public toolbar!: string[];
-  @Prop({ default: "file edit insert view format table" })
+  @Prop({ default: "file edit view insert format tools table help" })
   public menubar!: string;
   @Prop({ default: "360px" })
   public height!: string | number;
@@ -97,6 +109,7 @@ export default class Tinymce extends Vue {
   get initOptions() {
     return {
       selector: `#${this.id}`,
+      deprecation_warnings: false,
       height: this.height,
       body_class: "panel-body",
       object_resizing: false,
@@ -104,9 +117,10 @@ export default class Tinymce extends Vue {
       toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
       menubar: this.menubar,
       language: this.language,
-      language_url: this.language === "en-US" ? "" : `/public/tinymce/langs/${this.language}.js`,
-      skin_url: "/public/tinymce/skins/",
-      emoticons_database_url: "/public/tinymce/emojis.min.js",
+      language_url: this.language === "en" ? "" : `${process.env.BASE_URL}tinymce/langs/${this.language}.js`,
+      skin_url: `${process.env.BASE_URL}tinymce/skins/ui/oxide`,
+      emoticons_database_url: `${process.env.BASE_URL}tinymce/emojis.min.js`,
+      content_css: `${process.env.BASE_URL}tinymce/skins/content/default/content.css`,
       end_container_on_empty_block: true,
       powerpaste_word_import: "clean",
       code_dialog_height: 450,
@@ -139,48 +153,49 @@ export default class Tinymce extends Vue {
     };
   }
 
-  // @Watch("language")
-  // public onLanguageChange() {
-  //   const tinymceInstance = tinymce.get(this.id);
-  //   if (this.fullscreen) {
-  //     tinymce.execCommand("mceFullScreen");
-  //   }
-  //   if (tinymceInstance) {
-  //     tinymce.remove(this.id);
-  //   }
-  //   this.$nextTick(() => tinymce.init(this.initOptions));
-  // }
-
   beforeDestroy() {
-    tinymce.remove(this.id);
+    this.destroyTinymce();
   }
+  destroyTinymce() {
+    const tinymce = (window as any).tinymce.get(this.id);
+    if (this.fullscreen) {
+      tinymce.execCommand("mceFullScreen");
+    }
+    if (tinymce) {
+      tinymce.destroy();
+    }
+  }
+
+  @Watch("language")
+  public onLanguageChange() {
+    const tinymceManager = (window as any).tinymce;
+    const tinymceInstance = tinymceManager.get(this.id);
+    if (this.fullscreen) {
+      tinymceInstance.execCommand("mceFullScreen");
+    }
+    if (tinymceInstance) {
+      tinymceInstance.destroy();
+    }
+    this.$nextTick(() => tinymceManager.init(this.initOptions));
+  }
+
+  // public imageSuccessCBK(arr: IUploadObject[]) {
+  //   const tinymce = (window as any).tinymce.get(this.id)
+  //   arr.forEach(v => {
+  //     tinymce.insertContent(`<img class="wscnph" src="${v.url}" >`)
+  //   })
+  // }
 }
 </script>
 
-<style lang="scss" scoped>
-.tinymce-container {
+<style lang="scss">
+.tinymce-components {
   position: relative;
   line-height: normal;
 
-  .mce-fullscreen {
-    z-index: 10000;
+  .tox-fullscreen {
+    z-index: 10000 !important;
   }
-}
-
-.editor-custom-btn-container {
-  position: absolute;
-  right: 6px;
-  top: 6px;
-  z-index: 1002;
-}
-
-.fullscreen .editor-custom-btn-container {
-  z-index: 10000;
-  position: fixed;
-}
-
-.editor-upload-btn {
-  display: inline-block;
 }
 
 textarea {

@@ -121,7 +121,7 @@ export default class TagsNav extends Vue {
     };
   }
   // 过滤出固定在 TagsNav 的 tag
-  public filterfixedTags(routes: Array<RouteConfig>) {
+  public filterFixedTags(routes: Array<RouteConfig>) {
     let tags: Array<Tag> = [];
     routes.forEach(route => {
       if (route.meta && route.meta.fixedInNav) {
@@ -133,7 +133,7 @@ export default class TagsNav extends Vue {
         });
       }
       if (route.children) {
-        const childTags = this.filterfixedTags(route.children);
+        const childTags = this.filterFixedTags(route.children);
         if (childTags.length > 0) {
           tags = [...tags, ...childTags];
         }
@@ -143,7 +143,7 @@ export default class TagsNav extends Vue {
   }
   // 初始化固定在 TagsNav 的 tags
   public initTags() {
-    let fixedTags = this.filterfixedTags(PermissionModule.loadRoutes);
+    let fixedTags = this.filterFixedTags(PermissionModule.loadRoutes);
     let f: Array<Tag> = [];
     // 如果首页固定在 TagsNav，确保是第一个显示
     fixedTags.forEach(fixedTag => {
@@ -257,9 +257,9 @@ export default class TagsNav extends Vue {
           });
       }
     } else {
-      const lasttfixedTags: Tag = this.fixedTags.slice(-1)[0];
-      if (lasttfixedTags && tag.name !== lasttfixedTags.name) {
-        this.$router.push(lasttfixedTags.path);
+      const lastFixedTags: Tag = this.fixedTags.slice(-1)[0];
+      if (lastFixedTags && tag.name !== lastFixedTags.name) {
+        this.$router.push(lastFixedTags.path);
       }
     }
   }

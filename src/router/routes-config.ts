@@ -14,15 +14,17 @@ import Layout from "@/layout/index.vue";
     title: { string | number | Function }
                     显示在侧边栏、面包屑和标签栏的文字
                     使用 '{{ 多语言字段 }}' 形式结合「多语言」使用
-                    可以传入一个回调函数，参数是当前路由对象
+                    可以传入一个回调函数，参数是当前路由对象 to
     notClickBread: boolean                    如果为 true，则该路由无法在面包屑中被点击，默认为 false
-    hideInBread: boolean                    如果为 true，则该路由将不会出现在面包屑中，默认为 false
-    hideInMenu: boolean                     如果为 true，则该路由不会显示在左侧菜单，默认为 false
+    hideInBread: boolean                      如果为 true，则该路由将不会出现在面包屑中，默认为 false
+    hideInMenu: boolean                       如果为 true，则该路由不会显示在左侧菜单，默认为 false
     alwaysShowRoot: boolean                   如果为 false 且某一级路由下只有一个二级路由，则左侧菜单直接显示该二级路由，如果为 true，则总会让一级菜单作为下拉菜单，默认为 false，仅限父级路由使用
     notCache: boolean                         如果为 true，该路由在切换标签后不会缓存，如果需要缓存，则「必须」设置页面组件 name 属性（class 名）和路由配置的 name 一致，默认为 false
     icon: string                              该页面在左侧菜单、面包屑显示的图标，无默认值
-    fixedInNav: boolean | number                   如果为 true，则该路由按照路由表顺序依次标签固定在标签栏，如果指定顺序，则按照顺序固定，如果 fixedInNav 为 2，没有 1，则第一个为 true 的路由，默认为 false
+    fixedInNav: boolean                       如果为 true，则该路由按照路由表顺序依次标签固定在标签栏，默认为 false
     beforeCloseName: 'before_close_normal'    如果设置该字段，则在关闭当前 tab 页时会去 @/router/before-close.js 里寻找该字段名「对应」的方法，作为关闭前的钩子函数，无默认值
+    activeMenu: ''                            Restful 路由搭配使用，指定某个菜单高亮
+    beforeTo: Function                        点击菜单跳转路由前的回调，参数 1 为当前路由对象 to，2 为当前路由表对象，如果返回 false 代表终止路由跳转，默认为 true（允许跳转），http 请求不触发该回调
   }
  */
 
@@ -38,6 +40,14 @@ type RouteConfigAndMeta = RouteConfig & {
     icon?: string;
     fixedInNav?: boolean | number;
     beforeCloseName?: string;
+    activeMenu?: string;
+    beforeTo?: Function;
+  };
+};
+
+export type fullRoute = RouteConfig & {
+  meta: {
+    _fullPath: string; // 完整的路由（针对二级路由以上）
   };
 };
 
@@ -176,12 +186,12 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         component: () => import("@/views/components/drag-drawer/index.vue"),
         meta: { title: "抽屉拖拽", icon: "el-icon-star-on" },
       },
-      // {
-      //   path: "/tinymce",
-      //   name: "TinymceDemo",
-      //   component: () => import("@/views/components/tinymce/index.vue"),
-      //   meta: { title: "富文本", icon: "el-icon-star-on" },
-      // },
+      {
+        path: "/tinymce",
+        name: "TinymceDemo",
+        component: () => import("@/views/components/tinymce/index.vue"),
+        meta: { title: "富文本", icon: "el-icon-star-on" },
+      },
     ],
   },
   {
@@ -192,7 +202,29 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         path: "home",
         name: "_noUseI18n_redirectToHome",
         component: () => import("@/views/home-view.vue"),
-        meta: { title: "重定向到Home", icon: "component" },
+        meta: {
+          title: "重定向到Home",
+          icon: "component",
+        },
+      },
+    ],
+  },
+  {
+    path: "/no-redirect",
+    component: Layout,
+    children: [
+      {
+        path: "home",
+        name: "_noUseI18n_noRedirectToHome",
+        component: () => import("@/views/home-view.vue"),
+        meta: {
+          title: "禁止重定向",
+          icon: "component",
+          beforeTo: (to: Route, menuRoute: fullRoute) => {
+            console.log(to, menuRoute);
+            return false;
+          },
+        },
       },
     ],
   },

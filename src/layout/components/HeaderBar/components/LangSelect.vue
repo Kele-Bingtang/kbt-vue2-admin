@@ -23,16 +23,14 @@ import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
 @Component({})
 export default class LangSelecr extends Vue {
+  @Prop({ default: "zh-CN" })
+  public language!: string;
+
   public localList = [
     { label: "中文简体", value: "zh-CN" },
     { label: "中文繁体", value: "zh-TW" },
     { label: "English", value: "en-US" },
   ];
-
-  @Prop({
-    default: "zh-CN",
-  })
-  public language!: string;
 
   @Emit("on-change")
   public handleSetLanguage(lang: string) {

@@ -48,9 +48,7 @@ import { Component, Vue } from "vue-property-decorator";
 import GlobalSettings from "./GlobalSettings.vue";
 
 @Component({
-  components: {
-    GlobalSettings,
-  },
+  components: { GlobalSettings },
 })
 export default class User extends Vue {
   get user() {

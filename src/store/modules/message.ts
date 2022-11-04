@@ -20,7 +20,7 @@ export interface MessageState {
   message: MessageStore;
 }
 
-@Module({ dynamic: true, store, name: "MessageItem", namespaced: true })
+@Module({ dynamic: true, store, name: "message", namespaced: true })
 class Message extends VuexModule implements MessageState {
   public message: MessageStore = {
     unreadList: [],

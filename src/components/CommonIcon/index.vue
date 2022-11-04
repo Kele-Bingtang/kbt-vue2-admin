@@ -1,23 +1,33 @@
 <template>
-  <div class="common-icon">
-    <!-- Element UI 图标 -->
-    <i v-if="iconType === 'el'" :class="icon" :style="{ color: color }"></i>
-    <!-- 使用本地的 svg 图标 -->
-    <svg-icon v-if="iconType === 'svg'" :name="icon" :style="{ color: color }" />
-  </div>
+  <!-- 使用 Element UI 图标 -->
+  <i v-if="isElIcon" :class="icon" :style="{ color: color }"></i>
+  <!-- 使用本地的 svg 图标，这里可以换成你需要的格式图标 -->
+  <svg-icon v-else="iconType === 'svg'" :name="icon" :style="{ color: color }" />
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-// TODO：暂不使用，后面使用
+// 暂时用不到
+
 @Component({})
 export default class CommonIcon extends Vue {
   @Prop({ default: "" })
   public icon!: string;
-  @Prop({ default: "el" })
+  @Prop({ default: "" })
   public iconType!: string;
   @Prop({ default: "" })
   public color!: string;
+
+  mounted() {}
+
+  // 如果不传 iconType，则手动判断 iconType
+  get isElIcon() {
+    if (!this.iconType) {
+      return this.icon.startsWith("el-");
+    } else {
+      return this.iconType === "el";
+    }
+  }
 }
 </script>
 

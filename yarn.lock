@@ -1114,12 +1114,10 @@
   resolved "https://registry.npmmirror.com/@soda/get-current-script/-/get-current-script-1.0.2.tgz#a53515db25d8038374381b73af20bb4f2e508d87"
   integrity sha512-T7VNNlYVM1SgQ+VsMYhnDkcGmWhQdL0bDyGm5TlQ3GBXnJscEClUUOKduWTmm2zCnvNLC1hc3JpuXjs/nFOc5w==
 
-"@tinymce/tinymce-vue@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.npmmirror.com/@tinymce/tinymce-vue/-/tinymce-vue-5.0.0.tgz#0cba42697f36fa425f231e181857149a0538bde9"
-  integrity sha512-1HRCNa2eGdztOKShYAiHIry50LTU6YJG//qSP9AJElrXhb3BIBN0Bef6E56nZObVgwCgSmI4cnX35VU9D49aow==
-  dependencies:
-    tinymce "^6.0.0 || ^5.5.1"
+"@tinymce/tinymce-vue@^3.2.7":
+  version "3.2.8"
+  resolved "https://registry.npmmirror.com/@tinymce/tinymce-vue/-/tinymce-vue-3.2.8.tgz#014571b52ec8fa83665a7fa887bf65140207de71"
+  integrity sha512-jEz+NZ0g+FZFz273OEUWz9QkwPMyjc5AJYyxOgu51O1Y5UaJ/6IUddXTX6A20mwCleEv5ebwNYdalviafx4fnA==
 
 "@trysound/sax@0.2.0":
   version "0.2.0"
@@ -6683,10 +6681,10 @@ thunky@^1.0.2:
   resolved "https://registry.npmmirror.com/thunky/-/thunky-1.1.0.tgz#5abaf714a9405db0504732bbccd2cedd9ef9537d"
   integrity sha512-eHY7nBftgThBqOyHGVN+l8gF0BucP09fMo0oO/Lb0w1OF80dJv+lDVpXG60WMQvkcxAkNybKsrEIE3ZtKGmPrA==
 
-"tinymce@^6.0.0 || ^5.5.1", tinymce@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.npmmirror.com/tinymce/-/tinymce-6.2.0.tgz#473aa38af03bf772916f3e1730e6b8d3471203f0"
-  integrity sha512-zLjbFrg0hbtJ6PxmZUjQY6zyIOM/mLrWGTvhBec7XwYwoW1E0xXMQzy2tgMTh3OvJpsclgqf2ZMjmwcv4Cludw==
+tinymce@^5.7.2:
+  version "5.10.6"
+  resolved "https://registry.npmmirror.com/tinymce/-/tinymce-5.10.6.tgz#ea03927e9d20c035619dfd32ec4fd471c55e32c5"
+  integrity sha512-bnF2LUoycDsoZZLQBNHbOijrmoJuEeR1rQdqgo4s77BedufpOVnDh00OZKbseHeTMCxhVH05wvOqxLsi6vpeZw==
 
 to-fast-properties@^2.0.0:
   version "2.0.0"

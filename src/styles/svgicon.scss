@@ -24,6 +24,11 @@
     .el-button {
       padding: 0;
       border: none;
+      background-color: transparent;
+      &:hover,
+      &:focus {
+        background-color: transparent;
+      }
     }
   }
 }

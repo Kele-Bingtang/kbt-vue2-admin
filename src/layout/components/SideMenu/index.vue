@@ -32,9 +32,7 @@ export type MenuRoute = RouteConfig & {
 };
 
 @Component({
-  components: {
-    SideMenuItem,
-  },
+  components: { SideMenuItem },
 })
 export default class SideMenu extends Vue {
   // 当前菜单是否折叠
@@ -47,7 +45,12 @@ export default class SideMenu extends Vue {
   }
   // 对应菜单 Item 的 index，这样才能高亮
   get activeMenu() {
-    return this.$route.path || this.$route.name;
+    const route = this.$route;
+    const { meta, path } = route;
+    if (meta && meta.activeMenu) {
+      return meta.activeMenu;
+    }
+    return path;
   }
   // 获取主题色
   get theme() {

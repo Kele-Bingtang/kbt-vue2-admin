@@ -1,6 +1,6 @@
 <template>
   <div class="draggable-dialog-container">
-    <el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog</el-button>
+    <el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog（有边界拖拽）</el-button>
 
     <el-dialog
       title="收货地址"
@@ -15,9 +15,16 @@
       </el-table>
     </el-dialog>
 
-    <el-button type="text" @click="dialogFormVisible = true" style="margin-left: 20px">打开嵌套表单的 Dialog</el-button>
+    <el-button type="text" @click="dialogFormVisible = true" style="margin-left: 20px">
+      打开嵌套表单的 Dialog（无边界拖拽）
+    </el-button>
 
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible" v-draggable-dialog @on-dialog-drag="handleDialogDrag">
+    <el-dialog
+      title="收货地址"
+      :visible.sync="dialogFormVisible"
+      v-draggable-dialog-no-bounds
+      @on-dialog-drag="handleDialogDrag"
+    >
       <el-form :model="form">
         <el-form-item label="活动名称" label-width="120px">
           <el-input v-model="form.name" autocomplete="off"></el-input>

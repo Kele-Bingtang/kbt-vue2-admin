@@ -23,15 +23,15 @@ import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
 @Component({})
 export default class SizeSelect extends Vue {
+  @Prop({ default: "medium" })
+  public size!: string;
+
   public sizeOptions = [
     { label: "Large", value: "large" },
     { label: "Medium", value: "medium" },
     { label: "Small", value: "small" },
     { label: "Mini", value: "mini" },
   ];
-
-  @Prop({ default: "medium" })
-  public size!: string;
 
   @Emit("on-change")
   public handleSetSize(size: string) {

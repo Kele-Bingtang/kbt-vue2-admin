@@ -23,10 +23,7 @@ export interface Breadcrumbs extends Route {
 }
 
 @Component({
-  components: {
-    SideMenuTrigger,
-    Breadcrumb,
-  },
+  components: { SideMenuTrigger, Breadcrumb },
 })
 export default class HeaderBar extends Vue {
   public breadcrumbs: Array<Breadcrumbs> = [];

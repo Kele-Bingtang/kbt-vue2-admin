@@ -3,9 +3,9 @@
   <a v-if="isExternal(to.path)" :href="to.path" target="_blank" rel="noopener">
     <slot></slot>
   </a>
-  <router-link v-else :to="fullPath">
+  <div v-else @click.prevent="handleClick()">
     <slot></slot>
-  </router-link>
+  </div>
 </template>
 
 <script lang="ts">
@@ -26,6 +26,22 @@ export default class SideMenuItemLink extends Vue {
       return this.to.meta._fullPath;
     }
     return this.to.path;
+  }
+
+  public handleClick() {
+    let route = this.$route;
+    let { meta } = this.to;
+    if (meta && meta.beforeTo && typeof meta.beforeTo === "function") {
+      let result = meta.beforeTo(route, this.to);
+      if (result === false) {
+        return;
+      }
+    }
+    if (meta && route.path !== meta._fullPath) {
+      this.$router.push(meta._fullPath).catch(err => {
+        err;
+      });
+    }
   }
 }
 </script>
