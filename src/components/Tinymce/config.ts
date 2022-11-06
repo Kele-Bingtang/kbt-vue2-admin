@@ -2,13 +2,10 @@
 // Detail plugins list see: https://www.tiny.cloud/apps/#core-plugins
 // Custom builds see: https://www.tiny.cloud/get-tiny/custom-builds/
 export const plugins = [
-  "advlist anchor autolink autoresize autosave charmap code codesample directionality emoticons fullpage fullscreen help hr image imagetools insertdatetime link lists media nonbreaking noneditable pagebreak paste preview print save searchreplace spellchecker tabfocus table template textpattern visualblocks visualchars wordcount",
-  // 'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak','searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime','media', 'table', 'emoticons', 'template', 'help'
+  "advlist anchor autolink autosave charmap code codesample directionality emoticons fullpage fullscreen help hr image imagetools insertdatetime link lists media nonbreaking noneditable pagebreak paste preview print save searchreplace spellchecker tabfocus table template textpattern visualblocks visualchars wordcount quickbars",
 ];
 
 // Here is the list of toolbar control components
 // Details see: https://www.tinymce.com/docs/advanced/editor-control-identifiers/#toolbarcontrols
-export const toolbar = [
-  "searchreplace bold italic underline strikethrough alignleft aligncenter alignright outdent indent blockquote undo redo removeformat subscript superscript code codesample",
-  "hr bullist numlist link image charmap preview anchor pagebreak insertdatetime media table emoticons charmap forecolor backcolor fullpage fullscreen",
-];
+export const toolbar =
+  "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor removeformat | blockquote subscript superscript | code codesample | fullscreen preview | hr pagebreak link | image media anchor | insertdatetime table | emoticons charmap | fullpage searchreplace | ltr rtl";

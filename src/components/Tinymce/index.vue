@@ -1,5 +1,5 @@
 <template>
-  <div class="tinymce-components" :class="{ fullscreen: fullscreen }" :style="{ width: containerWidth }">
+  <div class="tinymce-components" :class="{ fullscreen: fullscreen }">
     <tinymce-editor :id="id" v-model="tinymceContent" :init="initOptions" />
   </div>
 </template>
@@ -8,14 +8,10 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import TinymceEditor from "@tinymce/tinymce-vue";
 import { plugins, toolbar } from "./config";
-import { LayoutModule } from "@/store/modules/layout";
-// Docs: https://www.tiny.cloud/docs/advanced/usage-with-module-loaders/
 import "tinymce/tinymce";
-// Default icons are required for TinyMCE 5.3 or above
 import "tinymce/icons/default";
 import "tinymce/themes/silver";
 import "tinymce/themes/mobile";
-import "tinymce/skins/content/default/content.css";
 import "tinymce/plugins/advlist";
 import "tinymce/plugins/anchor";
 import "tinymce/plugins/autoresize";
@@ -52,43 +48,50 @@ import "tinymce/plugins/textpattern";
 import "tinymce/plugins/visualblocks";
 import "tinymce/plugins/visualchars";
 import "tinymce/plugins/wordcount";
+import "tinymce/plugins/quickbars";
 
 @Component({
   components: {
     TinymceEditor,
   },
 })
+// TinyMce 文档：https://www.tiny.cloud/docs/
 export default class Tinymce extends Vue {
   @Prop({ required: true })
-  public value!: string;
+  public value!: string; // 内容
+  @Prop({ default: false })
+  public disabled!: boolean; // 编辑器是否禁用
+  @Prop({ default: "default" })
+  public theme!: "default" | "dark" | "tinymce-5" | "tinymce-5-dark"; // UI 主题
+  @Prop({ default: "" })
+  public contentTheme!: "default" | "dark" | "document" | "tinymce-5" | "tinymce-5-dark"; // 内容区主题，如果不传，默认等于 UI 主题
   @Prop({ default: () => "vue-tinymce-" + +new Date() + ((Math.random() * 1000).toFixed(0) + "") })
-  public id!: string;
-  @Prop({ default: () => [] })
-  public toolbar!: string[];
+  public id!: string; // 编辑器 id
   @Prop({ default: "file edit view insert format tools table help" })
-  public menubar!: string;
+  public menubar!: string; // 菜单区
+  @Prop({ default: () => [] })
+  public toolbar!: string[]; // 工具区
+  @Prop({ default: "sliding" })
+  public toolbarMode!: "floating" | "sliding" | "scrolling" | "wrap"; // 工具区超出一行的显示模式，floating：鼠标悬浮显示；sliding：鼠标点击显示；scrolling：鼠标滚动显示；wrap：直接换行显示
   @Prop({ default: "360px" })
-  public height!: string | number;
+  public height!: string | number; // 编辑器高度
   @Prop({ default: "auto" })
-  public width!: string | number;
+  public width!: string | number; // 编辑器宽度
+  @Prop({ default: "zh-CN" })
+  public lang!: string; // 编辑器语言
+  @Prop({ default: true })
+  public move!: true | false | "both"; // true：编辑器可以垂直移动；false：编辑器无法移动；both：编辑器垂直和水平都可以移动
 
-  public hasChange = false;
-  public hasInit = false;
   public fullscreen = false;
 
   // https://www.tiny.cloud/docs/configure/localization/#language
-  // when adding a new language, please also add the corresponding lang file under public/tinymce/langs folder
   public languageTypeList: { [key: string]: string } = {
     "en-US": "en",
     "zh-CN": "zh_CN",
-    es: "es",
-    ja: "ja",
-    ko: "ko_KR",
-    it: "it",
   };
 
   get language() {
-    return this.languageTypeList[LayoutModule.language];
+    return this.languageTypeList[this.lang];
   }
 
   get tinymceContent() {
@@ -99,49 +102,80 @@ export default class Tinymce extends Vue {
     this.$emit("input", value);
   }
 
-  get containerWidth() {
-    const width = this.width;
-    if (/^[\d]+(\.[\d]+)?$/.test(width.toString())) {
-      return `${width}px`;
+  get skinTheme() {
+    if (this.theme === "default") {
+      return "oxide";
+    } else if (this.theme === "dark") {
+      return "oxide-dark";
     }
-    return width;
+    return this.theme;
   }
+
   get initOptions() {
     return {
       selector: `#${this.id}`,
       deprecation_warnings: false,
+      width: this.width,
+      min_width: 60,
       height: this.height,
+      min_height: 60,
       body_class: "panel-body",
-      object_resizing: false,
+      resize: this.move,
       plugins: plugins,
       toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
+      toolbar_mode: this.toolbarMode,
       menubar: this.menubar,
       language: this.language,
-      language_url: this.language === "en" ? "" : `${process.env.BASE_URL}tinymce/langs/${this.language}.js`,
-      skin_url: `${process.env.BASE_URL}tinymce/skins/ui/oxide`,
+      // language_url: this.language === "en" ? "" : `${process.env.BASE_URL}tinymce/langs/${this.language}.js`,
+      base_url: "/tinymce",
+      skin: this.skinTheme,
+      content_css: this.contentTheme ? this.contentTheme : this.theme,
       emoticons_database_url: `${process.env.BASE_URL}tinymce/emojis.min.js`,
-      content_css: `${process.env.BASE_URL}tinymce/skins/content/default/content.css`,
       end_container_on_empty_block: true,
+      draggable_modal: true,
       powerpaste_word_import: "clean",
+      autosave_restore_when_empty: true,
       code_dialog_height: 450,
       code_dialog_width: 1000,
-      advlist_bullet_styles: "square",
-      advlist_number_styles: "default",
       imagetools_cors_hosts: ["www.tinymce.com", "codepen.io"],
       default_link_target: "_blank",
       link_title: false,
-      // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
       nonbreaking_force_tab: true,
-      // https://www.tiny.cloud/docs-3x/reference/configuration/Configuration3x@convert_urls/
-      // https://stackoverflow.com/questions/5196205/disable-tinymce-absolute-to-relative-url-conversions
+      insertdatetime_formats: ["%H:%M:%S", "%Y-%m-%d", "%I:%M:%S %p", "%D"],
       convert_urls: false,
+      paste_data_images: true, // https://www.tiny.cloud/docs/tinymce/6/upload-images/
+      images_file_types: "jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp", // 支持的上传图片类型
+      template_mdate_format: "%Y-%m-%d : %H:%M:%S",
+      template_replace_values: {
+        username: "Kobe Liu",
+        staffid: "100338",
+      },
+      template_preview_replace_values: {
+        preview_username: "Kobe Liu",
+        preview_staffid: "100338",
+      },
+      templates: [
+        {
+          title: "当前时间",
+          description: "当前时间模板",
+          content: '<p class="mdate">例如：1999-07-27 07:27:27，当然以您目前的时间为准</p>',
+        },
+        {
+          title: "您的身份",
+          description: "您的身份模板，您的身份将会放在 ${} 里",
+          content: "<p>Name: {$username}, StaffID: {$staffid}</p>",
+        },
+        {
+          title: "您的身份",
+          description: "您的身份模板，这里仅是预览，输出后不是实际的效果",
+          content: "<p>Name: {$username}, StaffID: {$staffid}</p>",
+        },
+      ],
       init_instance_callback: (editor: any) => {
         if (this.value) {
           editor.setContent(this.value);
         }
-        this.hasInit = true;
         editor.on("NodeChange Change KeyUp SetContent", () => {
-          this.hasChange = true;
           this.$emit("input", editor.getContent());
         });
       },
@@ -150,12 +184,35 @@ export default class Tinymce extends Vue {
           this.fullscreen = e.state;
         });
       },
+      // 图片上传回调
+      images_upload_handler: (blobInfo: Function, success: Function, failure: Function, progress: Function) => {
+        this.$emit("img-upload", blobInfo, success, failure, progress);
+      },
+      // 附件上传回调
+      file_picker_callback: (callback: any, value: any, meta: any) => {
+        let filetype =
+          ".pdf, .txt, .zip, .rar, .7z, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .mp3, .mp4,.mkv, .avi,.wmv, .rmvb,.mov,.mpg,.mpeg,.webm, .jpg, .jpeg, .png, .gif"; //限制文件的上传类型
+        const input = document.createElement("input");
+        input.setAttribute("type", "file");
+        input.setAttribute("accept", filetype);
+        const _this = this;
+        input.onchange = function () {
+          const file = (this as any).files[0];
+          _this.$emit("file-upload", file, meta.filetype, callback);
+        };
+        input.click();
+      },
     };
+  }
+
+  mounted() {
+    this.onDisabledChange();
   }
 
   beforeDestroy() {
     this.destroyTinymce();
   }
+
   destroyTinymce() {
     const tinymce = (window as any).tinymce.get(this.id);
     if (this.fullscreen) {
@@ -179,12 +236,14 @@ export default class Tinymce extends Vue {
     this.$nextTick(() => tinymceManager.init(this.initOptions));
   }
 
-  // public imageSuccessCBK(arr: IUploadObject[]) {
-  //   const tinymce = (window as any).tinymce.get(this.id)
-  //   arr.forEach(v => {
-  //     tinymce.insertContent(`<img class="wscnph" src="${v.url}" >`)
-  //   })
-  // }
+  @Watch("disabled")
+  public onDisabledChange() {
+    const tinymceInstance = (window as any).tinymce.get(this.id);
+    if (tinymceInstance) {
+      let status = this.disabled ? "readonly" : "design";
+      tinymceInstance.mode.set(status);
+    }
+  }
 }
 </script>
 
@@ -196,10 +255,5 @@ export default class Tinymce extends Vue {
   .tox-fullscreen {
     z-index: 10000 !important;
   }
-}
-
-textarea {
-  visibility: hidden;
-  z-index: -1;
 }
 </style>
