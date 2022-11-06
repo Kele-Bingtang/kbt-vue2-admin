@@ -130,7 +130,7 @@ export default class Tinymce extends Vue {
       base_url: "/tinymce",
       skin: this.skinTheme,
       content_css: this.contentTheme ? this.contentTheme : this.theme,
-      emoticons_database_url: `${process.env.BASE_URL}tinymce/emojis.min.js`,
+      emoticons_database_url: `/tinymce/emojis.min.js`,
       end_container_on_empty_block: true,
       draggable_modal: true,
       powerpaste_word_import: "clean",
