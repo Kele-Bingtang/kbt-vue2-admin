@@ -37,7 +37,7 @@ import { cmThemeOptions, cmModeOptions } from "@/test/code-mirror";
 export default class CodeMirrorDemo extends Vue {
   public cmTheme = "default";
   public cmMode = "application/json";
-  public value = "const a = hello world";
+  public value = "const a = 'hello world';";
 
   public cmThemeOptions = cmThemeOptions;
 

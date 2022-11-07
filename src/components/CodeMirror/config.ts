@@ -1,14 +1,3 @@
-// 编辑器代码格式
-import "codemirror/mode/javascript/javascript.js";
-import "codemirror/mode/htmlmixed/htmlmixed.js";
-import "codemirror/mode/css/css.js";
-import "codemirror/mode/vue/vue.js";
-import "codemirror/mode/yaml/yaml.js";
-import "codemirror/mode/xml/xml.js";
-import "codemirror/mode/sql/sql.js";
-import "codemirror/mode/python/python.js";
-import "codemirror/mode/markdown/markdown.js";
-import "codemirror/mode/shell/shell.js";
 // 支持使用Sublime快捷键
 import "codemirror/keymap/sublime";
 import "codemirror/addon/hint/show-hint.css";

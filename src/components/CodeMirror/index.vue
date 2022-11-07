@@ -20,6 +20,7 @@ import "codemirror/theme/ayu-mirage.css";
 import "codemirror/addon/display/autorefresh";
 import "./config.ts";
 import "./theme.ts";
+import "./mode.ts";
 
 @Component({
   components: { codemirror },
