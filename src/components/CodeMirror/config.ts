@@ -1,14 +1,14 @@
 // 编辑器代码格式
 import "codemirror/mode/javascript/javascript.js";
-import "codemirror/mode/xml/xml.js";
 import "codemirror/mode/htmlmixed/htmlmixed.js";
 import "codemirror/mode/css/css.js";
+import "codemirror/mode/vue/vue.js";
 import "codemirror/mode/yaml/yaml.js";
+import "codemirror/mode/xml/xml.js";
 import "codemirror/mode/sql/sql.js";
 import "codemirror/mode/python/python.js";
 import "codemirror/mode/markdown/markdown.js";
-// 编辑的主题文件
-import "codemirror/theme/idea.css";
+import "codemirror/mode/shell/shell.js";
 // 支持使用Sublime快捷键
 import "codemirror/keymap/sublime";
 import "codemirror/addon/hint/show-hint.css";
@@ -28,7 +28,7 @@ import "codemirror/addon/comment/comment.js";
 import "codemirror/addon/hint/show-hint.js";
 import "codemirror/addon/hint/anyword-hint.js";
 // yarn add jsonlint，然后全局注册才能使用 JSON 语法检查
-require('script-loader!jsonlint')
+require("script-loader!jsonlint");
 import "codemirror/addon/lint/javascript-lint.js";
 // 支持各种代码折叠
 import "codemirror/addon/fold/foldcode.js";

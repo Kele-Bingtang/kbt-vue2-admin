@@ -1,4 +1,5 @@
 <template>
+
   <codemirror
     ref="cmEditor"
     v-model="code"
@@ -13,18 +14,18 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { codemirror } from "vue-codemirror";
 import { Editor } from "codemirror";
-import "codemirror/mode/javascript/javascript.js";
 import "codemirror/lib/codemirror.css";
 // 编辑的主题文件
 import "codemirror/theme/ayu-mirage.css";
 import "codemirror/addon/display/autorefresh";
 import "./config.ts";
+import "./theme.ts";
 
 @Component({
   components: { codemirror },
 })
 export default class CodeMirror extends Vue {
-  @Prop({ default: "const A = 10" })
+  @Prop({ default: "" })
   public value!: string;
   @Prop({ default: "idea" })
   public cmTheme!: string;
