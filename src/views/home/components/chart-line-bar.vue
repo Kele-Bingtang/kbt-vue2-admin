@@ -41,6 +41,17 @@ export default class ChartLineBar extends Vue {
     this.chart = null;
   }
 
+  deactivated() {
+    if (!this.chart) {
+      return;
+    }
+    window.removeEventListener("resize", () => {
+      this.chart.resize();
+    });
+    this.chart.dispose();
+    this.chart = null;
+  }
+
   public initChart() {
     let category = this.data.map(item => item.category);
     let lineData = this.data.map(item => item.lineData);
@@ -117,7 +128,7 @@ export default class ChartLineBar extends Vue {
       ],
     });
     window.addEventListener("resize", () => {
-      this.chart.resize();
+      this.chart && this.chart.resize();
     });
   }
 }

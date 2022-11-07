@@ -39,6 +39,23 @@ export default class ChartBar extends Vue {
     this.chart = null;
   }
 
+  activated() {
+    this.$nextTick(() => {
+      this.initChart();
+    });
+  }
+
+  deactivated() {
+    if (!this.chart) {
+      return;
+    }
+    window.removeEventListener("resize", () => {
+      this.chart.resize();
+    });
+    this.chart.dispose();
+    this.chart = null;
+  }
+
   public initChart() {
     this.chart = echarts.init(this.$el as HTMLElement, "shine");
     this.chart.setOption({
@@ -121,7 +138,7 @@ export default class ChartBar extends Vue {
       ],
     });
     window.addEventListener("resize", () => {
-      this.chart.resize();
+      this.chart && this.chart.resize();
     });
   }
 }

@@ -63,7 +63,7 @@ class Settings extends VuexModule implements SettingsState {
   @Action
   public resetSettings() {
     removeCacheSettings();
-    if (this.recordTagsNav) {
+    if (!recordTagsNav) {
       removeCacheTagNavList();
     }
   }

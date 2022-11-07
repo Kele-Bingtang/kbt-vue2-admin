@@ -16,6 +16,7 @@ export default {
     DraggableDialogDemo: "模态框拖拽",
     DragDrawerDemo: "抽屉拖拽",
     TinymceDemo: "富文本",
+    CodeMirrorDemo: "代码编辑器",
     params: "动态路由",
     query: "带参路由",
   },

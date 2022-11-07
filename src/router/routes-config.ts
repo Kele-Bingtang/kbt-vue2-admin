@@ -24,7 +24,6 @@ import Layout from "@/layout/index.vue";
     fixedInNav: boolean                       如果为 true，则该路由按照路由表顺序依次标签固定在标签栏，默认为 false
     beforeCloseName: 'before_close_normal'    如果设置该字段，则在关闭当前 tab 页时会去 @/router/before-close.js 里寻找该字段名「对应」的方法，作为关闭前的钩子函数，无默认值
     activeMenu: ''                            Restful 路由搭配使用，指定某个菜单高亮
-    beforeTo: Function                        点击菜单跳转路由前的回调，参数 1 为当前路由对象 to，2 为当前路由表对象，如果返回 false 代表终止路由跳转，默认为 true（允许跳转），http 请求不触发该回调
   }
  */
 
@@ -41,7 +40,6 @@ type RouteConfigAndMeta = RouteConfig & {
     fixedInNav?: boolean | number;
     beforeCloseName?: string;
     activeMenu?: string;
-    beforeTo?: Function;
   };
 };
 
@@ -192,6 +190,12 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         component: () => import("@/views/components/tinymce/index.vue"),
         meta: { title: "富文本", icon: "el-icon-star-on" },
       },
+      {
+        path: "/code-mirror",
+        name: "CodeMirrorDemo",
+        component: () => import("@/views/components/code-mirror/index.vue"),
+        meta: { title: "代码编辑器", icon: "el-icon-star-on" },
+      },
     ],
   },
   {
@@ -205,25 +209,6 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         meta: {
           title: "重定向到Home",
           icon: "component",
-        },
-      },
-    ],
-  },
-  {
-    path: "/no-redirect",
-    component: Layout,
-    children: [
-      {
-        path: "home",
-        name: "_noUseI18n_noRedirectToHome",
-        component: () => import("@/views/home-view.vue"),
-        meta: {
-          title: "禁止重定向",
-          icon: "component",
-          beforeTo: (to: Route, menuRoute: fullRoute) => {
-            console.log(to, menuRoute);
-            return false;
-          },
         },
       },
     ],

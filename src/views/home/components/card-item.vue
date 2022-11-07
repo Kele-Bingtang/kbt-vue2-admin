@@ -5,7 +5,7 @@
         <i :class="icon" :style="{ fontSize: `${iconSize}px`, color: color }"></i>
       </div>
       <div class="right-area" :style="{ width: `${100 - iconWidth}%` }">
-        <div>
+        <div style="text-align: right">
           <slot></slot>
         </div>
       </div>

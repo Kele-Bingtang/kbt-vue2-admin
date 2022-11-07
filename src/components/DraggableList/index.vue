@@ -2,7 +2,14 @@
   <div class="drag-list-components">
     <div class="drag-list" :style="{ width: leftWidth }">
       <slot name="left-title">{{ leftTitle }}</slot>
-      <draggable class="drag-left-list" :class="dragClass.left" :group="group" :list="leftList" v-bind="$attrs">
+      <draggable
+        class="drag-left-list"
+        :class="dragClass.left"
+        :group="group"
+        :list="leftList"
+        v-bind="$attrs"
+        @end="handleEnd($event, 'left')"
+      >
         <div class="drag-list-item" v-for="item in leftList" :key="item.id" @click="handleClick(item.id, 'left')">
           <slot name="left" :item="item">{{ item }}</slot>
           <div class="left-icon icon" @click="pushList(item, 'left')"><slot name="leftIcon"></slot></div>
@@ -11,7 +18,14 @@
     </div>
     <div class="drag-list" :style="{ width: rightWidth }">
       <slot name="right-title">{{ rightTitle }}</slot>
-      <draggable class="drag-right-list" :class="dragClass.right" :group="group" :list="rightList" v-bind="$attrs">
+      <draggable
+        class="drag-right-list"
+        :class="dragClass.right"
+        :group="group"
+        :list="rightList"
+        v-bind="$attrs"
+        @end="handleEnd($event, 'right')"
+      >
         <div class="drag-list-item" v-for="item in rightList" :key="item.id" @click="handleClick(item.id, 'right')">
           <slot name="right" :item="item">{{ item }}</slot>
           <div class="right-icon icon" @click="pushList(item, 'right')"><slot name="rightIcon"></slot></div>
