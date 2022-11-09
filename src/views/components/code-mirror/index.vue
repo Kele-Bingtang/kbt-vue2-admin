@@ -22,14 +22,14 @@
         ></el-option>
       </el-select>
     </div>
-    <code-mirror :value="value" :cmTheme="cmTheme" :cmMode="cmMode" />
+    <code-mirror v-model="value" :cmTheme="cmTheme" :cmMode="cmMode" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import CodeMirror from "@/components/CodeMirror/index.vue";
-import { cmThemeOptions, cmModeOptions } from "@/test/code-mirror";
+import { cmThemeOptions, cmModeOptions } from "@/components/CodeMirror/code-mirror";
 
 @Component({
   components: { CodeMirror },

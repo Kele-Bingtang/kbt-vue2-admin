@@ -12,12 +12,14 @@ import "codemirror/addon/hint/anyword-hint.js";
 import "codemirror/addon/lint/lint.css";
 import "codemirror/addon/lint/lint.js";
 import "codemirror/addon/lint/json-lint";
+// yarn add jsonlint，然后全局注册才能使用 JSON 语法检查
+// import jsonlint from "jsonlint";
+// (window as any).jsonlint = jsonlint;
 // 行注释
 import "codemirror/addon/comment/comment.js";
 import "codemirror/addon/hint/show-hint.js";
 import "codemirror/addon/hint/anyword-hint.js";
-// yarn add jsonlint，然后全局注册才能使用 JSON 语法检查
-require("script-loader!jsonlint");
+
 import "codemirror/addon/lint/javascript-lint.js";
 // 支持各种代码折叠
 import "codemirror/addon/fold/foldcode.js";

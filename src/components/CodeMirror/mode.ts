@@ -9,3 +9,4 @@ import "codemirror/mode/sql/sql.js";
 import "codemirror/mode/python/python.js";
 import "codemirror/mode/markdown/markdown.js";
 import "codemirror/mode/shell/shell.js";
+import "codemirror/mode/clike/clike.js";

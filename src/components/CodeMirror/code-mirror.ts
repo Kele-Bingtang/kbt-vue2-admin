@@ -278,13 +278,13 @@ export const cmModeOptions = [
     value: "javascript",
     label: "JS",
   },
-  // {
-  //   value: "typescript",
-  //   label: "TS",
-  // },
   {
     value: "vue",
     label: "vue",
+  },
+  {
+    value: "text/x-java",
+    label: "java",
   },
   {
     value: "python",

@@ -49,6 +49,8 @@ export default class SideMenu extends Vue {
     const { meta, path } = route;
     if (meta && meta.activeMenu) {
       return meta.activeMenu;
+    } else if (meta && meta._fullPath) {
+      return meta._fullPath;
     }
     return path;
   }

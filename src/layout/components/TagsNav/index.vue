@@ -19,7 +19,7 @@
           @contextmenu.prevent.native="openRightMenu(tag, $event)"
         >
           <span class="dot" />
-          <span>{{ getTitle(tag) }}</span>
+          <span>{{ tag.meta && tag.meta.title }}</span>
           <span v-if="!isFixedInNav(tag)" class="el-icon-close" @click.prevent.stop="handleCloseTag(tag)" />
         </router-link>
       </div>
@@ -110,6 +110,10 @@ export default class TagsNav extends Vue {
 
   // 判断当前激活的 tag
   public isActive(tag: Tag): boolean {
+    let { meta, params } = this.$route;
+    if (meta && meta._fullPath && !params) {
+      return meta._fullPath === tag.path;
+    }
     return this.$route.path === tag.path;
   }
   // 更换 tag 颜色为全局 theme
@@ -129,7 +133,7 @@ export default class TagsNav extends Vue {
         tags.push({
           path: tagPath, // tag 的 path 其实就是路由完整的 path，懒得改成 fullPath 了
           name: route.name,
-          meta: { ...route.meta },
+          meta: { ...route.meta, title: getTitle(route, this) },
         });
       }
       if (route.children) {
@@ -166,10 +170,15 @@ export default class TagsNav extends Vue {
       LayoutModule.addTag(tag);
     } else {
       let route = { ...this.$route };
-      const { name, fullPath, meta } = route;
+      const { name, meta, params } = route;
+      // 默认 path 是 _fullPath，但是 _fullPath 可以在 store/permission.ts 里额外添加内容，如 "?name=liu"，那么这里也要同步更新到 path
+      // 动态参数有 :id 之类的，因为 _fullPath 包含，所以不能给 path
+      if (!params) {
+        route.path = meta && meta._fullPath;
+      }
       route.meta = {
         ...meta,
-        _fullPath: fullPath,
+        title: getTitle(route, this),
       };
       if (name) {
         LayoutModule.addTag(route);

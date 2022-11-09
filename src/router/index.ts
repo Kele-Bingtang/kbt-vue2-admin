@@ -37,8 +37,8 @@ router.beforeEach(async (to: Route, from: Route, next: any) => {
           const roles = await UserModule.getUserInfo();
           if (!PermissionModule.isLoadedRoutes) {
             loadRoutes(rolesRoutes, roles);
+            next({ ...to, replace: true });
           }
-          next({ ...to, replace: true });
         } catch (err) {
           UserModule.resetToken();
           // next(`/login?redirect=${to.path}`)

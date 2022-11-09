@@ -1,13 +1,5 @@
 <template>
-
-  <codemirror
-    ref="cmEditor"
-    v-model="code"
-    :options="cmOptions"
-    @input="onCmCodeChange"
-    @blur="onCmBlur"
-    @paste.native="onPaste"
-  ></codemirror>
+  <codemirror ref="cmEditor" v-model="code" :options="cmOptions" @blur="onCmBlur" @paste.native="onPaste"></codemirror>
 </template>
 
 <script lang="ts">
@@ -60,7 +52,7 @@ export default class CodeMirror extends Vue {
       smartIndent: true, // 是否智能缩进
       autocorrect: true, // 自动更正
       spellcheck: true, // 拼写检查
-      lint: true, // 检查格式
+      // lint: true, // 检查格式
       lineNumbers: true, // 是否显示行数
       lineWrapping: true, // 是否自动换行
       styleActiveLine: true, // 当前行高亮
@@ -81,10 +73,6 @@ export default class CodeMirror extends Vue {
     };
   }
 
-  onCmCodeChange(newCode: string) {
-    this.code = newCode;
-    // this.resetLint();
-  }
   // 失去焦点时处理函数
   onCmBlur(cm: any, event: Event) {
     try {
@@ -130,7 +118,7 @@ export default class CodeMirror extends Vue {
     if (this.cmOptions.mode === "application/json") {
       try {
         let oldCode = this.code;
-        this.code = this.formatStrInJson(this.code);
+        this.$emit("input", this.formatStrInJson(this.code));
         this.$emit("on-paste", this.code, oldCode);
       } catch (e) {}
     }
