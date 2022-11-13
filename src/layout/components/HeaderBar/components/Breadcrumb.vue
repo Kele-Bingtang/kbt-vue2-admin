@@ -53,10 +53,17 @@ export default class Breadcrumb extends Vue {
         });
         return;
       }
-      // 这里的面包屑地址以 fullPath 跳转（fullPath 已经保存在面包屑里），你也可以和通过 name 跳转
-      this.$router.push(this.pathCompile(fullPath)).catch(err => {
-        console.warn(err);
-      });
+      if (fullPath.indexOf("?") === -1) {
+        // 这里的面包屑地址以 fullPath 跳转（fullPath 已经保存在面包屑里），你也可以和通过 name 跳转
+        this.$router.push(this.pathCompile(fullPath)).catch(err => {
+          console.warn(err);
+        });
+      } else {
+        let f = fullPath.split("?");
+        this.$router.push(this.pathCompile(f[0]) + "?" + f[1]).catch(err => {
+          console.warn(err);
+        });
+      }
     }
   }
 

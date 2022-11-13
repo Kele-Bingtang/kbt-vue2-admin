@@ -11,7 +11,7 @@
         <router-link
           v-for="tag in tagNavList"
           :key="tag.path"
-          :to="{ path: tag.path, query: tag.query }"
+          :to="{ path: tag.path, query: tag.query, params: tag.params }"
           :class="isActive(tag) ? 'active' : ''"
           :style="activeStyle(tag)"
           class="tags-link"
@@ -100,20 +100,12 @@ export default class TagsNav extends Vue {
     return SettingsModule.theme;
   }
 
-  public getTitle(tag: Tag) {
-    return getTitle(tag, this);
-  }
-
   public isFixedInNav(tag: Tag) {
     return tag.meta && tag.meta.fixedInNav;
   }
 
   // 判断当前激活的 tag
   public isActive(tag: Tag): boolean {
-    let { meta, params } = this.$route;
-    if (meta && meta._fullPath && !params) {
-      return meta._fullPath === tag.path;
-    }
     return this.$route.path === tag.path;
   }
   // 更换 tag 颜色为全局 theme
@@ -169,18 +161,8 @@ export default class TagsNav extends Vue {
     if (tag) {
       LayoutModule.addTag(tag);
     } else {
-      let route = { ...this.$route };
-      const { name, meta, params } = route;
-      // 默认 path 是 _fullPath，但是 _fullPath 可以在 store/permission.ts 里额外添加内容，如 "?name=liu"，那么这里也要同步更新到 path
-      // 动态参数有 :id 之类的，因为 _fullPath 包含，所以不能给 path
-      if (!params) {
-        route.path = meta && meta._fullPath;
-      }
-      route.meta = {
-        ...meta,
-        title: getTitle(route, this),
-      };
-      if (name) {
+      let route = this.handleRouteTitle();
+      if (route.name) {
         LayoutModule.addTag(route);
       }
     }
@@ -195,12 +177,23 @@ export default class TagsNav extends Vue {
             this.moveToTargetTag(tag.$el);
             // 当 query 不一样
             if ((tag.to as Tag).path !== this.$route.fullPath) {
-              LayoutModule.updateVisitedTag(this.$route);
+              let route = this.handleRouteTitle();
+              LayoutModule.updateVisitedTag(route);
             }
           }
         }
       }
     });
+  }
+  // 处理路由的 Title 显示
+  public handleRouteTitle() {
+    let route = { ...this.$route };
+    const { meta } = route;
+    route.meta = {
+      ...meta,
+      title: getTitle(route, this),
+    };
+    return route;
   }
   // 移动到目标 tag，如果目标 tag 在 TagsNav 可视区域外面，则有滚动的动画效果
   public moveToTargetTag(tagElement: HTMLElement) {

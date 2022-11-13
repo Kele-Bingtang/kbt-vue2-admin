@@ -199,6 +199,36 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
     ],
   },
   {
+    path: "/table",
+    component: Layout,
+    name: "Table",
+    meta: {
+      notClickBread: true,
+      title: "表格",
+      icon: "component",
+    },
+    children: [
+      {
+        path: "/drag-table",
+        name: "DragTableDemo",
+        component: () => import("@/views/table-demo/drag-table/index.vue"),
+        meta: { title: "表格拖拽", icon: "el-icon-star-on" },
+      },
+      {
+        path: "/dynamic-table",
+        name: "DynamicTableDemo",
+        component: () => import("@/views/table-demo/dynamic-table/index.vue"),
+        meta: { title: "动态表格添加", icon: "el-icon-star-on" },
+      },
+      {
+        path: "/inline-table",
+        name: "InlineTableDemo",
+        component: () => import("@/views/table-demo/inline-table/index.vue"),
+        meta: { title: "内联表格编辑", icon: "el-icon-star-on" },
+      },
+    ],
+  },
+  {
     path: "/redirect",
     component: Layout,
     children: [
