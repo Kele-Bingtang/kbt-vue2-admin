@@ -13,14 +13,14 @@
       row-key="id"
       style="width: 100%"
     >
-      <el-table-column prop="id" label="ID" width="50"></el-table-column>
+      <el-table-column prop="id" label="ID" width="50" align="center"></el-table-column>
       <el-table-column prop="date" label="日期"></el-table-column>
       <el-table-column prop="name" label="姓名"></el-table-column>
       <el-table-column prop="address" label="地址"></el-table-column>
-      <el-table-column prop="tag" label="标签">
+      <el-table-column prop="status" label="状态">
         <template slot-scope="{ row }">
-          <el-tag :type="row.tag === '家' ? 'primary' : 'success'" disable-transitions>
-            {{ row.tag }}
+          <el-tag :type="row.status | tableStatusFilter">
+            {{ row.status }}
           </el-tag>
         </template>
       </el-table-column>
@@ -56,46 +56,14 @@
 </template>
 
 <script lang="ts">
+import { simpleData } from "@/test/table";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({})
 export default class InlineEditTable extends Vue {
-  row!: any;
+  public row!: any;
 
-  public tableData = [
-    {
-      id: "1",
-      name: "王小虎1",
-      date: "2016-05-02",
-      address: "上海市普陀区金沙江路 100 弄",
-      tag: "家",
-      title: "测试1111111111111111",
-    },
-    {
-      id: "2",
-      name: "王小虎2",
-      date: "2016-05-04",
-      address: "上海市普陀区金沙江路 200 弄",
-      tag: "公司",
-      title: "测试22222222222222222",
-    },
-    {
-      id: "3",
-      name: "王小虎3",
-      date: "2016-05-01",
-      address: "上海市普陀区金沙江路 300 弄",
-      tag: "公司",
-      title: "测试333333333333333333",
-    },
-    {
-      id: "4",
-      name: "王小虎4",
-      date: "2016-05-03",
-      address: "上海市普陀区金沙江路 400 弄",
-      tag: "家",
-      title: "测试44444444444444444",
-    },
-  ];
+  public tableData = simpleData;
 
   mounted() {
     this.tableData.map(item => {

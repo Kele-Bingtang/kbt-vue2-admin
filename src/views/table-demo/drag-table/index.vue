@@ -12,9 +12,9 @@
         :width="item.width"
       >
         <template slot-scope="scope">
-          <template v-if="dropCol[index].prop === 'tag'">
-            <el-tag :type="scope.row.tag === '家' ? 'primary' : 'success'" disable-transitions>
-              {{ scope.row.tag }}
+          <template v-if="dropCol[index].prop === 'status'">
+            <el-tag :type="scope.row.status | tableStatusFilter">
+              {{ scope.row.status }}
             </el-tag>
           </template>
           <template v-else>
@@ -30,10 +30,10 @@
       <el-table-column prop="date" label="日期"></el-table-column>
       <el-table-column prop="name" label="姓名"></el-table-column>
       <el-table-column prop="address" label="地址"></el-table-column>
-      <el-table-column prop="tag" label="标签">
+      <el-table-column prop="status" label="状态">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.tag === '家' ? 'primary' : 'success'" disable-transitions>
-            {{ scope.row.tag }}
+          <el-tag :type="scope.row.status | tableStatusFilter">
+            {{ scope.row.status }}
           </el-tag>
         </template>
       </el-table-column>
@@ -44,6 +44,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Sortable from "sortablejs";
+import { simpleData } from "@/test/table";
 
 interface ColItem {
   label: string;
@@ -54,7 +55,8 @@ interface ColItem {
 
 @Component({})
 export default class DragTable extends Vue {
-  scope!: any;
+  public scope!: any;
+  public tableStatusFilter!: any;
 
   public col: Array<ColItem> = [
     {
@@ -76,44 +78,15 @@ export default class DragTable extends Vue {
       prop: "address",
     },
     {
-      label: "标签",
-      prop: "tag",
+      label: "状态",
+      prop: "status",
     },
   ];
   public dropCol: Array<ColItem> = [];
   // 一条数据必须有个唯一的 id
-  public tableData = [
-    {
-      id: "1",
-      name: "王小虎1",
-      date: "2016-05-02",
-      address: "上海市普陀区金沙江路 100 弄",
-      tag: "家",
-    },
-    {
-      id: "2",
-      name: "王小虎2",
-      date: "2016-05-04",
-      address: "上海市普陀区金沙江路 200 弄",
-      tag: "公司",
-    },
-    {
-      id: "3",
-      name: "王小虎3",
-      date: "2016-05-01",
-      address: "上海市普陀区金沙江路 300 弄",
-      tag: "公司",
-    },
-    {
-      id: "4",
-      name: "王小虎4",
-      date: "2016-05-03",
-      address: "上海市普陀区金沙江路 400 弄",
-      tag: "家",
-    },
-  ];
+  public tableData = simpleData;
 
-  public sortable = null;
+  public sortable: any = null;
 
   created() {
     this.dropCol = [...this.col];

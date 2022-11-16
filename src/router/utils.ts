@@ -1,11 +1,10 @@
 import { PermissionModule } from "@/store/modules/permission";
-import { RouteConfig } from "vue-router";
-import router from ".";
+import VueRouter, { RouteConfig } from "vue-router";
 
 /**
  * 动态加载路由
  */
-export const loadRoutes = (routes: RouteConfig[], roles: string[]) => {
+export const loadRoutes = (routes: RouteConfig[], roles: string[], router: VueRouter) => {
   const onlyRolesRoutes = filterOnlyRolesRoutes(routes, roles);
   PermissionModule.loadRolesRoutes(onlyRolesRoutes);
   onlyRolesRoutes.forEach(route => {

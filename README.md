@@ -10,6 +10,10 @@
 - 使用 Windows 10 资源管理器进入到项目根目录，按住 `Shift`，然后鼠标在空白处右键，选择「在处处打开 Powershell 窗口」，执行命令 `rm -r -force .git` 即可删除
 - 利用 Git Bash Here 窗口进入项目根目录，执行命令 `rm -rf .git` 即可删除
 
+## Demo
+
+[Demo](https://admin.youngkbt.cn/)
+
 ## 使用流程
 
 ### Clone code：拉取代码
@@ -243,5 +247,5 @@ Vue 仅识别上面两个命令，而 `yarn build:test` 是自己手动加上 `-
 
 系统根据路由、角色等信息自动生成菜单栏、面包屑、标签页。
 
-用户的默认角色为 `admin`，实际的角色应该从后端获取
+用户的默认角色为 `visitor`，实际的角色应该从后端获取
 

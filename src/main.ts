@@ -13,6 +13,7 @@ import { LayoutModule } from "@/store/modules/layout";
 import "@/utils/error-log";
 import Vue2OrgTree from "vue2-org-tree";
 import * as directives from "@/directives";
+import * as filters from '@/filters'
 
 Vue.config.productionTip = false;
 
@@ -31,6 +32,10 @@ Vue.use(SvgIcon, {
 Object.keys(directives).forEach(key => {
   Vue.directive(key, (directives as { [key: string]: DirectiveOptions })[key]);
 });
+
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, (filters as { [key: string ]: Function })[key])
+})
 
 Vue.use(Vue2OrgTree);
 

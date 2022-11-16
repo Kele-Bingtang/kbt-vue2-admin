@@ -36,7 +36,7 @@ router.beforeEach(async (to: Route, from: Route, next: any) => {
         try {
           const roles = await UserModule.getUserInfo();
           if (!PermissionModule.isLoadedRoutes) {
-            loadRoutes(rolesRoutes, roles);
+            loadRoutes(rolesRoutes, roles, router);
             next({ ...to, replace: true });
           }
         } catch (err) {
@@ -51,7 +51,7 @@ router.beforeEach(async (to: Route, from: Route, next: any) => {
     // 白清单
     if (whiteList.includes("*")) {
       if (!PermissionModule.isLoadedRoutes) {
-        loadRoutes(rolesRoutes, ["*"]);
+        loadRoutes(rolesRoutes, ["*"], router);
         next({ ...to, replace: true });
       } else {
         next();

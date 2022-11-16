@@ -2,10 +2,10 @@
   <div :class="{ hidden: hidden }" class="pagination-component">
     <el-pagination
       :background="background"
-      :current-page.sync="currentPage"
-      :page-size.sync="pageSize"
+      :current-page.sync="pageObj.currentPage"
+      :page-size.sync="pageObj.pageSize"
+      :page-sizes="pageObj.pageSizes"
       :layout="layout"
-      :page-sizes="pageSizes"
       :total="total"
       v-bind="$attrs"
       @size-change="handleSizeChange"
@@ -16,46 +16,61 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { scrollTo } from "@/utils/scroll-to";
+
+export interface Paging {
+  currentPage: number;
+  pageSizes: number[];
+  pageSize: number;
+}
+
+export const paging = {
+  currentPage: 1,
+  pageSizes: [10, 20, 50, 100, 200],
+  pageSize: 20,
+};
 
 @Component({})
 export default class Pagination extends Vue {
   @Prop({ required: true })
   public total!: number;
-  @Prop({ default: 1 })
-  public page!: number;
-  @Prop({ default: 20 })
-  public limit!: number;
-  @Prop({ default: () => [10, 20, 30, 50] })
-  public pageSizes!: number[];
+  @Prop({ default: () => paging })
+  public paging!: Paging;
   @Prop({ default: "total, sizes, prev, pager, next, jumper" })
   public layout!: string;
   @Prop({ default: true })
   public background!: boolean;
+  @Prop({ default: true })
+  public autoScroll!: boolean;
   @Prop({ default: false })
   public hidden!: boolean;
 
-  get currentPage() {
-    return this.page;
-  }
+  public pageObj!: Paging;
 
-  set currentPage(value) {
-    this.$emit("update:page", value);
-  }
-
-  get pageSize() {
-    return this.limit;
-  }
-
-  set pageSize(value) {
-    this.$emit("update:limit", value);
+  created() {
+    this.pageObj = this.paging;
   }
 
   handleSizeChange(value: number) {
-    this.$emit("pagination", { page: this.currentPage, limit: value });
+    this.pageObj.pageSize = value;
+    this.$emit("pagination", this.paging);
+    this.$nextTick(() => {
+      if (this.autoScroll) {
+        scrollTo("el-table__body-wrapper", 0, 700);
+        scrollTo("main-content", 0, 700);
+      }
+    });
   }
 
   handleCurrentChange(value: number) {
-    this.$emit("pagination", { page: value, limit: this.pageSize });
+    this.paging.currentPage = value;
+    this.$emit("pagination", this.paging);
+    this.$nextTick(() => {
+      if (this.autoScroll) {
+        scrollTo("el-table__body-wrapper", 0, 700);
+        scrollTo("main-content", 0, 700);
+      }
+    });
   }
 }
 </script>

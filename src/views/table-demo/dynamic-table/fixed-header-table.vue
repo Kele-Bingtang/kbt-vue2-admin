@@ -4,7 +4,8 @@
       <el-checkbox-group v-model="checkboxVal">
         <el-checkbox label="date">date</el-checkbox>
         <el-checkbox label="address">address</el-checkbox>
-        <el-checkbox label="tag">tag</el-checkbox>
+        <el-checkbox label="status">status</el-checkbox>
+        <el-checkbox label="title">title</el-checkbox>
       </el-checkbox-group>
     </div>
 
@@ -20,47 +21,19 @@
 </template>
 
 <script lang="ts">
+import { simpleData } from "@/test/table";
 import { Component, Vue, Watch } from "vue-property-decorator";
 
 @Component({})
 export default class FixedHeaderTable extends Vue {
-  row!: any;
+  public row!: any;
 
-  public tableData = [
-    {
-      id: "1",
-      name: "王小虎1",
-      date: "2016-05-02",
-      address: "北京省普陀区金沙江路 100 弄",
-      tag: "北京",
-    },
-    {
-      id: "2",
-      name: "王小虎2",
-      date: "2016-05-04",
-      address: "上海市普陀区金沙江路 200 弄",
-      tag: "上海",
-    },
-    {
-      id: "3",
-      name: "王小虎3",
-      date: "2016-05-01",
-      address: "广东省普陀区金沙江路 300 弄",
-      tag: "广东",
-    },
-    {
-      id: "4",
-      name: "王小虎4",
-      date: "2016-05-03",
-      address: "广西省普陀区金沙江路 400 弄",
-      tag: "广西",
-    },
-  ];
+  public tableData = simpleData;
 
   public key = 1; // Table key
-  public formTheadOptions = ["date", "address", "tag"];
-  public checkboxVal = ["date", "address"];
-  public formThead = ["date", "address"];
+  public formTheadOptions = ["date", "address", "status", "title"];
+  public checkboxVal = ["date", "address", "title"];
+  public formThead = this.checkboxVal;
 
   @Watch("checkboxVal")
   public onCheckboxValChange(value: string[]) {

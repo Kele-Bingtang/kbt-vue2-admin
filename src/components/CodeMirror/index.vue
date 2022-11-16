@@ -73,6 +73,10 @@ export default class CodeMirror extends Vue {
     };
   }
 
+  mounted() {
+    this.onPaste();
+  }
+
   // 失去焦点时处理函数
   onCmBlur(cm: any, event: Event) {
     try {
@@ -114,7 +118,7 @@ export default class CodeMirror extends Vue {
     this.cm.closeHint();
   }
   // 黏贴事件处理函数
-  public onPaste(event: Event) {
+  public onPaste(event?: Event) {
     if (this.cmOptions.mode === "application/json") {
       try {
         let oldCode = this.code;

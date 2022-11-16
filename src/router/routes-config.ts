@@ -226,6 +226,30 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         component: () => import("@/views/table-demo/inline-table/index.vue"),
         meta: { title: "内联表格编辑", icon: "el-icon-star-on" },
       },
+      {
+        path: "/search-table",
+        name: "SearchTableDemo",
+        component: () => import("@/views/table-demo/search-table/index.vue"),
+        meta: { title: "表格查询", icon: "el-icon-star-on" },
+      },
+      {
+        path: "/page-table",
+        name: "PageTableDemo",
+        component: () => import("@/views/table-demo/page-table/index.vue"),
+        meta: { title: "分页表格", icon: "el-icon-star-on" },
+      },
+      {
+        path: "/tree-table",
+        name: "TreeTableDemo",
+        component: () => import("@/views/table-demo/tree-table/index.vue"),
+        meta: { title: "树状表格", icon: "el-icon-star-on" },
+      },
+      {
+        path: "/Integration-table",
+        name: "IntegrationTableDemo",
+        component: () => import("@/views/table-demo/integration-table/index.vue"),
+        meta: { title: "集成表格", icon: "el-icon-star-on" },
+      },
     ],
   },
   {
