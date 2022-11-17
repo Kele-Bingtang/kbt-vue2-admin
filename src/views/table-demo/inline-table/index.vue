@@ -62,6 +62,7 @@ import { Component, Vue } from "vue-property-decorator";
 @Component({})
 export default class InlineEditTable extends Vue {
   public row!: any;
+  public tableStatusFilter!: any;
 
   public tableData = simpleData;
 

@@ -62,7 +62,9 @@
 
       <el-table-column align="center" label="操作" width="120">
         <template slot-scope="{ row, $index }">
-          <el-button type="primary" size="small" icon="el-icon-edit" @click="handleDelete(row, $index)">删除</el-button>
+          <el-button type="primary" size="small" icon="el-icon-delete" @click="handleDelete(row, $index)">
+            删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -116,8 +118,8 @@ export default class SearchTableDemo extends Vue {
   };
   public statusOptions = [
     {
-      value: "Enabled",
-      label: "Enabled",
+      value: "Enable",
+      label: "Enable",
     },
     {
       value: "Disable",
@@ -192,13 +194,21 @@ export default class SearchTableDemo extends Vue {
   }
 
   public handleDelete(row: any, index: number) {
-    this.$notify({
-      title: "Success",
-      message: "删除成功！",
-      type: "success",
-      duration: 2000,
-    });
-    this.tableData.splice(index, 1);
+    this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
+    })
+      .then(() => {
+        this.tableData.splice(index, 1);
+        this.$notify({
+          title: "Success",
+          message: "删除成功！",
+          type: "success",
+          duration: 2000,
+        });
+      })
+      .catch(() => {});
   }
 }
 </script>

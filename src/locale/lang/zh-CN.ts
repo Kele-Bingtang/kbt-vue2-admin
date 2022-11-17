@@ -23,7 +23,6 @@ export default {
     InlineTableDemo: "内联表格编辑",
     SearchTableDemo: "表格查询",
     PageTableDemo: "分页表格",
-    TreeTableDemo: "树状表格",
     IntegrationTableDemo: "集成表格",
     params: "动态路由",
     query: "带参路由",

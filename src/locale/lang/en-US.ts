@@ -23,7 +23,6 @@ export default {
     InlineTableDemo: "Inline Table",
     SearchTableDemo: "Search Table",
     PageTableDemo: "Page Table",
-    TreeTableDemo: "Tree Table",
     IntegrationTableDemo: "Integration Table",
     params: "params",
     query: "query",

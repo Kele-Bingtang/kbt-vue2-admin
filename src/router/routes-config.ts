@@ -239,12 +239,6 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         meta: { title: "分页表格", icon: "el-icon-star-on" },
       },
       {
-        path: "/tree-table",
-        name: "TreeTableDemo",
-        component: () => import("@/views/table-demo/tree-table/index.vue"),
-        meta: { title: "树状表格", icon: "el-icon-star-on" },
-      },
-      {
         path: "/Integration-table",
         name: "IntegrationTableDemo",
         component: () => import("@/views/table-demo/integration-table/index.vue"),
