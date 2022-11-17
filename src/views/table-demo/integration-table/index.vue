@@ -196,7 +196,7 @@
 import { Paging, paging } from "@/components/Pagination/index.vue";
 import { largeData } from "@/test/table";
 import { Form } from "element-ui";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import Pagination from "@/components/Pagination/index.vue";
 import Sortable from "sortablejs";
 
@@ -285,6 +285,14 @@ export default class IntegrationTableDemo extends Vue {
   };
   public tempTableDate = defaultTableData;
   public sortable: any = null;
+
+  @Watch("showAddress")
+  public onShowAddressChange() {
+    this.sortable = null;
+    this.$nextTick(() => {
+      this.rowDrop();
+    });
+  }
 
   mounted() {
     this.tableData.map(item => {
