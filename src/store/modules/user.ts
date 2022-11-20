@@ -3,6 +3,9 @@ import store from "@/store";
 import { removeCacheToken, setCacheToken } from "@/utils/cache";
 import { resetRouter } from "@/router";
 import { LayoutModule } from "./layout";
+import { loadRoutes } from "@/router/utils";
+import { rolesRoutes } from "@/router/routes-config";
+import router from "@/router";
 
 export interface UserInfo {
   userId: string; // 用户 ID
@@ -23,7 +26,7 @@ export interface UserState {
 
 @Module({ dynamic: true, store, name: "user", namespaced: true })
 class User extends VuexModule implements UserState {
-  public token: string = "";
+  public token: string = "admin-token";
   public userInfo: UserInfo = {
     userId: "v10001",
     userName: "Visitor",
@@ -31,14 +34,14 @@ class User extends VuexModule implements UserState {
     email: "2456019588@qq.com",
     phone: "13377492843",
     avatar: "https://cdn.staticaly.com/gh/Kele-Bingtang/static@master/user/avatar1.png",
-    roles: ["Visitor"],
+    roles: ["visitor"],
     registerTime: "2022-10-01 19:07:27",
   };
   public roles: string[] = [];
 
   @Action
   public login() {
-    let token = "1";
+    let token = "admin-token";
     setCacheToken(token);
     this.SET_TOKEN(token);
   }
@@ -80,8 +83,16 @@ class User extends VuexModule implements UserState {
   }
 
   @Action
-  public changeRoles(roles: string[]) {
-    this.SET_ROLES(roles);
+  public async changeRoles(roles: string[]) {
+    // 模拟新的 token
+    const token = roles[0] + "-token";
+    this.SET_TOKEN(token);
+    setCacheToken(token);
+    this.SET_ROLES(roles); // 正常不是直接赋予角色，而是调用 this.getUserInfo(token)，根据 token 重新获取对应的角色
+    // await this.getUserInfo(token);
+    resetRouter();
+    loadRoutes(rolesRoutes, roles, router);
+    LayoutModule.deleteAllTags();
   }
 
   @Action

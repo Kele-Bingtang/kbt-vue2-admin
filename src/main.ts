@@ -14,6 +14,7 @@ import "@/utils/error-log";
 import Vue2OrgTree from "vue2-org-tree";
 import * as directives from "@/directives";
 import * as filters from '@/filters'
+import VueClipBoard from 'vue-clipboard2'
 
 Vue.config.productionTip = false;
 
@@ -38,6 +39,7 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.use(Vue2OrgTree);
+Vue.use(VueClipBoard)
 
 new Vue({
   router,

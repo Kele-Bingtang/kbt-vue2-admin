@@ -127,7 +127,7 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
     meta: {
       notClickBread: true,
       title: "组件",
-      icon: "component",
+      icon: "el-icon-s-opportunity",
     },
     children: [
       {
@@ -205,44 +205,197 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
     meta: {
       notClickBread: true,
       title: "表格",
-      icon: "component",
+      icon: "el-icon-table-lamp",
     },
     children: [
       {
         path: "/drag-table",
-        name: "DragTableDemo",
-        component: () => import("@/views/table-demo/drag-table/index.vue"),
+        name: "DragTable",
+        component: () => import("@/views/table/drag-table/index.vue"),
         meta: { title: "表格拖拽", icon: "el-icon-star-on" },
       },
       {
         path: "/dynamic-table",
-        name: "DynamicTableDemo",
-        component: () => import("@/views/table-demo/dynamic-table/index.vue"),
+        name: "DynamicTable",
+        component: () => import("@/views/table/dynamic-table/index.vue"),
         meta: { title: "动态表格添加", icon: "el-icon-star-on" },
       },
       {
         path: "/inline-table",
-        name: "InlineTableDemo",
-        component: () => import("@/views/table-demo/inline-table/index.vue"),
+        name: "InlineTable",
+        component: () => import("@/views/table/inline-table/index.vue"),
         meta: { title: "内联表格编辑", icon: "el-icon-star-on" },
       },
       {
         path: "/search-table",
-        name: "SearchTableDemo",
-        component: () => import("@/views/table-demo/search-table/index.vue"),
+        name: "SearchTable",
+        component: () => import("@/views/table/search-table/index.vue"),
         meta: { title: "表格查询", icon: "el-icon-star-on" },
       },
       {
         path: "/page-table",
-        name: "PageTableDemo",
-        component: () => import("@/views/table-demo/page-table/index.vue"),
+        name: "PageTable",
+        component: () => import("@/views/table/page-table/index.vue"),
         meta: { title: "分页表格", icon: "el-icon-star-on" },
       },
       {
         path: "/Integration-table",
-        name: "IntegrationTableDemo",
-        component: () => import("@/views/table-demo/integration-table/index.vue"),
+        name: "IntegrationTable",
+        component: () => import("@/views/table/integration-table/index.vue"),
         meta: { title: "集成表格", icon: "el-icon-star-on" },
+      },
+    ],
+  },
+  {
+    path: "/excel",
+    component: Layout,
+    redirect: "/excel/export-excel",
+    name: "Excel",
+    meta: {
+      title: "Excel",
+      icon: "el-icon-tickets",
+    },
+    children: [
+      {
+        path: "export-excel",
+        component: () => import("@/views/excel/export-excel.vue"),
+        name: "ExportExcel",
+        meta: { title: "Excel 导出", icon: "el-icon-star-on" },
+      },
+      {
+        path: "export-selected-excel",
+        component: () => import("@/views/excel/select-excel.vue"),
+        name: "SelectExcel",
+        meta: { title: "指定数据导出", icon: "el-icon-star-on" },
+      },
+      {
+        path: "export-merge-header",
+        component: () => import("@/views/excel/merge-header.vue"),
+        name: "MergeHeader",
+        meta: { title: "合并表头导出", icon: "el-icon-star-on" },
+      },
+      {
+        path: "upload-excel",
+        component: () => import("@/views/excel/upload-excel.vue"),
+        name: "UploadExcel",
+        meta: { title: "Excel 导入", icon: "el-icon-star-on" },
+      },
+    ],
+  },
+  {
+    path: "/clipboard",
+    component: Layout,
+    redirect: "/clipboard/index",
+    children: [
+      {
+        path: "index",
+        name: "Clipboard",
+        component: () => import("@/views/clipboard/index.vue"),
+        meta: { title: "文本复制", icon: "el-icon-document-copy" },
+      },
+    ],
+  },
+  {
+    path: "/icons",
+    component: Layout,
+    redirect: "/icons/index",
+    children: [
+      {
+        path: "index",
+        name: "Icons",
+        component: () => import("@/views/icons/index.vue"),
+        meta: { title: "Icons", icon: "icon" },
+      },
+    ],
+  },
+  {
+    path: "/permission",
+    component: Layout,
+    redirect: "/permission/switch",
+    name: "Permission",
+    meta: {
+      title: "权限",
+      icon: "lock",
+      roles: ["admin", "visitor"],
+      alwaysShowRoot: true,
+    },
+    children: [
+      {
+        path: "switch",
+        component: () => import("@/views/permission/switch-permission.vue"),
+        name: "SwitchPermission",
+        meta: {
+          title: "权限切换",
+        },
+      },
+      {
+        path: "role",
+        component: () => import("@/views/permission/role-permission.vue"),
+        name: "RolePermission",
+        meta: {
+          title: "权限编辑",
+          roles: ["admin"],
+        },
+      },
+    ],
+  },
+  {
+    path: "/nested",
+    component: Layout,
+    redirect: "/nested/menu1",
+    name: "Nested",
+    meta: {
+      title: "nested",
+      icon: "el-icon-s-operation",
+    },
+    children: [
+      {
+        path: "menu1",
+        component: () => import("@/views/nested/menu1/index.vue"),
+        redirect: "/nested/menu1/menu1-1",
+        name: "Menu1",
+        meta: { title: "menu1", icon: "el-icon-menu" },
+        children: [
+          {
+            path: "menu1-1",
+            component: () => import("@/views/nested/menu1/menu1-1/index.vue"),
+            name: "Menu1-1",
+            meta: { title: "menu1-1" },
+          },
+          {
+            path: "menu1-2",
+            component: () => import("@/views/nested/menu1/menu1-2/index.vue"),
+            name: "Menu1-2",
+            meta: { title: "menu1-2" },
+          },
+          {
+            path: "menu1-3",
+            component: () => import("@/views/nested/menu1/menu1-3/index.vue"),
+            redirect: "/nested/menu1/menu1-3/menu1-3-1",
+            name: "Menu1-3",
+            meta: { title: "menu1-3" },
+            children: [
+              {
+                path: "menu1-3-1",
+                component: () => import("@/views/nested/menu1/menu1-3/menu1-3-1/index.vue"),
+                name: "Menu1-3-1",
+                meta: { title: "menu1-3-1" },
+              },
+              {
+                path: "menu1-3-2",
+                component: () => import("@/views/nested/menu1/menu1-3/menu1-3-2/index.vue"),
+                name: "Menu1-3-2",
+                meta: { title: "menu1-3-2" },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: "menu2",
+        component: () => import("@/views/nested/menu2/index.vue"),
+        name: "Menu2",
+        meta: { title: "menu2" },
       },
     ],
   },
