@@ -38,7 +38,7 @@ const hasPermission = (route: RouteConfig, roles: string[]) => {
     return true;
   }
   if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta!.roles.includes(role));
+    return roles.some(role => route.meta && route.meta.roles.includes(role));
   } else {
     return true; // 没有添加权限验证
   }

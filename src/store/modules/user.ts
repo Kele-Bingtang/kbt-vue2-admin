@@ -64,10 +64,14 @@ class User extends VuexModule implements UserState {
   @Action
   public async getUserInfo() {
     let userInfo: UserInfo = {
-      userId: "k100338",
-      userName: "Kobe Liu",
+      userId: "v10001",
+      userName: "Visitor",
       sex: "男",
-      roles: ["admin"],
+      email: "2456019588@qq.com",
+      phone: "13377492843",
+      avatar: "https://cdn.staticaly.com/gh/Kele-Bingtang/static@master/user/avatar1.png",
+      roles: ["visitor"],
+      registerTime: "2022-10-01 19:07:27",
     };
     let roles: string[] = userInfo.roles || ["admin"];
     this.SET_ROLES(roles);

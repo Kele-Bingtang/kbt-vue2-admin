@@ -86,8 +86,8 @@ export const getTitle = (route: Route | RouteConfig | RouteRecord | Tag, vm: any
   } else {
     route = handleRouteTitle(route as Route);
     // 进入 else 代表 route.meta 必定存在
-    title = route.meta!.title;
-    __titleIsFunction__ = route.meta!.__titleIsFunction__;
+    title = route.meta && route.meta.title;
+    __titleIsFunction__ = route.meta && route.meta.__titleIsFunction__ || false;
   }
   // name 如果有 $_noUseI18n_，代表不使用多语言 I18n
   let noUseI18n = route.name && route.name.startsWith("_noUseI18n_");

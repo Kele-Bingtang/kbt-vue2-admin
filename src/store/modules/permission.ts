@@ -62,10 +62,10 @@ export const getRouteFullPath = (routes: Array<RouteConfig>, basePath = "/") => 
     }
     if (route.children && route.children.length > 0) {
       // 如果是 http 链接，不需要路由拼接
-      if (isExternal(route.meta!._fullPath)) {
+      if (isExternal(route.meta._fullPath)) {
         route.children = getRouteFullPath(route.children, "");
       } else {
-        route.children = getRouteFullPath(route.children, route.meta!._fullPath);
+        route.children = getRouteFullPath(route.children, route.meta && route.meta._fullPath);
       }
     }
     return route;

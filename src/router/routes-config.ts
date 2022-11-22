@@ -43,12 +43,6 @@ type RouteConfigAndMeta = RouteConfig & {
   };
 };
 
-export type fullRoute = RouteConfig & {
-  meta: {
-    _fullPath: string; // 完整的路由（针对二级路由以上）
-  };
-};
-
 export const constantRoutes: Array<RouteConfigAndMeta> = [
   // 用来解决路由重复跳转问题：因为无法利用路由直接跳转，所以利用 views/redirect/Index.vue 组件实现跳转
   {

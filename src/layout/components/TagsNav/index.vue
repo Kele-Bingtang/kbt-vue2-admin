@@ -139,11 +139,12 @@ export default class TagsNav extends Vue {
   }
   // 初始化固定在 TagsNav 的 tags
   public initTags() {
-    let fixedTags = this.filterFixedTags(PermissionModule.loadRoutes);
+    let { homeRoute, loadRoutes } = PermissionModule;
+    let fixedTags = this.filterFixedTags(loadRoutes);
     let f: Array<Tag> = [];
     // 如果首页固定在 TagsNav，确保是第一个显示
     fixedTags.forEach(fixedTag => {
-      if (fixedTag.path === PermissionModule.homeRoute.meta!._fullPath) {
+      if (homeRoute.meta && fixedTag.path === homeRoute.meta._fullPath) {
         f.unshift(fixedTag);
       } else {
         f.push(fixedTag);
@@ -248,15 +249,18 @@ export default class TagsNav extends Vue {
         console.warn(err);
       });
     } else if (this.fixedTags.length === 0 || toHome) {
+      let { homeRoute } = PermissionModule;
       // 如果 fixedTags 为空或者 tagNavList 为空，则默认跳转到首页
-      if (this.fixedTags.length === 0 || tag.name !== PermissionModule.homeRoute.name) {
-        this.$router
-          .replace({
-            path: "/redirect" + PermissionModule.homeRoute.meta!._fullPath,
-          })
-          .catch(err => {
-            console.warn(err);
-          });
+      if (this.fixedTags.length === 0 || tag.name !== homeRoute.name) {
+        if (homeRoute.meta) {
+          this.$router
+            .replace({
+              path: "/redirect" + homeRoute.meta._fullPath,
+            })
+            .catch(err => {
+              console.warn(err);
+            });
+        }
       }
     } else {
       const lastFixedTags: Tag = this.fixedTags.slice(-1)[0];
