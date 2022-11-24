@@ -179,7 +179,7 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         meta: { title: "抽屉拖拽", icon: "el-icon-star-on" },
       },
       {
-        path: "/tinymce",
+        path: "/tinymce-demo",
         name: "TinymceDemo",
         component: () => import("@/views/components/tinymce/index.vue"),
         meta: { title: "富文本", icon: "el-icon-star-on" },

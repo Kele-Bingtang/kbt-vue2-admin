@@ -127,10 +127,13 @@ export default class Tinymce extends Vue {
       menubar: this.menubar,
       language: this.language,
       // language_url: this.language === "en" ? "" : `${process.env.BASE_URL}tinymce/langs/${this.language}.js`,
-      base_url: "/tinymce",
+      base_url: process.env.VUE_APP_PUBLIC_PATH === "/" ? "/tinymce" : `${process.env.VUE_APP_PUBLIC_PATH}/tinymce`,
       skin: this.skinTheme,
       content_css: this.contentTheme ? this.contentTheme : this.theme,
-      emoticons_database_url: "/tinymce/emojis.min.js",
+      emoticons_database_url:
+        process.env.VUE_APP_PUBLIC_PATH === "/"
+          ? "tinymce/emojis.min.js"
+          : `${process.env.VUE_APP_PUBLIC_PATH}/tinymce/emojis.min.js`,
       end_container_on_empty_block: true,
       draggable_modal: true,
       powerpaste_word_import: "clean",
