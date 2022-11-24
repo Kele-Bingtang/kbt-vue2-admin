@@ -235,7 +235,7 @@ class Layout extends VuexModule implements LayoutState {
 
   @Mutation
   private ADD_VISITED_TAG(tag: Tag) {
-    if (this.tagsNav.tagNavList.some(v => v.path === tag.path)) return;
+    if (this.tagsNav.tagNavList.some(v => v.path === tag.path || v.path + "/" === tag.path)) return;
     this.tagsNav.tagNavList.push(tag);
   }
 
