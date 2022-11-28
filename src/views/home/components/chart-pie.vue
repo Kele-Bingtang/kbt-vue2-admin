@@ -43,6 +43,12 @@ export default class ChartPie extends Vue {
     this.chart = null;
   }
 
+  activated() {
+    this.$nextTick(() => {
+      this.initChart();
+    });
+  }
+
   deactivated() {
     if (!this.chart) {
       return;

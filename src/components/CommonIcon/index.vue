@@ -7,7 +7,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-// 暂时用不到
+
+// 暂时用不到该组件
 
 @Component({})
 export default class CommonIcon extends Vue {

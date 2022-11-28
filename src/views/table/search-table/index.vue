@@ -62,7 +62,7 @@
 
       <el-table-column align="center" label="操作" width="120">
         <template slot-scope="{ row, $index }">
-          <el-button type="primary" size="small" icon="el-icon-delete" @click="handleDelete(row, $index)">
+          <el-button type="text" icon="el-icon-delete" @click="handleDelete(row, $index)" class="btn-danger">
             删除
           </el-button>
         </template>

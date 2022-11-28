@@ -38,8 +38,8 @@
         >
           多条件查询
         </el-button>
-        <el-button v-waves type="primary" icon="el-icon-circle-check-outline" @click="handleReset">重置</el-button>
-        <el-button v-waves type="primary" icon="el-icon-edit" @click="handleAdd()">添加</el-button>
+        <el-button v-waves icon="el-icon-refresh" @click="handleReset">重置</el-button>
+        <el-button v-waves type="primary" icon="el-icon-plus" @click="handleAdd()">添加</el-button>
         <el-checkbox v-model="showAddress" style="margin-left: 15px" @change="tableKey = tableKey + 1">
           地址
         </el-checkbox>
@@ -100,23 +100,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" width="180px">
+      <el-table-column label="操作" width="200px">
         <template slot-scope="{ row, $index }">
-          <el-button type="primary" size="small" icon="el-icon-search" circle @click="handleLook(row)"></el-button>
-          <el-button
-            type="primary"
-            size="small"
-            icon="el-icon-edit-outline"
-            circle
-            @click="handleEdit(row)"
-          ></el-button>
-          <el-button
-            type="danger"
-            size="small"
-            icon="el-icon-delete"
-            circle
-            @click="handleDelete(row, $index)"
-          ></el-button>
+          <el-button type="text" icon="el-icon-search" @click="handleLook(row)" class="btn-info">查看</el-button>
+          <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)">编辑</el-button>
+          <el-button type="text" icon="el-icon-delete" @click="handleDelete(row, $index)" class="btn-danger">
+            删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>

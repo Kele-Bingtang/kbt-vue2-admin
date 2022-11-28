@@ -339,7 +339,7 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
     redirect: "/nested/menu1",
     name: "Nested",
     meta: {
-      title: "nested",
+      title: "嵌套菜单",
       icon: "el-icon-s-operation",
     },
     children: [
@@ -348,38 +348,38 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         component: () => import("@/views/nested/menu1/index.vue"),
         redirect: "/nested/menu1/menu1-1",
         name: "Menu1",
-        meta: { title: "menu1", icon: "el-icon-menu" },
+        meta: { title: "菜单 1", icon: "el-icon-menu" },
         children: [
           {
             path: "menu1-1",
             component: () => import("@/views/nested/menu1/menu1-1/index.vue"),
             name: "Menu1-1",
-            meta: { title: "menu1-1" },
+            meta: { title: "菜单 1-1" },
           },
           {
             path: "menu1-2",
             component: () => import("@/views/nested/menu1/menu1-2/index.vue"),
             name: "Menu1-2",
-            meta: { title: "menu1-2" },
+            meta: { title: "菜单 1-2" },
           },
           {
             path: "menu1-3",
             component: () => import("@/views/nested/menu1/menu1-3/index.vue"),
             redirect: "/nested/menu1/menu1-3/menu1-3-1",
             name: "Menu1-3",
-            meta: { title: "menu1-3" },
+            meta: { title: "菜单 1-3" },
             children: [
               {
                 path: "menu1-3-1",
                 component: () => import("@/views/nested/menu1/menu1-3/menu1-3-1/index.vue"),
                 name: "Menu1-3-1",
-                meta: { title: "menu1-3-1" },
+                meta: { title: "菜单 1-3-1" },
               },
               {
                 path: "menu1-3-2",
                 component: () => import("@/views/nested/menu1/menu1-3/menu1-3-2/index.vue"),
                 name: "Menu1-3-2",
-                meta: { title: "menu1-3-2" },
+                meta: { title: "菜单 1-3-2" },
               },
             ],
           },
@@ -389,7 +389,7 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         path: "menu2",
         component: () => import("@/views/nested/menu2/index.vue"),
         name: "Menu2",
-        meta: { title: "menu2" },
+        meta: { title: "菜单 2" },
       },
     ],
   },

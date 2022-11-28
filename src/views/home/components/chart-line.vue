@@ -32,6 +32,12 @@ export default class ChartLine extends Vue {
     this.chart = null;
   }
 
+  activated() {
+    this.$nextTick(() => {
+      this.initChart();
+    });
+  }
+
   deactivated() {
     if (!this.chart) {
       return;

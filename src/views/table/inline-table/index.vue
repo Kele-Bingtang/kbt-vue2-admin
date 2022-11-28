@@ -48,7 +48,9 @@
           >
             确定
           </el-button>
-          <el-button v-else type="primary" size="small" icon="el-icon-edit" @click="handleEdit(row)">编辑</el-button>
+          <el-button v-else type="text" icon="el-icon-edit" @click="handleEdit(row)" class="btn-primary">
+            编辑
+          </el-button>
         </template>
       </el-table-column>
     </el-table>

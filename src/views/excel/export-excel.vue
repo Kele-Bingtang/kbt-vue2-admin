@@ -29,7 +29,7 @@
       <el-button
         :loading="downloadLoading"
         style="margin: 0 0 20px 20px"
-        type="primary"
+        type="success"
         icon="el-icon-document"
         @click="handleDownload"
       >

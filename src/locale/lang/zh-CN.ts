@@ -34,7 +34,7 @@ export default {
     Permission: "权限",
     SwitchPermission: "权限切换",
     RolePermission: "权限编辑",
-    Nested: "嵌套路由",
+    Nested: "嵌套菜单",
     Menu1: "菜单 1",
     "Menu1-1": "菜单 1-1",
     "Menu1-2": "菜单 1-2",
