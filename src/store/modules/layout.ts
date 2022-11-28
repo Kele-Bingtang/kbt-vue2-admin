@@ -235,6 +235,7 @@ class Layout extends VuexModule implements LayoutState {
 
   @Mutation
   private ADD_VISITED_TAG(tag: Tag) {
+    tag.path = decodeURIComponent(tag.path); // 存储的 tag.path 是解码后的
     if (this.tagsNav.tagNavList.some(v => v.path === tag.path || v.path + "/" === tag.path)) return;
     this.tagsNav.tagNavList.push(tag);
   }

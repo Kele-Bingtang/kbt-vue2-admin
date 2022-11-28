@@ -106,7 +106,8 @@ export default class TagsNav extends Vue {
 
   // 判断当前激活的 tag
   public isActive(tag: Tag): boolean {
-    return this.$route.path === tag.path || this.$route.path === tag.path + "/";
+    let path = decodeURIComponent(this.$route.path); // 防止编码后不一致
+    return path === tag.path || path === tag.path + "/";
   }
   // 更换 tag 颜色为全局 theme
   public activeStyle(tag: Tag) {
