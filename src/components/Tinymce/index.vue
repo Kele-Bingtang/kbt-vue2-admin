@@ -256,7 +256,7 @@ export default class Tinymce extends Vue {
   line-height: normal;
 
   .tox-fullscreen {
-    z-index: 10000 !important;
+    z-index: 1010 !important;
   }
 }
 </style>

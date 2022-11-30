@@ -265,7 +265,7 @@ export default class Layout extends Vue {
     .side-menu-container {
       height: 100%;
       transition: width 0.28s;
-      z-index: 2000;
+      z-index: 1000;
       box-shadow: 0 1px 4px rgb(0 21 41 / 9%);
     }
     &.side-menu-expand .side-menu-container {

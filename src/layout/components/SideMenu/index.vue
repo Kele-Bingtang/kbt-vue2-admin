@@ -24,6 +24,7 @@ import { PermissionModule } from "@/store/modules/permission";
 import { RouteConfig } from "vue-router";
 import variables from "@/styles/variables.module.scss";
 import { SettingsModule } from "@/store/modules/settings";
+import settings from "@/config/settings";
 
 export type MenuRoute = RouteConfig & {
   meta: {
@@ -41,7 +42,22 @@ export default class SideMenu extends Vue {
   }
   // 获取菜单列表
   get menuList() {
-    return this.getMenuListByRouter(PermissionModule.loadRoutes);
+    /**
+     * 第一次是将 hideInMenu 和 Children 为 1 的过滤掉，第二次是将最终 Children 为 1 的过滤掉（可能第一次 Children 有多个，只有一个 hideInMenu 不为 true）
+     *
+     * 场景：alwaysShowRoot 为 false
+     *    如果一个路由有一个子路由，那么菜单只渲染出该子路由
+     *    如果一个路由有两个子路由，其中一个子路由为 hideInMenu 为 true，那么菜单只渲染出另一个子路由
+     * 如果一个路由有两个子路由，且都不是 hideInMenu，那么两个子路由为二级菜单
+     *
+     * 如果您确保您的路由不会出现：多个子路由且只有一个 hideInMenu 不为 true，可以只过滤一次提升性能，即直接 return this.getMenuListByRouter(PermissionModule.loadRoutes);
+     */
+    if (settings.moreRouteChildrenHideInMenuThenOnlyOne) {
+      let menu = this.getMenuListByRouter(PermissionModule.loadRoutes);
+      return this.getMenuListByRouter(menu);
+    } else {
+      return this.getMenuListByRouter(PermissionModule.loadRoutes);
+    }
   }
   // 对应菜单 Item 的 index，这样才能高亮
   get activeMenu() {
@@ -77,7 +93,9 @@ export default class SideMenu extends Vue {
     };
   }
 
-  // 通过路由表获取菜单列表
+  /**
+   * 通过路由表获取菜单列表，筛选出只有 alwaysShowRoot 为 false，hideInMenu 为 false 的菜单列表
+   */
   public getMenuListByRouter(allRolesRoutes: Array<RouteConfig>) {
     let menusList: Array<MenuRoute> = [];
     allRolesRoutes.forEach(route => {
