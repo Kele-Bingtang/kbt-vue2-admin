@@ -1,15 +1,22 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
+
+const cancelToken = axios.CancelToken;
+const source = cancelToken.source();
 
 // 创建 axios 实例
-const request = axios.create({
+const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
   timeout: 5000,
 });
 
 // request 拦截器
-request.interceptors.request.use(
+service.interceptors.request.use(
   config => {
     // config.headers['Content-Type'] = 'application/json;charset=utf-8';
+    // if(!token) {
+    //   config.cancelToken = source.token;
+    //   source.cancel("身份异常！")
+    // }
     return config;
   },
   error => {
@@ -18,7 +25,7 @@ request.interceptors.request.use(
 );
 
 // response 拦截器
-request.interceptors.response.use(
+service.interceptors.response.use(
   response => {
     let res = response.data;
     return res;
@@ -27,5 +34,8 @@ request.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-export default request;
+export { service };
 
+export default function request<T, R>(config: AxiosRequestConfig<T>) {
+  return service(config) as unknown as Promise<R>;
+}
