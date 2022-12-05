@@ -5,7 +5,7 @@ const source = cancelToken.source();
 
 // 创建 axios 实例
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: process.env.VUE_APP_BASE_URL,
   timeout: 5000,
 });
 

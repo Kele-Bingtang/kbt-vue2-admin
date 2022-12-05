@@ -22,6 +22,7 @@
         :draggable="draggable"
         :inner="true"
         @on-resize="handleResize"
+        title="我是标题"
       ></drag-drawer>
     </div>
 
@@ -31,7 +32,11 @@
       :width.sync="width2"
       :draggable="draggable"
       @on-resize="handleResize"
-    ></drag-drawer>
+    >
+      <template #header>
+        <span>我是标题</span>
+      </template>
+    </drag-drawer>
   </div>
 </template>
 

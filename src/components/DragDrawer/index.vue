@@ -1,7 +1,7 @@
 <template>
   <div class="drag-drawer-components">
     <el-drawer
-      title="我是标题"
+      :title="title"
       :visible="visible"
       :size="width"
       :direction="direction"
@@ -13,29 +13,10 @@
       :modal-append-to-body="!inner"
       :class="{ 'drag-drawer-inner': inner }"
     >
-      <template v-for="(slots, slotsName) in $slots">
-        <template v-if="slotsName !== 'default'">
-          <render-dom
-            v-for="(render, index) in slots"
-            :key="`drag_drawer_${slotsName}_${index}`"
-            :render="() => render"
-            :slot="slotsName"
-          ></render-dom>
-        </template>
-
-        <template v-else>
-          <div :class="`drag-drawer-body-wrapper`" :key="`drag_drawer_${slotsName}`">
-            <render-dom
-              v-for="(render, index) in slots"
-              :key="`drag_drawer_${slotsName}_${index}`"
-              :render="() => render"
-              :slot="slotsName"
-            ></render-dom>
-          </div>
-        </template>
+      <template #title>
+        <slot name="header"></slot>
       </template>
-
-      <!-- 所有插槽内容显示在这里 ↑ -->
+      <slot></slot>
       <div
         v-if="draggable"
         :style="triggerStyle"
@@ -74,6 +55,8 @@ export default class DragDrawer extends Vue {
   public minWidth!: string | number;
   @Prop({ default: false })
   public inner!: boolean;
+  @Prop({ default: "" })
+  public title!: string;
 
   public canMove = false;
   public wrapperWidth = 0;
@@ -132,6 +115,7 @@ export default class DragDrawer extends Vue {
     this.$emit("update:visible", false);
   }
   public handleTriggerMousedown(event: Event) {
+    event.preventDefault();
     this.canMove = true;
     this.$emit("on-resize-start");
     // 防止鼠标选中抽屉中文字，造成拖动 trigger 触发浏览器原生拖动行为
