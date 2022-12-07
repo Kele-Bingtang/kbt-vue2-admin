@@ -1,5 +1,5 @@
 import config from "@/config/settings";
-import { Tag } from "@/store/modules/layout";
+import { LayoutModule, Tag } from "@/store/modules/layout";
 import { SettingsModule } from "@/store/modules/settings";
 import { UserModule } from "@/store/modules/user";
 import { Route, RouteConfig, RouteRecord } from "vue-router";
@@ -87,7 +87,7 @@ export const getTitle = (route: Route | RouteConfig | RouteRecord | Tag, vm: any
     route = handleRouteTitle(route as Route);
     // 进入 else 代表 route.meta 必定存在
     title = route.meta && route.meta.title;
-    __titleIsFunction__ = route.meta && route.meta.__titleIsFunction__ || false;
+    __titleIsFunction__ = (route.meta && route.meta.__titleIsFunction__) || false;
   }
   // name 如果有 $_noUseI18n_，代表不使用多语言 I18n
   let noUseI18n = route.name && route.name.startsWith("_noUseI18n_");
@@ -128,3 +128,49 @@ export const handleRouteTitle = (route: Route) => {
   }
   return router;
 };
+
+/**
+ * 刷新页面
+ */
+export const refreshPage = (vm: Vue, target: "local" | "reload" = "local") => {
+  if (target === "reload") {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+  } else {
+    // 重新渲染整个页面
+    LayoutModule.deleteAllCachedTags();
+    const { fullPath } = vm.$route;
+    vm.$nextTick(() => {
+      vm.$router
+        .replace({
+          path: "/redirect" + fullPath,
+        })
+        .catch(err => {
+          console.warn(err);
+        });
+    });
+  }
+};
+
+/**
+ * 将对象的某个属性变为可选，如：
+
+interface User {
+  name: string;
+  age: string;
+  gender: string;
+}
+
+// gender 变为可选
+let user: PartialKey<User, "gender"> = {
+  name: "",
+  age: "",
+};
+// age 和 gender 变为可选
+let user: PartialKey<User, "age" | gender"> = {
+  name: "",
+};
+
+ */
+export type PartialKey<T, U extends keyof T> = Pick<T, Exclude<keyof T, U>> & Partial<Pick<T, U>>;

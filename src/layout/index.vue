@@ -80,7 +80,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { HeaderBar, SideMenu, TagsNav, MainContent } from "./components";
-import { setTitle } from "@/utils/layout";
+import { refreshPage, setTitle } from "@/utils/layout";
 import { DeviceType, LayoutModule } from "@/store/modules/layout";
 import { SettingsModule } from "@/store/modules/settings";
 import LayoutLogo from "./components/Logo/index.vue";
@@ -219,30 +219,29 @@ export default class Layout extends Vue {
       message: message as string,
       type: "success",
     });
-    this.refreshPage("all");
+    refreshPage(this, "reload");
   }
-  // 刷新页面
-  private refreshPage(target: string) {
-    if (target === "all") {
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    } else {
-      // 重新渲染整个页面
-      LayoutModule.deleteAllCachedTags();
-      const { fullPath } = this.$route;
-      this.$nextTick(() => {
-        this.$router
-          .replace({
-            path: "/redirect" + fullPath,
-          })
-          .catch(err => {
-            console.warn(err);
-          });
-      });
-    }
-  }
-}
+  // 刷新页面：移到 utils/layout.ts 下，全局使用
+  // private refreshPage(target: string) {
+  //   if (target === "all") {
+  //     setTimeout(() => {
+  //       window.location.reload();
+  //     }, 1500);
+  //   } else {
+  //     // 重新渲染整个页面
+  //     LayoutModule.deleteAllCachedTags();
+  //     const { fullPath } = this.$route;
+  //     this.$nextTick(() => {
+  //       this.$router
+  //         .replace({
+  //           path: "/redirect" + fullPath,
+  //         })
+  //         .catch(err => {
+  //           console.warn(err);
+  //         });
+  //     });
+  //   }
+  // }
 </script>
 
 <style lang="scss" scoped>
