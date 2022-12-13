@@ -6,6 +6,19 @@
 
 [Demo](https://admin.youngkbt.cn/)
 
+## Template
+
+本项目内置很多组件，如果您打算使用本项目的框架搭建您自己的项目，需要去掉很多的依赖和不需要的组件。
+
+所以我准备了最干净的 [kbt-vue-admin-Template](https://github.com/Kele-Bingtang/kbt-vue-admin-template)。
+
+一套简单的开发仅需两步：
+
+- 开发您自己的 Vue 组件
+- 在 `src/router/routes-config.ts` 里配置路由等信息
+
+系统根据路由等信息自动生成菜单栏、面包屑、标签页。
+
 ## 使用流程
 
 ### Clone code：拉取代码

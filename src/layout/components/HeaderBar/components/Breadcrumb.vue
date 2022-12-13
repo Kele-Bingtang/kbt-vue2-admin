@@ -7,10 +7,31 @@
           class="hide-bread"
         >
           <template v-if="breadcrumb.meta && breadcrumb.meta.icon">
-            <!-- 使用 Element UI 自带的图标 -->
-            <i v-if="breadcrumb.meta.icon.startsWith('el-')" class="icon" :class="breadcrumb.meta.icon"></i>
-            <!-- 使用本地的 svg 图标 -->
-            <svg-icon v-else :name="breadcrumb.meta.icon" />
+            <template v-if="Array.isArray(breadcrumb.meta.icon)">
+              <!-- 使用 Element UI 自带的图标 -->
+              <i
+                v-if="breadcrumb.meta.icon[0].startsWith('el-')"
+                class="icon"
+                :class="breadcrumb.meta.icon"
+                :style="{ width: `${breadcrumb.meta.icon[1]}px`, height: `${breadcrumb.meta.icon[2]}px` }"
+              ></i>
+              <!-- 使用本地的 svg 图标 -->
+              <svg-icon
+                v-else
+                :name="breadcrumb.meta.icon[0]"
+                :width="breadcrumb.meta.icon[1]"
+                :height="breadcrumb.meta.icon[2]"
+              />
+            </template>
+            <template v-else>
+              <i
+                v-if="breadcrumb.meta.icon.startsWith('el-')"
+                class="icon"
+                :class="breadcrumb.meta.icon"
+                :style="{ width: breadcrumb.meta.icon[1], height: breadcrumb.meta.icon[2] }"
+              ></i>
+              <svg-icon v-else :name="breadcrumb.meta.icon" />
+            </template>
           </template>
           <span>{{ getTitle(breadcrumb) }}</span>
         </span>

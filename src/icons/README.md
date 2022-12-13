@@ -11,3 +11,19 @@
 * 所有的 svg 组件都是由 `vue-svgicon` 生成的
 * 每当在 `icons/svg` 文件夹内添加 icon 之后，可以通过执行 `yarn svg` 来重新生成所有组件 (在此之前需要全局安装 `vue-svgicon` 或使用 `npx`)
 * 详细文档请见：[https://github.com/MMF-FE/vue-svgicon](https://github.com/MMF-FE/vue-svgicon)
+
+## 获取
+
+可以在阿里巴巴矢量图标库搜索您想要的图标，然后下载的时候，选择 SVG 下载即可。
+
+链接：`https://www.iconfont.cn/`。
+
+将下载的 `.svg` 文件放到 `icons/svg` 下，然后执行 `yarn svg` 即可在项目里使用。
+
+假设下载的 svg 文件名叫做：bug.svg，则：
+
+```html
+<svg-icon name="bug" width="20px" height="20px" />
+```
+
+name 就是你的文件名，不含 `.svg`。

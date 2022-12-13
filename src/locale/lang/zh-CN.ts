@@ -44,6 +44,7 @@ export default {
     Menu2: "菜单 2",
     params: "动态路由",
     query: "带参路由",
+    Github: "Github",
   },
   _tagsNav: {
     refresh: "刷新页面",

@@ -20,7 +20,7 @@ import Layout from "@/layout/index.vue";
     hideInMenu: boolean                       如果为 true，则该路由不会显示在左侧菜单，默认为 false
     alwaysShowRoot: boolean                   如果为 false 且某一级路由下只有一个二级路由，则左侧菜单直接显示该二级路由，如果为 true，则总会让一级菜单作为下拉菜单，默认为 false，仅限父级路由使用
     notCache: boolean                         如果为 true，该路由在切换标签后不会缓存，如果需要缓存，则「必须」设置页面组件 name 属性（class 名）和路由配置的 name 一致，默认为 false
-    icon: string                              该页面在左侧菜单、面包屑显示的图标，无默认值
+    icon: string | [string, string, string]   该页面在左侧菜单、面包屑显示的图标，无默认值，如果是数组形式（仅支持三个下标），则对应 [icon, width, height]
     fixedInNav: boolean                       如果为 true，则该路由按照路由表顺序依次标签固定在标签栏，默认为 false
     beforeCloseName: 'before_close_normal'    如果设置该字段，则在关闭当前 tab 页时会去 @/router/before-close.js 里寻找该字段名「对应」的方法，作为关闭前的钩子函数，无默认值
     activeMenu: ''                            Restful 路由搭配使用，指定某个菜单高亮
@@ -36,7 +36,7 @@ type RouteConfigAndMeta = RouteConfig & {
     hideInMenu?: boolean;
     alwaysShowRoot?: boolean;
     notCache?: boolean;
-    icon?: string;
+    icon?: string | [string, string, string];
     fixedInNav?: boolean | number;
     beforeCloseName?: string;
     activeMenu?: string;
@@ -438,5 +438,13 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         },
       },
     ],
+  },
+  {
+    path: "https://github.com/Kele-Bingtang/kbt-vue-admin",
+    name: "Github",
+    meta: {
+      title: "Github",
+      icon: ["github", "18", "18"]
+    }
   },
 ];
