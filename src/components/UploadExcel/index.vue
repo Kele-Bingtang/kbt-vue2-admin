@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-excel-components">
+  <div class="upload-excel-component">
     <input ref="excel-upload-input" class="excel-upload-input" type="file" accept=".xlsx, .xls" @change="handleClick" />
     <div class="drop" @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover">
       上传 Excel 文件
@@ -128,7 +128,7 @@ export default class UploadExcel extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.upload-excel-components {
+.upload-excel-component {
   .excel-upload-input {
     display: none;
     z-index: -9999;

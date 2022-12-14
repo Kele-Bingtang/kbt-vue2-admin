@@ -17,6 +17,7 @@ export default {
     DragDrawerDemo: "抽屉拖拽",
     TinymceDemo: "富文本",
     CodeMirrorDemo: "代码编辑器",
+    InfoSelectionDemo: "信息选择器",
     Table: "表格",
     DragTable: "表格拖拽",
     DynamicTable: "动态表格添加",

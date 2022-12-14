@@ -1,5 +1,5 @@
 <template>
-  <div class="split-trigger-components" :class="classes">
+  <div class="split-trigger-component" :class="classes">
     <div class="split-trigger-bar" :class="barConClasses"></div>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default class Trigger extends Vue {
 <style lang="scss" scoped>
 $trigger-background: #f8f8f9;
 
-.split-trigger-components {
+.split-trigger-component {
   .split-trigger-bar {
     position: absolute;
     overflow: hidden;

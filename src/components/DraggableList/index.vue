@@ -1,5 +1,5 @@
 <template>
-  <div class="drag-list-components">
+  <div class="drag-list-component">
     <div class="drag-list" :style="{ width: leftWidth }">
       <slot name="left-title">{{ leftTitle }}</slot>
       <draggable
@@ -129,7 +129,7 @@ export default class DraggableList extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.drag-list-components {
+.drag-list-component {
   height: 100%;
   .drag-list {
     height: 100%;

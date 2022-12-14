@@ -190,6 +190,12 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         component: () => import("@/views/components/code-mirror/index.vue"),
         meta: { title: "代码编辑器", icon: "el-icon-star-on" },
       },
+      {
+        path: "/info-selection",
+        name: "InfoSelectionDemo",
+        component: () => import("@/views/components/info-selection/index.vue"),
+        meta: { title: "信息选择器", icon: "el-icon-star-on" },
+      },
     ],
   },
   {

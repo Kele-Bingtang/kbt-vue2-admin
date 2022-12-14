@@ -1,5 +1,5 @@
 <template>
-  <div class="drag-drawer-components">
+  <div class="drag-drawer-component">
     <el-drawer
       :title="title"
       :visible="visible"
@@ -149,7 +149,7 @@ export default class DragDrawer extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.drag-drawer-components {
+.drag-drawer-component {
   &.no-select {
     user-select: none;
   }
@@ -182,7 +182,7 @@ export default class DragDrawer extends Vue {
 }
 </style>
 <style lang="scss">
-.drag-drawer-components {
+.drag-drawer-component {
   .drag-drawer-inner {
     position: absolute;
     & + .v-modal {

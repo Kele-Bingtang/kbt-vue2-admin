@@ -66,7 +66,7 @@
 
       <el-divider />
 
-      <div class="layout-components-container">
+      <div class="layout-component-container">
         <div class="drawer-item-title">{{ $t("_settings.layoutComponents") }}</div>
 
         <div class="drawer-item">

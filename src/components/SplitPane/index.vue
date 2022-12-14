@@ -1,5 +1,5 @@
 <template>
-  <div ref="splitPane" class="split-pane-components" :class="{ 'no-select': isMoving }">
+  <div ref="splitPane" class="split-pane-component" :class="{ 'no-select': isMoving }">
     <div v-if="isHorizontal" class="split-horizontal">
       <div :style="{ bottom: `${anotherOffset}%` }" class="split-pane top-pane"><slot name="top" /></div>
       <div class="split-line-container" :style="{ top: `${offset}%` }" @mousedown="handleMousedown">
@@ -142,7 +142,7 @@ export default class SplitPane extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.split-pane-components {
+.split-pane-component {
   position: relative;
   width: 100%;
   height: 100%;

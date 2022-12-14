@@ -17,6 +17,7 @@ export default {
     DragDrawerDemo: "Drawer Drag",
     TinymceDemo: "Tinymce",
     CodeMirrorDemo: "Code Mirror",
+    InfoSelectionDemo: "Info Selection",
     Table: "Table",
     DragTable: "Drag Table",
     DynamicTable: "Dynamic Table",

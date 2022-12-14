@@ -1,5 +1,5 @@
 <template>
-  <div class="drag-item-components">
+  <div class="drag-item-component">
     <div class="drag-item-header" :class="titleClass" :style="{ backgroundColor: titleBgColor }">
       <slot name="title">{{ title }}</slot>
     </div>
@@ -40,7 +40,7 @@ export default class DraggableItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.drag-item-components {
+.drag-item-component {
   min-width: 300px;
   min-height: 100px;
   height: auto;

@@ -1,5 +1,5 @@
 <template>
-  <div class="tinymce-components" :class="{ fullscreen: fullscreen }">
+  <div class="tinymce-component" :class="{ fullscreen: fullscreen }">
     <tinymce-editor :id="id" v-model="tinymceContent" :init="initOptions" />
   </div>
 </template>
@@ -251,7 +251,7 @@ export default class Tinymce extends Vue {
 </script>
 
 <style lang="scss">
-.tinymce-components {
+.tinymce-component {
   position: relative;
   line-height: normal;
 
