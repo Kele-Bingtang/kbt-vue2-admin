@@ -24,7 +24,7 @@
       <el-table-column prop="err.message" label="信息" width="280px"></el-table-column>
       <el-table-column prop="url" label="URL" width="380px"></el-table-column>
       <el-table-column prop="info" label="位置">
-        <template slot-scope="{ row }">{{ row.vm.$vnode.tag }} error in {{ row.info }}</template>
+        <template slot-scope="{ row }">{{ row.vm?.$vnode.tag }} error in {{ row.info }}</template>
       </el-table-column>
       <el-table-column prop="time" label="时间" width="180px">
         <template slot-scope="{ row }">
@@ -45,22 +45,22 @@
       <el-table :data="[clickCurrentRow]" border>
         <el-table-column label="name" width="160px">
           <template slot-scope="{ row }">
-            {{ row.err.name }}
+            {{ row.err?.name }}
           </template>
         </el-table-column>
         <el-table-column label="message" width="160px">
           <template slot-scope="{ row }">
-            {{ row.err.message }}
+            {{ row.err?.message }}
           </template>
         </el-table-column>
         <el-table-column label="cause" width="160px">
           <template slot-scope="{ row }">
-            {{ row.err.cause }}
+            {{ row.err?.cause }}
           </template>
         </el-table-column>
         <el-table-column label="stack">
           <template slot-scope="{ row }">
-            {{ row.err.stack }}
+            {{ row.err?.stack }}
           </template>
         </el-table-column>
       </el-table>

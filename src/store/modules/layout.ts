@@ -40,8 +40,8 @@ export enum DeviceType {
 }
 
 export interface ErrorLog {
-  err: Error; // 错误对象
-  vm: any; // 发生错误的 Vue 实例
+  err: Error | null; // 错误对象
+  vm?: Vue; // 发生错误的 Vue 实例
   info: string; // Vue 组件的错误信息
   url: string; // 发生错误的 URL
   hasRead: boolean; // 错误日志是否已读

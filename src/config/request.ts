@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import qs from "qs";
 
 const cancelToken = axios.CancelToken;
 const source = cancelToken.source();
@@ -12,11 +13,27 @@ const service = axios.create({
 // request 拦截器
 service.interceptors.request.use(
   config => {
-    // config.headers['Content-Type'] = 'application/json;charset=utf-8';
     // if(!token) {
     //   config.cancelToken = source.token;
     //   source.cancel("身份异常！")
     // }
+    // 如果请求时 params 携带 _type，则进行判断
+    if (config.method?.toLowerCase() === "post") {
+      if (config.params?._type) {
+        if (config.params._type === "form") {
+          config.headers!["Content-Type"] = "application/x-www-form-urlencoded";
+          config.data = qs.stringify(config.data);
+        } else if (config.params._type === "json") {
+          config.headers!["Content-Type"] = "application/json";
+        } else if (config.params._type === "file") {
+          config.headers!["Content-Type"] = "application/form-data";
+        }
+      } else {
+        // 可以给默认的 Content-Type
+      }
+      // 最后删除 _type
+      delete config.params?._type;
+    }
     return config;
   },
   error => {

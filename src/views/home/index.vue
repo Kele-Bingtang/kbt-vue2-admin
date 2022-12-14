@@ -45,6 +45,7 @@ import ChartPie from "./components/chart-pie.vue";
 import ChartBar from "./components/chart-bar.vue";
 import ChartLineBar from "./components/chart-line-bar.vue";
 import ChartLine from "./components/chart-line.vue";
+import request from "@/config/request";
 
 @Component({
   components: {
