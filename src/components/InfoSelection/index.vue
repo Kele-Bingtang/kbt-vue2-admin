@@ -55,24 +55,14 @@ export default class InfoSelection extends Vue {
   @Prop({ default: false, type: Boolean })
   public reserveKeyword!: boolean; // 是否在选中一个选项后保留当前的搜索关键词
   @Prop({ default: false, type: Boolean })
-  public onlySearch!: boolean; // 文本框为空时，显示所有数据
+  public onlySearch!: boolean; // 只能搜索出内容
   @Prop({ default: false, type: Boolean })
   public selectShowAll!: boolean; // 选择至少一个值后，才显示全部下拉值，只在 onlySearch 为 true 生效
-  @Prop({ default: 210 })
-  public width!: number | string;
 
   public selectValue: string[] = [];
   public loading = false;
   public options: Array<Option> = [];
   public tempOptions: Array<Option> = [];
-
-  get selectWidth() {
-    let { width } = this;
-    if (typeof width === "string") {
-      return `${parseInt(width)}px`;
-    }
-    return `${width}px`;
-  }
 
   @Watch("list", { immediate: true })
   public onListChange() {
