@@ -36,11 +36,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import RenderDom from "./RenderDom.vue";
 import DragDrawerTrigger from "./DragDrawerTrigger.vue";
 
 @Component({
-  components: { RenderDom, DragDrawerTrigger },
+  components: { DragDrawerTrigger },
 })
 export default class DragDrawer extends Vue {
   @Prop({ default: false })
