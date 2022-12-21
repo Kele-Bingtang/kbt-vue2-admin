@@ -72,14 +72,7 @@
       </el-col>
       <el-col :xs="24" :sm="24" :md="8" :lg="4">
         <p>自定义内容：</p>
-        <info-selection
-          :list="list"
-          id="id"
-          :show-info="['employeeNo', 'nickname']"
-          separator=" "
-          multiple
-          @change="handleChange"
-        >
+        <info-selection :list="list" id="id" separator=" " multiple @change="handleChange">
           <template #default="{ option }">
             <span style="float: left">{{ option.nickname }}</span>
             <span style="float: right; color: #8492a6; font-size: 13px">{{ option.employeeNo }}</span>

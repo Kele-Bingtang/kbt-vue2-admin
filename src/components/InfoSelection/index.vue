@@ -15,9 +15,16 @@
       v-on="$listeners"
       style="width: 100%"
     >
-      <el-option v-for="item in options" :key="item.id" :label="item.label" :value="item.label">
-        <slot v-bind:option="getOptionFromList(item)"></slot>
-      </el-option>
+      <template v-if="showInfo.length === 0">
+        <el-option v-for="item in list" :key="item.id" :value="item[id]">
+          <slot v-bind:option="item"></slot>
+        </el-option>
+      </template>
+      <template v-else>
+        <el-option v-for="item in options" :key="item.id" :label="item.label" :value="item.id">
+          <slot v-bind:option="item"></slot>
+        </el-option>
+      </template>
     </el-select>
   </div>
 </template>
@@ -27,6 +34,7 @@ import { Input, Select } from "element-ui";
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
 interface Selection {
+  [proName: string]: any;
   id: number;
   employeeNo: string;
   username: string;
@@ -46,7 +54,7 @@ export default class InfoSelection extends Vue {
   public list!: Array<Selection>; // 完整数据
   @Prop({ required: true })
   public id!: string; // 数据里的唯一 key
-  @Prop({ required: true, default: () => [] })
+  @Prop({ default: () => [] })
   public showInfo!: string[]; // 显示的数据
   @Prop({ default: "请输入关键词" })
   public placeholder!: string; // 文本框为空时的提示
@@ -67,6 +75,10 @@ export default class InfoSelection extends Vue {
   @Watch("list", { immediate: true })
   public onListChange() {
     let { id, showInfo, separator } = this;
+    if (showInfo.length === 0) {
+      this.options = [];
+      return;
+    }
     this.tempOptions = [];
     this.list.forEach(item => {
       let l: any = item;
@@ -82,16 +94,6 @@ export default class InfoSelection extends Vue {
       }
     });
     this.initOption();
-  }
-
-  public getOptionFromList(option: Option) {
-    let { list } = this;
-    for (let i = 0; i < list.length; i++) {
-      let item = list[i];
-      if (item && item.id === option.id) {
-        return item;
-      }
-    }
   }
 
   public remoteMethod(query: string) {
