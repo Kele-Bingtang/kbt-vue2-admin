@@ -33,7 +33,7 @@
 import { Input, Select } from "element-ui";
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
-interface Selection {
+export interface Selection {
   [proName: string]: any;
   id: number;
   employeeNo: string;
@@ -43,7 +43,7 @@ interface Selection {
   address: string;
 }
 
-interface Option {
+export interface Option {
   id: string | number;
   label: string;
 }
@@ -67,7 +67,7 @@ export default class InfoSelection extends Vue {
   @Prop({ default: false, type: Boolean })
   public selectShowAll!: boolean; // 选择至少一个值后，才显示全部下拉值，只在 onlySearch 为 true 生效
 
-  public selectValue: string[] = [];
+  public selectValue: string[] | string = [];
   public loading = false;
   public options: Array<Option> = [];
   public tempOptions: Array<Option> = [];
@@ -76,7 +76,7 @@ export default class InfoSelection extends Vue {
   public onListChange() {
     let { id, showInfo, separator } = this;
     if (showInfo.length === 0) {
-      this.options = [];
+      this.tempOptions = [];
       return;
     }
     this.tempOptions = [];
@@ -139,13 +139,17 @@ export default class InfoSelection extends Vue {
     this.$emit("on-blur", e);
   }
 
-  public initOption() {
+  private initOption() {
     let { onlySearch, selectShowAll, selectValue } = this;
     onlySearch
       ? selectShowAll && selectValue.length > 0
         ? (this.options = this.tempOptions)
         : (this.options = [])
       : (this.options = this.tempOptions);
+  }
+
+  public clearSelection() {
+    this.selectValue = [];
   }
 }
 </script>

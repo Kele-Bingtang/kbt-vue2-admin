@@ -182,7 +182,13 @@ export const rolesRoutes: Array<RouteConfigAndMeta> = [
         path: "/tinymce-demo",
         name: "TinymceDemo",
         component: () => import("@/views/components/tinymce/index.vue"),
-        meta: { title: "富文本", icon: "el-icon-star-on" },
+        meta: { title: "Tinymce 富文本", icon: "el-icon-star-on" },
+      },
+      {
+        path: "/wang-editor-demo",
+        name: "WangEditorDemo",
+        component: () => import("@/views/components/wang-editor/index.vue"),
+        meta: { title: "Wang 富文本", icon: "el-icon-star-on" },
       },
       {
         path: "/code-mirror",

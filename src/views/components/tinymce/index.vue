@@ -65,14 +65,14 @@ export default class TinymceDemo extends Vue {
     });
   }
 
-  public handleImgUpload(blobInfo: any, success: Function, failure: Function, progress: Function) {
+  public async handleImgUpload(blobInfo: any, success: Function, failure: Function, progress: Function) {
     let blobFile = blobInfo.blob(); // blob 图片
-    let base64File = blobInfo.base64(); // base64 图片
+    // let base64File = blobInfo.base64(); // base64 图片
     // fileName 为 Tinymce 内部处理的文件名（官网说 fileName 一定唯一），而 blobFile.name 是文件上传前自带的文件名
-    let fileName = blobInfo.filename();
+    // let fileName = blobInfo.filename();
     const isLt2M = blobFile.size / 1024 / 1024 < 10;
     let { name } = blobFile;
-    let imgType = name && name.substring(name.lastIndexOf(".") + 1);
+    // let imgType = name && name.substring(name.lastIndexOf(".") + 1);
     // if (imgType !== "jpg" && imgType !== "png") {
     //   failure("上传文件只能是 jpg、png 格式!");
     //   return false;
@@ -81,6 +81,15 @@ export default class TinymceDemo extends Vue {
       failure("上传失败，图片不可超过 10M!");
       return false;
     }
+    /**
+     * 模拟本地批量上传图片，实际应该上传到云端，则下面的 if 需要去掉（单个图片上传时，length 大于 2，只有批量上传，才等于 2）
+     * 批量上传只是类似于 for 循环调用该 handleImgUpload 函数，所以实际的云端批量上传，直接把下面的 if 去掉即可
+     */
+    if (Object.keys(blobInfo).length === 2) {
+      let { blobInfo: b, file: f } = await this.uploadLocal(blobFile);
+      success(b.blobUri(), { text: f.name, title: f.name });
+    }
+
     // 上传服务器
     // let formData = new FormData();
     // formData.append("file", blobInfo.blob());
@@ -117,26 +126,27 @@ export default class TinymceDemo extends Vue {
        * 这里不应该上传图片到云端，因为执行完 callback，就会执行 @img-upload 回调，所以请在 @img-upload 的回调函数上传到云端
        * 因此这里仅仅是上传到本地浏览器即可
        */
-      let { blobInfo, file: f } = await this.uploadLocal(file, callback);
-      callback(blobInfo.blobUri(), { title: f.name });
+      let { blobInfo, file: f } = await this.uploadLocal(file);
+      callback(blobInfo.blobUri(), { text: f.name, title: f.name });
     } else if (filetype === "media") {
       const isValid = await this.validateVideo(file);
       if (isValid) {
         // 本地上传
-        let { blobInfo, file: f } = await this.uploadLocal(file, callback);
-        callback(blobInfo.blobUri(), { title: f.name });
+        let { blobInfo, file: f } = await this.uploadLocal(file);
+        callback(blobInfo.blobUri(), { text: f.name, title: f.name });
         // 云端上传
         // const { url, name } = await this.uploadFile(file, "video");
         // callback(url, { title: name });
       }
     } else if (filetype === "file") {
-      this.$message.error("暂不支持，因为 TinyMce 的附件上传需要付费！");
+      let { blobInfo, file: f } = await this.uploadLocal(file);
+      callback(blobInfo.blobUri(), { text: f.name, title: f.name });
     }
   }
   /**
    * 上传到本地浏览器
    */
-  private uploadLocal(file: File, callback: Function): Promise<{ blobInfo: any; file: File }> {
+  private uploadLocal(file: File): Promise<{ blobInfo: any; file: File }> {
     return new Promise(resolve => {
       let reader = new FileReader();
       reader.onload = function (e) {

@@ -49,6 +49,7 @@ import "tinymce/plugins/visualblocks";
 import "tinymce/plugins/visualchars";
 import "tinymce/plugins/wordcount";
 import "tinymce/plugins/quickbars";
+import "../../../public/tinymce/plugins/axupimgs";
 
 @Component({
   components: {

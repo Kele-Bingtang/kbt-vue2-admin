@@ -16,6 +16,7 @@ export default {
     DraggableDialogDemo: "Dialog Drag",
     DragDrawerDemo: "Drawer Drag",
     TinymceDemo: "Tinymce",
+    WangEditorDemo: "Wang Editor",
     CodeMirrorDemo: "Code Mirror",
     InfoSelectionDemo: "Info Selection",
     Table: "Table",
