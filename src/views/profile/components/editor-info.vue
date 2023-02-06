@@ -28,8 +28,8 @@
 import { UserInfo, UserModule } from "@/store/modules/user";
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class EditorInfo extends Vue {
+@Component({ name: "EditorInfo" })
+export default class extends Vue {
   @Prop({ required: true })
   public user!: UserInfo;
 

@@ -197,12 +197,8 @@
 import { Component, Vue } from "vue-property-decorator";
 import CountTo from "@/components/CountTo/index.vue";
 
-@Component({
-  components: {
-    CountTo,
-  },
-})
-export default class CountToDemo extends Vue {
+@Component({ name: "CountToDemo", components: { CountTo } })
+export default class extends Vue {
   public asyncEndVal = 199;
   public timer = 0;
 

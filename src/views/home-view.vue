@@ -8,8 +8,8 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class Home1 extends Vue {
+@Component({ name: "Home1" })
+export default class extends Vue {
   public timeStr = "";
   public timer = -1;
 

@@ -13,8 +13,8 @@ interface LineBarData {
   lineName: string;
   barName: string;
 }
-@Component({})
-export default class ChartLineBar extends Vue {
+@Component({ name: "ChartLineBar" })
+export default class extends Vue {
   public chart: any;
 
   @Prop({ required: true })

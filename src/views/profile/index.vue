@@ -4,9 +4,7 @@
       <el-row :gutter="20">
         <el-col :span="6" :xs="24">
           <user-card :user="user">
-            <user-avatar
-              :user="user"
-            />
+            <user-avatar :user="user" />
           </user-card>
         </el-col>
         <el-col :span="18" :xs="24">
@@ -39,6 +37,7 @@ import UserAvatar from "./components/user-avatar.vue";
 import Timeline from "./components/timeline.vue";
 
 @Component({
+  name: "Profile",
   components: {
     EditorInfo,
     Account,
@@ -47,7 +46,7 @@ import Timeline from "./components/timeline.vue";
     UserAvatar,
   },
 })
-export default class Profile extends Vue {
+export default class extends Vue {
   public activeTab = "timeline";
   public canEditUser: UserInfo = {
     userId: "",

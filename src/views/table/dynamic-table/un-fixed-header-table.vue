@@ -24,8 +24,8 @@
 import { simpleData } from "@/test/table";
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class UnfixedHeaderTable extends Vue {
+@Component({ name: "UnfixedHeaderTable" })
+export default class extends Vue {
   public row!: any;
 
   public tableData = simpleData;

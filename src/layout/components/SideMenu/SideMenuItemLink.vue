@@ -13,8 +13,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { isExternal } from "@/utils/validate";
 import { RouteConfig } from "vue-router";
 
-@Component({})
-export default class SideMenuItemLink extends Vue {
+@Component({ name: "SideMenuItemLink" })
+export default class extends Vue {
   @Prop({ required: true })
   public to!: RouteConfig;
 

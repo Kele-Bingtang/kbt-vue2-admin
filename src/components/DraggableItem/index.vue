@@ -20,12 +20,8 @@ export interface DragItemList {
   name: string;
 }
 
-@Component({
-  components: {
-    Draggable,
-  },
-})
-export default class DraggableItem extends Vue {
+@Component({ name: "DraggableItem", components: { Draggable } })
+export default class extends Vue {
   @Prop({ default: "header" })
   public title!: string;
   @Prop({ default: () => [] })

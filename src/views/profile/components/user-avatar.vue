@@ -35,12 +35,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { UserInfo } from "@/store/modules/user";
 import Cropper from "@/components/Cropper/index.vue";
 
-@Component({
-  components: {
-    Cropper,
-  },
-})
-export default class UserAvatar extends Vue {
+@Component({ name: "UserAvatar", components: { Cropper } })
+export default class extends Vue {
   public dialogVisible = false;
 
   @Prop({ required: true })

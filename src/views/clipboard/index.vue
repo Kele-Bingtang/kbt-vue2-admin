@@ -33,8 +33,8 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class Clipboard extends Vue {
+@Component({ name: "Clipboard" })
+export default class extends Vue {
   public activeName = "directly";
   public content = "https://github.com/Kele-Bingtang/kbt-vue-admin";
   /**

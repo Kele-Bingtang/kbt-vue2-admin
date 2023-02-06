@@ -25,13 +25,11 @@ import attachmentModule from "@wangeditor/plugin-upload-attachment"; // wangedit
 import { toolbarKeys } from "./config";
 
 export type ImageInsertFnType = (url: string, alt: string) => void;
-
 export type VideoInsertFnType = (url: string, poster: string) => void;
+export type FileInsertFnType = (fileName: string, url: string) => void;
+Boot.registerModule(attachmentModule);
 
-@Component({
-  name: "WangEditor",
-  components: { Editor, Toolbar },
-})
+@Component({ name: "WangEditor", components: { Editor, Toolbar } })
 export default class extends Vue {
   @Prop({ default: "" })
   public value!: string; // 编辑器内容
@@ -126,11 +124,6 @@ export default class extends Vue {
   };
 
   get content() {
-    const editor = this.editor;
-    if (editor == null) {
-      return;
-    }
-    editor.setHtml(this.value);
     return this.value;
   }
   set content(value) {
@@ -158,7 +151,6 @@ export default class extends Vue {
   }
 
   public onCreated(editor: any) {
-    Boot.registerModule(attachmentModule);
     this.editor = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
     if (this.editor) {
       this.disabled ? this.editor.disable() : this.editor.enable();

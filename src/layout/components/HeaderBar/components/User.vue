@@ -47,10 +47,8 @@ import { UserModule } from "@/store/modules/user";
 import { Component, Vue } from "vue-property-decorator";
 import GlobalSettings from "./GlobalSettings.vue";
 
-@Component({
-  components: { GlobalSettings },
-})
-export default class User extends Vue {
+@Component({ name: "User", components: { GlobalSettings } })
+export default class extends Vue {
   get user() {
     return UserModule.userInfo;
   }

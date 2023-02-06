@@ -16,8 +16,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class HomeCardItem extends Vue {
+@Component({ name: "HomeCardItem" })
+export default class extends Vue {
   @Prop({ default: "" })
   public shadow!: string;
   @Prop({ default: "" })

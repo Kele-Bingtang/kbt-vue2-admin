@@ -48,8 +48,8 @@ export interface Option {
   label: string;
 }
 
-@Component({})
-export default class InfoSelection extends Vue {
+@Component({ name: "InfoSelection" })
+export default class extends Vue {
   @Prop({ required: true })
   public list!: Array<Selection>; // 完整数据
   @Prop({ required: true })

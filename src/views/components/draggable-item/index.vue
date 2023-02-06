@@ -25,10 +25,8 @@ import { Component, Vue } from "vue-property-decorator";
 import DraggableItem from "@/components/DraggableItem/index.vue";
 import { list1, list2, list3 } from "@/test/drag-item";
 
-@Component({
-  components: { DraggableItem },
-})
-export default class DraggableItemDemo extends Vue {
+@Component({ name: "DraggableItemDemo", components: { DraggableItem } })
+export default class extends Vue {
   public group = "drag_item";
   public list1 = list1;
   public list2 = list2;

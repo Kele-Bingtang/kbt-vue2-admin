@@ -72,8 +72,8 @@ import { Component, Vue } from "vue-property-decorator";
 import { exportJsonToExcel, formatJsonToArray } from "@/utils/excel";
 import { largeData } from "@/test/table";
 
-@Component({})
-export default class ExportExcel extends Vue {
+@Component({ name: "ExportExcel" })
+export default class extends Vue {
   public row!: any;
   public $index!: any;
   public tableStatusFilter!: any;

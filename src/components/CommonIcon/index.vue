@@ -10,8 +10,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 // 暂时用不到该组件
 
-@Component({})
-export default class CommonIcon extends Vue {
+@Component({ name: "CommonIcon" })
+export default class extends Vue {
   @Prop({ default: "" })
   public icon!: string;
   @Prop({ default: "" })

@@ -48,6 +48,7 @@ import ChartLine from "./components/chart-line.vue";
 import request from "@/config/request";
 
 @Component({
+  name: "Home",
   components: {
     CardItem,
     CountTo,
@@ -57,7 +58,7 @@ import request from "@/config/request";
     ChartLine,
   },
 })
-export default class Home extends Vue {
+export default class extends Vue {
   public cardInfo = [
     { title: "访问人数", icon: "el-icon-s-custom", count: 1803, color: "#2d8cf0" },
     { title: "累计用户", icon: "el-icon-user-solid", count: 232, color: "#19be6b" },

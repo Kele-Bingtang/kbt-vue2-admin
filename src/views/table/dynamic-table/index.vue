@@ -12,10 +12,8 @@ import { Component, Vue } from "vue-property-decorator";
 import FixedHeaderTable from "./fixed-header-table.vue";
 import UnFixedHeaderTable from "./un-fixed-header-table.vue";
 
-@Component({
-  components: { FixedHeaderTable, UnFixedHeaderTable },
-})
-export default class DynamicTable extends Vue {}
+@Component({ name: "DynamicTable", components: { FixedHeaderTable, UnFixedHeaderTable } })
+export default class extends Vue {}
 </script>
 
 <style lang="scss" scoped>

@@ -53,10 +53,8 @@ import { Component, Vue } from "vue-property-decorator";
 import DraggableList, { DragClass } from "@/components/DraggableList/index.vue";
 import { list1, list2 } from "@/test/drag-list";
 
-@Component({
-  components: { DraggableList },
-})
-export default class DraggableListDemo extends Vue {
+@Component({ name: "DraggableListDemo", components: { DraggableList } })
+export default class extends Vue {
   public dragClass: DragClass = {
     left: ["drag-box", "left-drag-box"],
     right: ["drag-box", "right-drag-box"],

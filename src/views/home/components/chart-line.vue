@@ -6,8 +6,8 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import * as echarts from "echarts";
 
-@Component({})
-export default class ChartLine extends Vue {
+@Component({ name: "ChartLine" })
+export default class extends Vue {
   public chart: any;
 
   @Prop({ default: "100%" })

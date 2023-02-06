@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:test": "vue-cli-service build --mode test",
+    "build:stage": "vue-cli-service build --mode stage",
     "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6",
     "lint": "vue-cli-service lint"
   },

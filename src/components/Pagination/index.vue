@@ -30,8 +30,8 @@ export const paging = {
   pageSize: 20,
 };
 
-@Component({})
-export default class Pagination extends Vue {
+@Component({ name: "Pagination" })
+export default class extends Vue {
   @Prop({ required: true })
   public total!: number;
   @Prop({ default: () => paging })

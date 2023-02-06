@@ -44,10 +44,8 @@
 import { Component, Vue } from "vue-property-decorator";
 import DragDrawer from "@/components/DragDrawer/index.vue";
 
-@Component({
-  components: { DragDrawer },
-})
-export default class DragDrawerDemo extends Vue {
+@Component({ name: "DragDrawerDemo", components: { DragDrawer } })
+export default class extends Vue {
   public visible1 = false;
   public visible2 = false;
   public placement = "right";

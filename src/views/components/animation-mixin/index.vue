@@ -91,10 +91,8 @@ import MaterialInput from "@/components/MaterialInput/index.vue";
 import TextHoverEffect from "@/components/TextHoverEffect/index.vue";
 import DropdownMenu from "@/components/DropdownMenu/index.vue";
 
-@Component({
-  components: { MaterialInput, TextHoverEffect, DropdownMenu },
-})
-export default class AnimationMixinDemo extends Vue {
+@Component({ name: "AnimationMixinDemo", components: { MaterialInput, TextHoverEffect, DropdownMenu } })
+export default class extends Vue {
   public demo = {
     title: "",
   };

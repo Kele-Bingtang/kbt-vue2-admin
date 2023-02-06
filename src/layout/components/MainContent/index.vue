@@ -13,8 +13,8 @@
 import { LayoutModule } from "@/store/modules/layout";
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class MainContent extends Vue {
+@Component({ name: "MainContent" })
+export default class extends Vue {
   // 获取缓存的组件名
   get cachedTagList() {
     return LayoutModule.tagsNav.cachedTagList;

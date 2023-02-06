@@ -70,8 +70,8 @@ import { Component, Vue } from "vue-property-decorator";
 
 type MessageType = "unread" | "hasRead" | "recycle";
 
-@Component({})
-export default class MessageCenter extends Vue {
+@Component({ name: "MessageCenter" })
+export default class extends Vue {
   public listLoading = false;
   public contentLoading = false;
 

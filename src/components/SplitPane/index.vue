@@ -27,10 +27,8 @@ import SplitLine from "./SplitLine.vue";
 
 type NumAndStr = number | string;
 
-@Component({
-  components: { SplitLine },
-})
-export default class SplitPane extends Vue {
+@Component({ name: "SplitPane", components: { SplitLine } })
+export default class extends Vue {
   @Prop({ default: 0.5 })
   public value!: NumAndStr;
   @Prop({ default: "horizontal" })

@@ -11,8 +11,8 @@ interface BarData {
   data: number[];
 }
 
-@Component({})
-export default class ChartBar extends Vue {
+@Component({ name: "ChartBar" })
+export default class extends Vue {
   public chart: any;
 
   @Prop({ required: true })

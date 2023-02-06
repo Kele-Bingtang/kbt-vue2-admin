@@ -32,10 +32,8 @@ export type MenuRoute = RouteConfig & {
   };
 };
 
-@Component({
-  components: { SideMenuItem },
-})
-export default class SideMenu extends Vue {
+@Component({ name: "SideMenu", components: { SideMenuItem } })
+export default class extends Vue {
   // 当前菜单是否折叠
   get isCollapse() {
     return LayoutModule.sideMenu.isCollapse;

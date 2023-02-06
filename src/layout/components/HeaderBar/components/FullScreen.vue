@@ -12,8 +12,8 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class FullScreen extends Vue {
+@Component({ name: "FullScreen" })
+export default class extends Vue {
   public isFullscreen: boolean = false;
 
   get showFullScreenBtn() {

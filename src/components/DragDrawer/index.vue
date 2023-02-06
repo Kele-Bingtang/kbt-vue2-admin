@@ -38,10 +38,8 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import DragDrawerTrigger from "./DragDrawerTrigger.vue";
 
-@Component({
-  components: { DragDrawerTrigger },
-})
-export default class DragDrawer extends Vue {
+@Component({ name: "DragDrawer", components: { DragDrawerTrigger } })
+export default class extends Vue {
   @Prop({ default: false })
   public visible!: boolean;
   @Prop({ default: 200 })

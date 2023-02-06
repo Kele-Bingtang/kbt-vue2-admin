@@ -7,10 +7,8 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({
-  components: {},
-})
-export default class App extends Vue {}
+@Component({ name: "App", components: {} })
+export default class extends Vue {}
 </script>
 
 <style lang="scss"></style>

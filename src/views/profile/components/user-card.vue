@@ -106,8 +106,8 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { UserInfo } from "@/store/modules/user";
 
-@Component({})
-export default class UserCard extends Vue {
+@Component({ name: "UserCard" })
+export default class extends Vue {
   @Prop({ required: true })
   public user!: UserInfo;
 

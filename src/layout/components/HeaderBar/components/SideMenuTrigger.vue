@@ -7,8 +7,8 @@
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class SideMenuTrigger extends Vue {
+@Component({ name: "SideMenuTrigger" })
+export default class extends Vue {
   @Prop({ default: false })
   public isCollapse!: boolean;
 

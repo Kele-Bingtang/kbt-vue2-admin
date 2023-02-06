@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import WangEditor, { ImageInsertFnType, VideoInsertFnType } from "@/components/WangEditor/index.vue";
+import WangEditor, { FileInsertFnType, ImageInsertFnType, VideoInsertFnType } from "@/components/WangEditor/index.vue";
 
 @Component({ name: "WangEditorDemo", components: { WangEditor } })
 export default class extends Vue {
@@ -63,7 +63,7 @@ export default class extends Vue {
     //     this.$message.error("上传出错，服务器开小差了呢");
     //   });
   }
-  public fileUpload(file: File, insertFn: VideoInsertFnType) {
+  public fileUpload(file: File, insertFn: FileInsertFnType) {
     // 上传服务器
     // uploadFiles(file, appId, this.$sso.userId)
     //   .then(res => {

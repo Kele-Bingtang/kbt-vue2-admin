@@ -69,12 +69,8 @@ interface CropperItem {
   h: number;
 }
 
-@Component({
-  components: {
-    VueCropper,
-  },
-})
-export default class Cropper extends Vue {
+@Component({ name: "Cropper", components: { VueCropper } })
+export default class extends Vue {
   // 缩略图对象
   public previews: CropperItem = {
     div: {

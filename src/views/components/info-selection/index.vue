@@ -87,10 +87,8 @@
 import { Component, Vue } from "vue-property-decorator";
 import InfoSelection from "@/components/InfoSelection/index.vue";
 
-@Component({
-  components: { InfoSelection },
-})
-export default class InfoSelectionDemo extends Vue {
+@Component({ name: "InfoSelectionDemo", components: { InfoSelection } })
+export default class extends Vue {
   public list = [
     {
       id: 0,

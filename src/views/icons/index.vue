@@ -40,8 +40,8 @@ import { Component, Vue } from "vue-property-decorator";
 import elementIcons from "./element-icons";
 import svgIcons from "./svg-icons";
 
-@Component({})
-export default class Icons extends Vue {
+@Component({ name: "Icons" })
+export default class extends Vue {
   public svgIcons = svgIcons;
   public elementIcons = elementIcons;
   public doClipboard(item: any) {

@@ -31,10 +31,8 @@ import { Component, Vue } from "vue-property-decorator";
 import CodeMirror from "@/components/CodeMirror/index.vue";
 import { cmThemeOptions, cmModeOptions } from "@/components/CodeMirror/code-mirror";
 
-@Component({
-  components: { CodeMirror },
-})
-export default class CodeMirrorDemo extends Vue {
+@Component({ name: "CodeMirrorDemo", components: { CodeMirror } })
+export default class extends Vue {
   public cmTheme = "default";
   public cmMode = "application/json";
   public value = `{"code": 200001,"msg": "success","data": {"JSON": {"mydata": {"name": "张三","age": "21","tel": "1539324****","blance": "100"}}}}`;

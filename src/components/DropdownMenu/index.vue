@@ -13,8 +13,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class DropdownMenu extends Vue {
+@Component({ name: "DropdownMenu" })
+export default class extends Vue {
   @Prop({ default: () => [] })
   public items!: any[];
   @Prop({ default: "vue" })

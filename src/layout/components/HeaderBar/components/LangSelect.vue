@@ -21,8 +21,8 @@
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class LangSelecr extends Vue {
+@Component({ name: "LangSelect" })
+export default class extends Vue {
   @Prop({ default: "zh-CN" })
   public language!: string;
 

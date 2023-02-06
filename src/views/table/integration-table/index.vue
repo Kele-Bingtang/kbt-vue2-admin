@@ -200,10 +200,8 @@ const defaultTableData = {
   title: "",
 };
 
-@Component({
-  components: { Pagination },
-})
-export default class IntegrationTableDemo extends Vue {
+@Component({ name: "IntegrationTableDemo", components: { Pagination } })
+export default class extends Vue {
   public row!: any;
   public $index!: any;
   public tableStatusFilter!: any;

@@ -39,10 +39,8 @@ import { Component, Vue } from "vue-property-decorator";
 import Pagination, { paging, Paging } from "@/components/Pagination/index.vue";
 import { largeData } from "@/test/table";
 
-@Component({
-  components: { Pagination },
-})
-export default class PageTableDemo extends Vue {
+@Component({ name: "PageTableDemo", components: { Pagination } })
+export default class extends Vue {
   public row!: any;
   public tableStatusFilter!: any;
 

@@ -17,12 +17,8 @@
 import { Component, Vue } from "vue-property-decorator";
 import Cropper from "@/components/Cropper/index.vue";
 
-@Component({
-  components: {
-    Cropper,
-  },
-})
-export default class CropperDemo extends Vue {
+@Component({ name: "CropperDemo", components: { Cropper } })
+export default class extends Vue {
   // 提交图片到云端
   public uploadImage(imgData: FormData) {
     console.log(imgData);

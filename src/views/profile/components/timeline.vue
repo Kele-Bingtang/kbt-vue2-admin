@@ -22,8 +22,8 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class Timeline extends Vue {
+@Component({ name: "Timeline" })
+export default class extends Vue {
   public timeline = [
     {
       timestamp: "2018/09/08",

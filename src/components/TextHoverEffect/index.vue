@@ -11,8 +11,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class TextHoverEffect extends Vue {
+@Component({ name: "TextHoverEffect" })
+export default class extends Vue {
   @Prop({ default: "" })
   public className!: string;
   @Prop({ default: "" })

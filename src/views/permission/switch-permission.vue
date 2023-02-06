@@ -65,8 +65,8 @@ import { UserModule } from "@/store/modules/user";
 import { checkPermission } from "@/utils/permission";
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class SwitchPermission extends Vue {
+@Component({ name: "SwitchPermission" })
+export default class extends Vue {
   public key = 1;
   public checkPermission = checkPermission;
 

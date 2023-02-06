@@ -33,8 +33,8 @@ export interface OrgTree extends OrgTreeItem {
   children?: Array<OrgTree>;
 }
 
-@Component({})
-export default class OrgTreeView extends Vue {
+@Component({ name: "OrgTreeView" })
+export default class extends Vue {
   @Prop({ required: true })
   public data!: OrgTree;
   @Prop({ default: true })

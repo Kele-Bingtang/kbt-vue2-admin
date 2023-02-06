@@ -21,8 +21,8 @@
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class SizeSelect extends Vue {
+@Component({ name: "SizeSelect" })
+export default class extends Vue {
   @Prop({ default: "medium" })
   public size!: string;
 

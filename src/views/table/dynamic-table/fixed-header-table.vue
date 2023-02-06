@@ -24,8 +24,8 @@
 import { simpleData } from "@/test/table";
 import { Component, Vue, Watch } from "vue-property-decorator";
 
-@Component({})
-export default class FixedHeaderTable extends Vue {
+@Component({ name: "FixedHeaderTable" })
+export default class extends Vue {
   public row!: any;
 
   public tableData = simpleData;

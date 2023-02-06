@@ -11,8 +11,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class ErrorLog extends Vue {
+@Component({ name: "ErrorLog" })
+export default class extends Vue {
   @Prop({ default: 0 })
   public errorCount!: number;
   // 获取错误日志的数量

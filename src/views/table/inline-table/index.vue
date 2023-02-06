@@ -61,8 +61,8 @@
 import { simpleData } from "@/test/table";
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class InlineEditTable extends Vue {
+@Component({ name: "InlineEditTable" })
+export default class extends Vue {
   public row!: any;
   public tableStatusFilter!: any;
 

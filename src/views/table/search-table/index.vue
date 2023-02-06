@@ -75,8 +75,8 @@
 import { middleData } from "@/test/table";
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class SearchTableDemo extends Vue {
+@Component({ name: "SearchTableDemo" })
+export default class extends Vue {
   public row!: any;
   public $index: any;
   public tableStatusFilter!: any;

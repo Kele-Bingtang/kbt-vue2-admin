@@ -72,8 +72,8 @@
 import { Component, Vue } from "vue-property-decorator";
 import { ErrorLog, LayoutModule } from "@/store/modules/layout";
 
-@Component({})
-export default class ErrorLogger extends Vue {
+@Component({ name: "ErrorLogger" })
+export default class extends Vue {
   public row!: ErrorLog;
 
   public dialogErrorInfoVisible = false;

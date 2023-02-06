@@ -14,8 +14,8 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { read, utils } from "xlsx";
 
-@Component({})
-export default class UploadExcel extends Vue {
+@Component({ name: "UploadExcel" })
+export default class extends Vue {
   @Prop({ required: true })
   public beforeUpload!: Function;
   @Prop({ required: true })

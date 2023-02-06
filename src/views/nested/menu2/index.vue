@@ -7,6 +7,6 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class Menu2 extends Vue {}
+@Component({ name: "Menu2" })
+export default class extends Vue {}
 </script>

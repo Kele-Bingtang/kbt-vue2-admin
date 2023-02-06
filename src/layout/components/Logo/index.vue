@@ -30,15 +30,15 @@ import settings from "@/config/settings";
 import variables from "@/styles/variables.module.scss";
 import { SettingsModule } from "@/store/modules/settings";
 
-@Component({})
-export default class LayoutLogo extends Vue {
+@Component({ name: "LayoutLogo" })
+export default class extends Vue {
   @Prop({ required: true })
   public isCollapse!: boolean;
   @Prop({ default: "sideMenu" })
   public position!: string;
 
   public title = settings.title;
-  
+
   get variables() {
     return variables;
   }

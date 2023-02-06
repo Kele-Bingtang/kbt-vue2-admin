@@ -52,8 +52,8 @@ import { getTitle } from "@/utils/layout";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { RouteConfig } from "vue-router";
 
-@Component({})
-export default class TagsNav extends Vue {
+@Component({ name: "TagsNav" })
+export default class extends Vue {
   // 右键菜单显示
   public rightMenuVisible = false;
   // tagsNav 滚动

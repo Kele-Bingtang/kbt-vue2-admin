@@ -72,10 +72,8 @@ import OrgTreeView from "./components/org-tree-view.vue";
 import { orgTreeData } from "@/test/org-tree";
 import { OrgTree } from "./components/org-tree-view-next.vue";
 
-@Component({
-  components: { OrgTreeView },
-})
-export default class OrgTreeDemo extends Vue {
+@Component({ name: "OrgTreeDemo", components: { OrgTreeView } })
+export default class extends Vue {
   public zoom = 100;
   public data = orgTreeData;
   public expandAll = true;

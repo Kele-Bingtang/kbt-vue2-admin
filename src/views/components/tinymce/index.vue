@@ -29,10 +29,8 @@ import Tinymce from "@/components/Tinymce/index.vue";
 import { LayoutModule } from "@/store/modules/layout";
 import { tinymceHtml } from "@/test/tinymce";
 
-@Component({
-  components: { Tinymce },
-})
-export default class TinymceDemo extends Vue {
+@Component({ name: "TinymceDemo", components: { Tinymce } })
+export default class extends Vue {
   public content = tinymceHtml;
   public tinymceActive = true;
   public disabled = false;

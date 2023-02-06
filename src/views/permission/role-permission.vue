@@ -79,8 +79,8 @@ const defaultRole: Role = {
   routes: [],
 };
 
-@Component({})
-export default class RolePermission extends Vue {
+@Component({ name: "RolePermission" })
+export default class extends Vue {
   public row!: any;
   public scope!: any;
 

@@ -22,10 +22,8 @@ export interface Breadcrumbs extends Route {
   redirect?: RedirectOption;
 }
 
-@Component({
-  components: { SideMenuTrigger, Breadcrumb },
-})
-export default class HeaderBar extends Vue {
+@Component({ name: "HeaderBar", components: { SideMenuTrigger, Breadcrumb } })
+export default class extends Vue {
   public breadcrumbs: Array<Breadcrumbs> = [];
   // 当前菜单是否折叠
   get isCollapse(): boolean {

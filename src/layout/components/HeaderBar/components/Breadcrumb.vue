@@ -55,8 +55,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { getTitle } from "@/utils/layout";
 import { Breadcrumbs } from "../index.vue";
 
-@Component({})
-export default class Breadcrumb extends Vue {
+@Component({ name: "Breadcrumb" })
+export default class extends Vue {
   @Prop({ required: true })
   public breadcrumbs!: Breadcrumbs[];
   // 获取展示的 title

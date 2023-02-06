@@ -22,8 +22,8 @@ interface Unit {
   label: string;
 }
 
-@Component({})
-export default class CountTo extends Vue {
+@Component({ name: "CountTo" })
+export default class extends Vue {
   public counter: any = null;
   public unitText = "";
 

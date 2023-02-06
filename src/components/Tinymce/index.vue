@@ -51,13 +51,9 @@ import "tinymce/plugins/wordcount";
 import "tinymce/plugins/quickbars";
 import "../../../public/tinymce/plugins/axupimgs";
 
-@Component({
-  components: {
-    TinymceEditor,
-  },
-})
+@Component({ name: "Tinymce", components: { TinymceEditor } })
 // TinyMce 文档：https://www.tiny.cloud/docs/
-export default class Tinymce extends Vue {
+export default class extends Vue {
   @Prop({ required: true })
   public value!: string; // 内容
   @Prop({ default: false })

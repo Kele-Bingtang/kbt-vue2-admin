@@ -47,8 +47,8 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class DraggableDialogDemo extends Vue {
+@Component({ name: "DraggableDialogDemo" })
+export default class extends Vue {
   public gridData = [
     {
       date: "2016-05-02",

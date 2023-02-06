@@ -44,10 +44,8 @@ import SplitPane from "@/components/SplitPane/index.vue";
  * 详细代码，请看 src/components/SplitPane/index.vue 组件内容
  */
 
-@Component({
-  components: { SplitPane },
-})
-export default class SplitPaneDemo extends Vue {
+@Component({ name: "SplitPaneDemo", components: { SplitPane } })
+export default class extends Vue {
   public offset1 = 0.4; // 数值单位 1 最大，0 最小
   public offset2 = "500px"; // 页面宽度最大， 0 最小
   public offset3 = 0.5;

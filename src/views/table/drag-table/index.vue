@@ -53,8 +53,8 @@ interface ColItem {
   width?: string;
 }
 
-@Component({})
-export default class DragTable extends Vue {
+@Component({ name: "DragTable" })
+export default class extends Vue {
   public scope!: any;
   public tableStatusFilter!: any;
 

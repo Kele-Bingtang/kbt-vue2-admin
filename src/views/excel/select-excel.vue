@@ -54,8 +54,8 @@ import { exportJsonToExcel, formatJsonToArray } from "@/utils/excel";
 import { Table } from "element-ui";
 import { largeData } from "@/test/table";
 
-@Component({})
-export default class SelectExcel extends Vue {
+@Component({ name: "SelectExcel" })
+export default class extends Vue {
   public row!: any;
   public $index!: any;
   public tableStatusFilter!: any;

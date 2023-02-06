@@ -14,10 +14,8 @@ import "./config.ts";
 import "./theme.ts";
 import "./mode.ts";
 
-@Component({
-  components: { codemirror },
-})
-export default class CodeMirror extends Vue {
+@Component({ name: "CodeMirror", components: { codemirror } })
+export default class extends Vue {
   @Prop({ default: "" })
   public value!: string;
   @Prop({ default: "idea" })

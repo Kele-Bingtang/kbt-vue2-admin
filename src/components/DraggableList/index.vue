@@ -49,12 +49,8 @@ export interface DragList {
   name: string;
 }
 
-@Component({
-  components: {
-    Draggable,
-  },
-})
-export default class DraggableList extends Vue {
+@Component({ name: "DraggableList", components: { Draggable } })
+export default class extends Vue {
   @Prop({ default: () => [] })
   public leftList!: DragList[];
   @Prop({ default: () => [] })

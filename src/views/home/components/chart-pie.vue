@@ -11,8 +11,8 @@ export interface PieData {
   value: number;
 }
 
-@Component({})
-export default class ChartPie extends Vue {
+@Component({ name: "ChartPie" })
+export default class extends Vue {
   public chart: any;
 
   @Prop({ required: true })

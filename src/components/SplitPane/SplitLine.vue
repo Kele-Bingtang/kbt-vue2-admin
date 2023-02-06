@@ -7,8 +7,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class Trigger extends Vue {
+@Component({ name: "SplitLine" })
+export default class extends Vue {
   @Prop({ required: true })
   public mode!: "vertical" | "horizontal";
 

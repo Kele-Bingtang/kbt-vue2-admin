@@ -123,12 +123,8 @@ import ThemePicker from "@/components/ThemePicker/index.vue";
 import { SettingsModule } from "@/store/modules/settings";
 import { setTitle } from "@/utils/layout";
 
-@Component({
-  components: {
-    ThemePicker,
-  },
-})
-export default class GlobalSettings extends Vue {
+@Component({ name: "GlobalSettings", components: { ThemePicker } })
+export default class extends Vue {
   @Prop({ default: false })
   public showSvg!: boolean;
   public drawerVisible = false;

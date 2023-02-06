@@ -19,8 +19,8 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
-export default class Account extends Vue {
+@Component({ name: "Account" })
+export default class extends Vue {
   public user = {
     oldPassword: "",
     newPassword: "",
