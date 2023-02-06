@@ -73,7 +73,7 @@ import { getTitle } from "@/utils/layout";
   name: "SideMenuItem", // 解决 Vercel 打包后递归组件失效
   components: { SideMenuItemLink },
 })
-export default class SideMenuItem extends Vue {
+export default class extends Vue {
   @Prop({ required: true })
   public menuItem!: RouteConfig;
   @Prop({ default: false })
