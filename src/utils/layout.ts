@@ -153,24 +153,3 @@ export const refreshPage = (vm: Vue, target: "local" | "reload" = "local") => {
   }
 };
 
-/**
- * 将对象的某个属性变为可选，如：
-
-interface User {
-  name: string;
-  age: string;
-  gender: string;
-}
-
-// gender 变为可选
-let user: PartialKey<User, "gender"> = {
-  name: "",
-  age: "",
-};
-// age 和 gender 变为可选
-let user: PartialKey<User, "age" | gender"> = {
-  name: "",
-};
-
- */
-export type PartialKey<T, U extends keyof T> = Pick<T, Exclude<keyof T, U>> & Partial<Pick<T, U>>;
