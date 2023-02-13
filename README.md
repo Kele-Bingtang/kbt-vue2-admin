@@ -1,6 +1,6 @@
 # kbt-vue-admin
 
-基于 Vue + TypeScript 搭建的后台系统模板。
+基于 Vue2 + TypeScript 搭建的后台系统模板。
 
 ## Demo
 

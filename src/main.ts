@@ -13,8 +13,8 @@ import { LayoutModule } from "@/store/modules/layout";
 import "@/utils/error-log";
 import Vue2OrgTree from "vue2-org-tree";
 import * as directives from "@/directives";
-import * as filters from '@/filters'
-import VueClipBoard from 'vue-clipboard2'
+import * as filters from "@/filters";
+import VueClipBoard from "vue-clipboard2";
 
 Vue.config.productionTip = false;
 
@@ -34,11 +34,11 @@ Object.keys(directives).forEach(key => {
 });
 
 Object.keys(filters).forEach(key => {
-  Vue.filter(key, (filters as { [key: string ]: Function })[key])
-})
+  Vue.filter(key, (filters as { [key: string]: Function })[key]);
+});
 
 Vue.use(Vue2OrgTree);
-Vue.use(VueClipBoard)
+Vue.use(VueClipBoard);
 
 new Vue({
   router,
