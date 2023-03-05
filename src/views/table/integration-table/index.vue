@@ -322,19 +322,19 @@ export default class extends Vue {
         }, 500);
         return;
       }
-      let tableData = [...this.tableData];
+      let tableData = this.tableData;
       if (this.multipleSearchParams.name) {
-        tableData = this.tableData.filter(item => {
+        tableData = tableData.filter(item => {
           return item.name.indexOf(this.multipleSearchParams.name) !== -1;
         });
       }
       if (this.multipleSearchParams.status) {
-        tableData = this.tableData.filter(item => {
+        tableData = tableData.filter(item => {
           return item.status === this.multipleSearchParams.status;
         });
       }
       if (this.multipleSearchParams.priority) {
-        tableData = this.tableData.filter(item => {
+        tableData = tableData.filter(item => {
           return item.priority === parseInt(this.multipleSearchParams.priority);
         });
       }
